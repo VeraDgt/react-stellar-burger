@@ -6,16 +6,16 @@ const AppHeader = () => {
   return (
     <header className={styles.header}>
       <span className={styles.logo}><Logo /></span>
-        <ul className={`${styles.nav} default-list`}>
-          <li className={`${styles.listItem} mr-7 ml-5`}>
+        <ul className={styles.nav}>
+          <li className={styles.listItem}>
             <BurgerIcon type='primary'/>
             <a className='text text_type_main-default ml-2'>Конструктор</a>
           </li>
-          <li className={`${styles.listItem} mr-7 ml-5`}>
+          <li className={styles.listItem}>
             <ListIcon type='secondary' />
             <a className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</a>
           </li>
-          <li className={`${styles.listItem} mr-7 ml-5`}>
+          <li className={styles.listItem}>
             <ProfileIcon type='secondary' />
             <a className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</a>
           </li>

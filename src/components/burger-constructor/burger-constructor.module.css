@@ -1,0 +1,29 @@
+.section {
+  composes: default-section pl-4 mt-25 from global;
+}
+
+.container {
+  composes: mr-4 mb-4 from global;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.item {
+  composes: ml-8 from global;
+}
+
+.list {
+  composes: default-list from global;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  height: 408px;
+  overflow-y: scroll;
+}
+
+.price {
+  display: flex;
+  margin-left: auto;
+}
