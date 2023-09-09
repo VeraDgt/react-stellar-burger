@@ -1,0 +1,25 @@
+.name {
+  composes: text text_type_main-medium mt-4 mb-8 from global;
+}
+
+.container {
+  composes: mb-15 from global;
+  display: flex;
+  gap: 20px;
+}
+
+.parameter {
+  composes: text text_type_main-default text_color_inactive from global;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  composes: text text_type_digits-default text_color_inactive mt-2 from global;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

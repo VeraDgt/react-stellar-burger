@@ -7,7 +7,7 @@ import { data } from '../../utils/data';
 const Main = () => {
   return (
     <main className={mainStyles.main}>
-      {/* <BurgerIngredients data={data} /> */}
+      <BurgerIngredients data={ data } />
       <BurgerConstructor data={ data } />
     </main>
   );

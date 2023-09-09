@@ -19,11 +19,11 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 16px;
-  height: 408px;
+  height: 480px;
   overflow-y: scroll;
 }
 
 .price {
   display: flex;
-  margin-left: auto;
+  justify-content: flex-end;
 }

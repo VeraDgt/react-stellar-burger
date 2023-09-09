@@ -17,7 +17,7 @@ const BurgerConstructor = ({data}) => {
           className={burgerConstructorStyles.item}
           />
         </div>
-      <ul className={burgerConstructorStyles.list}>
+      <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
         <ConstructorItem item={data[1]} />
         <ConstructorItem item={data[1]} />
         <ConstructorItem item={data[1]} />
@@ -38,7 +38,7 @@ const BurgerConstructor = ({data}) => {
           />
       </div>
       <div className={burgerConstructorStyles.price}>
-        <PriceContainer total={360000} />
+        <PriceContainer total={610} />
         <Button type='primary' size='large'>Оформить заказ</Button>
       </div>
     </section>
