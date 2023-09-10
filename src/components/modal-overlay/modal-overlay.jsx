@@ -2,11 +2,11 @@ import React from 'react';
 import overlayStyles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-const ModalOverlay = ({ closeModal }) => {
+const ModalOverlay = ({ handleClose }) => {
   const ref = React.useRef(null);
 
   function handleClick(e) {
-    return e.target === ref.current && closeModal();
+    return e.target === ref.current && handleClose();
   }
 
   return (
@@ -15,7 +15,7 @@ const ModalOverlay = ({ closeModal }) => {
 }
 
 ModalOverlay.propTypes = {
-  closeModal: PropTypes.func.isRequired
+  handleClose: PropTypes.func.isRequired
 }
 
 export default ModalOverlay

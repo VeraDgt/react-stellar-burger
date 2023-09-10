@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 
 const withModal = (Component) => {
   return function(props) {
-    const [open, setOpen] = React.useState(false);
+    const [visibility, setVisibility] = React.useState(false);
 
     function openModal() {
-      setOpen(true)
+      setVisibility(true)
     }
 
     function closeModal() {
-      setOpen(false)
+      setVisibility(false)
     }
 
     return (
-      <Component {...props} visibility={open} openModal={openModal} closeModal={closeModal}/>
+      <Component {...props} visibility={visibility} openModal={openModal} closeModal={closeModal}/>
     )
   }
 }

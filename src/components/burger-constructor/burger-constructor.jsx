@@ -3,11 +3,20 @@ import burgerConstructorStyles from './burger-constructor.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
 import PriceContainer from './price-container/price-container';
 import { ingredientsPropType } from '../../utils/prop-types';
+import PropTypes from 'prop-types';
+import OrderDetails from '../order-details/order-details';
 
-const BurgerConstructor = ({data}) => {
+
+const BurgerConstructor = ({data, openModal, closeModal, visibility}) => {
+  const modal = (
+    <OrderDetails handleClose={closeModal} />
+  )
+  
   return (
     <section className={burgerConstructorStyles.section}>
-      <div className={burgerConstructorStyles.container}>
+      { data.length !== 0 &&
+      <>
+        <div className={burgerConstructorStyles.container}>
         <ConstructorElement 
           type='top'
           isLocked={true}
@@ -17,7 +26,7 @@ const BurgerConstructor = ({data}) => {
           className={burgerConstructorStyles.item}
           />
         </div>
-      <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
+        <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
         <ConstructorItem item={data[1]} />
         <ConstructorItem item={data[1]} />
         <ConstructorItem item={data[1]} />
@@ -37,16 +46,22 @@ const BurgerConstructor = ({data}) => {
           className={burgerConstructorStyles.item}
           />
       </div>
+      </>
+      }
       <div className={burgerConstructorStyles.price}>
         <PriceContainer total={610} />
-        <Button type='primary' size='large'>Оформить заказ</Button>
+        <Button type='primary' htmlType='button' size='large' onClick={openModal}>Оформить заказ</Button>
       </div>
+      {visibility && modal}
     </section>
-  );
+  )
 };
 
 BurgerConstructor.propTypes = {
-  data: ingredientsPropType.isRequired
+  data: ingredientsPropType.isRequired,
+  openModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  visibility: PropTypes.bool.isRequired
 }
 
 export default BurgerConstructor;

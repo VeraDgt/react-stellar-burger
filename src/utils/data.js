@@ -2,7 +2,7 @@ import withModal from '../components/hocs/withModal';
 import BurgerIngredient from '../components/burger-ingredients/burger-ingredient/burger-ingredient';
 
 export const url = 'https://norma.nomoreparties.space/api/ingredients';
-export const modalRoot = document.getElementById('react-modals');
+export const modalRoot = document.getElementById('modals');
 export const WithModalBurgerIngredient = withModal(BurgerIngredient);
 
 export default function filterIngredients(data, type) {

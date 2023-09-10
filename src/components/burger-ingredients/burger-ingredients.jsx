@@ -5,7 +5,7 @@ import { ingredientsPropType } from '../../utils/prop-types';
 import filterIngredients from '../../utils/data';
 
 const BurgerIngredients = ({ data }) => {
-  // const [current, setCurrent] = React.useSate('one');
+  const [current, setCurrent] = React.useState('one');
 
   return (
     <section className={ingredientsStyles.section}>
@@ -13,18 +13,18 @@ const BurgerIngredients = ({ data }) => {
       <ul className={ingredientsStyles.menu}>
         <li>
           <a className={ingredientsStyles.link} href="#buns">
-            {/* <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab> */}
+            <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab>
           </a>
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#sauces">
-            {/* <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab> */}
+            <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab>
           </a>
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#fillings">
-            {/* <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинки</Tab> */}
-          </a>
+            <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинки</Tab>
+          </a>  
         </li>
       </ul>
 
@@ -35,10 +35,10 @@ const BurgerIngredients = ({ data }) => {
             { filterIngredients(data, 'bun') }
           </ul>
         </li>
-        <li id='sauses'>
+        <li id='sauces'>
           <h3 className={ingredientsStyles.subtitle}>Соусы</h3>
           <ul className={ingredientsStyles.item}>
-            { filterIngredients(data, 'sause') }
+            { filterIngredients(data, 'sauce') }
           </ul>
         </li>
         <li id='fillings'>
