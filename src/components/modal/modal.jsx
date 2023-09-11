@@ -24,7 +24,7 @@ const Modal = ({ handleClose, title, children, hasOverlay }) => {
       <>
         {hasOverlay && <ModalOverlay handleClose={handleClose} />}
         <div className={modalStyles.modal} >
-          <h2 className={title && `${modalStyles}`}>{title}</h2>
+          <h2 className={title && `${modalStyles.title}`}>{title}</h2>
           { children }
           <button onClick={handleClose} className={modalStyles.button}>
           <CloseIcon type="primary" />

@@ -1,4 +1,4 @@
-import { url } from './data';
+import { URL } from './data';
 
 const checkResponse = (res) => {
   if(res.ok) {
@@ -7,9 +7,9 @@ const checkResponse = (res) => {
   return Promise.reject(`Error: ${res.status}`)
 }
 
-export default function getIngredients(setData) {
-  return fetch(url)
+export default function getIngredients() {
+  return fetch(URL)
     .then(res => checkResponse(res))
-    .then(res => setData(res.data))
+    .then(res => (res.data))
     .catch(err => console.log(err))
 }

@@ -4,7 +4,7 @@
 }
 
 .text {
-  copmoses: text text_type_main-medium mt-8 from global;
+  composes: text text_type_main-medium mt-8 from global;
 }
 
 .img {

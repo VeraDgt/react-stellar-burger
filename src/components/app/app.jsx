@@ -7,7 +7,7 @@ import Main from "../main/main.jsx";
 
 function App() {
   const [data, setData] = React.useState([]);
-  React.useEffect(() => { getIngredients(setData) }, [])
+  React.useEffect(() => { getIngredients().then(setData) }, [])
 
   return (
     <div className={styles.app}>
@@ -16,5 +16,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;

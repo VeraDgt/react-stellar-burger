@@ -6,7 +6,7 @@ const ModalOverlay = ({ handleClose }) => {
   const ref = React.useRef(null);
 
   function handleClick(e) {
-    return e.target === ref.current && handleClose();
+    return handleClose();
   }
 
   return (

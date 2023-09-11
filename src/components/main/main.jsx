@@ -3,7 +3,7 @@ import mainStyles from './main.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { ingredientsPropType } from '../../utils/prop-types';
 import withModal from '../hocs/withModal';
-import { data } from '../../utils/data';
+import PropTypes from 'prop-types';
 
 const Main = ({ data }) => {
   const WithModalBurgerConstructor = withModal(BurgerConstructor);
@@ -17,7 +17,8 @@ const Main = ({ data }) => {
 };
 
 Main.propTypes = {
-  data: ingredientsPropType.isRequired
+  data: ingredientsPropType,
+  data: PropTypes.array
 }
 
 export default Main;

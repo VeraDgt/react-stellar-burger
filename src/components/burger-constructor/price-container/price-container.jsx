@@ -1,4 +1,5 @@
-import priceStyles from './price-container.module.css'
+import priceStyles from './price-container.module.css';
+import PropTypes from 'prop-types';
 
 const PriceContainer = ({total}) => {
   return (
@@ -8,5 +9,9 @@ const PriceContainer = ({total}) => {
     </span>
   );
 };
+
+PriceContainer.propTypes = {
+  total: PropTypes.number.isRequired
+}
 
 export default PriceContainer;
