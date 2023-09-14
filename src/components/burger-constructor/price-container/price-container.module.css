@@ -1,0 +1,6 @@
+.price {
+  composes: text text_type_digits-medium mr-10 from global;
+  display: flex;
+  align-items: center;
+  gap: 9.5px;
+}

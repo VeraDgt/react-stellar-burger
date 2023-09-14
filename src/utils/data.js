@@ -1,3 +1,16 @@
+import withModal from '../components/hocs/withModal';
+import BurgerIngredient from '../components/burger-ingredients/burger-ingredient/burger-ingredient';
+
+export const URL = 'https://norma.nomoreparties.space/api/ingredients'; 
+export const modalRoot = document.getElementById('modals');
+export const WithModalBurgerIngredient = withModal(BurgerIngredient);
+
+export default function filterIngredients(data, type) {
+   return data
+   .filter((item) => item.type === type) 
+   .map((element) => <WithModalBurgerIngredient key={element._id} item={element} />)
+}
+
 export const data = [
   {
      "_id":"60666c42cc7b410027a1a9b1",
