@@ -4,20 +4,12 @@ import ConstructorItem from './constructor-item/constructor-item';
 import PriceContainer from './price-container/price-container';
 import { ingredientsPropType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
-import Modal from "../modal/modal";
-import orderStyles from '../order-details/order-details.module.css';
-import img from '../../images/done.png';
+import OrderDetails from '../order-details/order-details';
 
 
 const BurgerConstructor = ({data, openModal, closeModal, visibility}) => {
   const modal = (
-    <Modal handleClose={closeModal} hasOverlay={true}>
-      <p className={orderStyles.number}>034536</p>
-      <p className={orderStyles.text}>идентификатор заказа</p>
-      <img src={img} alt='Заказ принят' className={orderStyles.img}/>
-      <p className={orderStyles.infoText}>Ваш заказ начали готовить</p>
-      <p className={orderStyles.delivery}>Дождитесь готовности на орбитальной станции</p>
-    </Modal>
+    <OrderDetails handleClose={closeModal} />
   )
   
   return (
