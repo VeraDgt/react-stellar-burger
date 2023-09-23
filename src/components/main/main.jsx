@@ -1,24 +1,24 @@
+import { useState } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import mainStyles from './main.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { ingredientsPropType } from '../../utils/prop-types';
-import withModal from '../hocs/withModal';
-import PropTypes from 'prop-types';
+import { TotalSumContext, CurrentItemContext } from '../../services/context';
 
-const Main = ({ data }) => {
-  const WithModalBurgerConstructor = withModal(BurgerConstructor);
+
+const Main = () => {
+  const [totalSum, setTotalSum] = useState(0);
+  const [ currentItem, setCurrentItem] = useState({});
 
   return (
     <main className={mainStyles.main}>
-      <BurgerIngredients data={ data } />
-      <WithModalBurgerConstructor data={ data } />
+      <CurrentItemContext.Provider value={{currentItem, setCurrentItem}}>
+        <BurgerIngredients />
+      </CurrentItemContext.Provider>
+      <TotalSumContext.Provider value={{totalSum, setTotalSum}}>
+        <BurgerConstructor />
+      </TotalSumContext.Provider>
     </main>
   );
 };
-
-Main.propTypes = {
-  data: ingredientsPropType,
-  data: PropTypes.array
-}
 
 export default Main;

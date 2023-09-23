@@ -1,18 +1,29 @@
-import React from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import styles from "./app.module.css";
 import getIngredients from "../../utils/api";
 import AppHeader from "../app-header/app-header.jsx";
 import Main from "../main/main.jsx";
+import { Context, ItemsContext } from '../../services/context';
 
 
 function App() {
-  const [data, setData] = React.useState([]);
-  React.useEffect(() => { getIngredients().then(setData) }, [])
+  const [state, setState ] = useState({
+    data: [],
+    order: null
+  });
+
+  const [ chosenItems, setChosenItems ] = useState([]);
+
+  useEffect(() => { getIngredients().then(setState, state) }, [])
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Main data={data}/>
+      <Context.Provider value={{ state, setState }}>
+        <ItemsContext.Provider value={{ chosenItems, setChosenItems }}>
+        <Main />
+        </ItemsContext.Provider>
+      </Context.Provider>
     </div>
   );
 }
