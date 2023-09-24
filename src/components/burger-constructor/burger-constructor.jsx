@@ -10,7 +10,7 @@ import Modal from '../modal/modal';
 
 
 const BurgerConstructor = () => {
-  const { chosenItems } = useContext(ItemsContext);
+  const { items } = useContext(ItemsContext);
   const { totalSum, setTotalSum } = useContext(TotalSumContext);
   const [ visibility, setVisibility ] = useState(false);
 
@@ -23,8 +23,8 @@ const BurgerConstructor = () => {
   }
 
   useEffect(() => {
-    setTotalSum(countTotalSum(chosenItems))
-  }, [chosenItems])
+    setTotalSum(countTotalSum(items))
+  }, [items])
 
   const modal = (
     <Modal handleClose={closeModal} hasOverlay={true}>
@@ -36,7 +36,7 @@ const BurgerConstructor = () => {
     <section className={burgerConstructorStyles.section}>
       { 
       <>
-        { chosenItems
+        { items
         .filter((item) => item.type === 'bun')
         .map((item, index) => 
           <div className={burgerConstructorStyles.container} key={ index }>
@@ -54,7 +54,7 @@ const BurgerConstructor = () => {
         
         <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
           {
-            chosenItems
+            items
             .filter((item) => item.type !== 'bun')
             .map((item, index) => {
               for(let i = 0; i < item.qty; i++) {
@@ -63,7 +63,7 @@ const BurgerConstructor = () => {
             })
           }
         </ul>
-        { chosenItems
+        { items
           .filter((item) => item.type === 'bun')
           .map((item, index) =>
             <div className={burgerConstructorStyles.container} key={index}>
@@ -81,7 +81,7 @@ const BurgerConstructor = () => {
       </>
       }
       <div className={burgerConstructorStyles.price}>
-        <PriceContainer total={totalSum} />
+        <PriceContainer totalSum={totalSum} />
         <Button type='primary' htmlType='button' size='large' onClick={openModal}>Оформить заказ</Button>
       </div>
       {visibility && modal}

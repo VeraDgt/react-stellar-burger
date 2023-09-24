@@ -7,11 +7,11 @@ import { Context, ItemsContext, CurrentItemContext } from '../../services/contex
 import BurgerIngredient from './burger-ingredient/burger-ingredient';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState('one');
-  const [visibility, setVisibility] = useState(false);
+  const [ current, setCurrent ] = useState('one');
+  const [ visibility, setVisibility ] = useState(false);
   const { state, setState } = useContext(Context);
   const { currentItem, setCurrentItem } = useContext(CurrentItemContext);
-  const { Items, setItems } = useContext(ItemsContext);
+  const { items, setItems } = useContext(ItemsContext);
   const data = state.data;
 
   function handleClick(item) {
@@ -29,15 +29,15 @@ const BurgerIngredients = () => {
     )
 
     setItems(item.type !== 'bun' ?
-      [...Items, item] : () => {
-        const index = [...Items].findIndex((el) => el.type === 'bun');
-        const newState = [...Items];
+      [...items, item] : () => {
+        const index = [...items].findIndex((el) => el.type === 'bun');
+        const newState = [...items];
 
         if(index !== -1) {
           newState[index] = item
           return newState
         } else {
-          return [...Items, item]
+          return [...items, item]
         }
       }
     )

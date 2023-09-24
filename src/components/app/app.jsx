@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 import styles from "./app.module.css";
 import getIngredients from "../../utils/api";
 import AppHeader from "../app-header/app-header.jsx";
@@ -12,15 +12,15 @@ function App() {
     order: null
   });
 
-  const [ chosenItems, setChosenItems ] = useState([]);
+  const [ items, setItems ] = useState([]);
 
-  useEffect(() => { getIngredients().then(setState, state) }, [])
+  useEffect(() => { getIngredients(setState, state) }, [])
 
   return (
     <div className={styles.app}>
       <AppHeader />
       <Context.Provider value={{ state, setState }}>
-        <ItemsContext.Provider value={{ chosenItems, setChosenItems }}>
+        <ItemsContext.Provider value={{ items, setItems }}>
         <Main />
         </ItemsContext.Provider>
       </Context.Provider>
