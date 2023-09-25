@@ -1,11 +1,8 @@
-import Modal from '../modal/modal';
 import detailsStyles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
 
-const IngredientDetails = ({ item, handleClose }) => {
+const IngredientDetails = ({ item }) => {
   return (
-    <Modal handleClose={handleClose} title='Детали ингредиента' hasOverlay={true}>
+    <>
       <img src={item.image_large} alt={item.title} />
       <p className={detailsStyles.name}>{item.name}</p>
       <div className={detailsStyles.container}>
@@ -22,13 +19,8 @@ const IngredientDetails = ({ item, handleClose }) => {
         <span className={detailsStyles.text}>{item.carbohydrates}</span>
         </p>
       </div>
-    </Modal>
+    </>
   );
 };
-
-IngredientDetails.propTypes = {
-  item: ingredientPropType.isRequired,
-  handleClose: PropTypes.func.isRequired,
-}
 
 export default IngredientDetails;

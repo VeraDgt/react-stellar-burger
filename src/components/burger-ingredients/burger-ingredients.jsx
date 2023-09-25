@@ -1,12 +1,63 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropType } from '../../utils/prop-types';
-import PropTypes from 'prop-types';
-import filterIngredients from '../../utils/data';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import { Context, ItemsContext, CurrentItemContext } from '../../services/context';
+import BurgerIngredient from './burger-ingredient/burger-ingredient';
 
-const BurgerIngredients = ({ data }) => {
-  const [current, setCurrent] = React.useState('one');
+const BurgerIngredients = () => {
+  const [ current, setCurrent ] = useState('one');
+  const [ visibility, setVisibility ] = useState(false);
+  const { state, setState } = useContext(Context);
+  const { currentItem, setCurrentItem } = useContext(CurrentItemContext);
+  const { items, setItems } = useContext(ItemsContext);
+  const data = state.data;
+
+  function handleClick(item) {
+    setVisibility(true);
+    setCurrentItem(item);
+    setState(
+      { ...state, data: state.data.map((el) => {
+        if(el._id === item._id) {
+          return el.type !== 'bun' ? {...el, qty: ++el.qty} : {...el, qty: 1}
+        } else {
+          return el.type !== 'bun' ? el : item.type === 'bun' ? {...el, qty: 0} : el
+        }
+      })
+      }
+    )
+
+    setItems(item.type !== 'bun' ?
+      [...items, item] : () => {
+        const index = [...items].findIndex((el) => el.type === 'bun');
+        const newState = [...items];
+
+        if(index !== -1) {
+          newState[index] = item
+          return newState
+        } else {
+          return [...items, item]
+        }
+      }
+    )
+  }
+
+  function closeModal() {
+    setVisibility(false)
+  }
+
+  const modal = (
+    <Modal handleClose={closeModal} title='Детали ингредиента' hasOverlay={true}>
+      <IngredientDetails item={currentItem}/>
+    </Modal>
+  )
+
+  function filterIngredients(data, type) {
+    return data
+    .filter((item) => item.type === type)
+    .map((el) => <BurgerIngredient key={el._id} item={el} handleClick={() => handleClick(el)}/>)
+  }
 
   return (
     <section className={ingredientsStyles.section}>
@@ -48,15 +99,10 @@ const BurgerIngredients = ({ data }) => {
             { filterIngredients(data, 'main') }
           </ul>
         </li>
-
       </ul>
+      {visibility && modal}
     </section>
   );
 };
-
-BurgerIngredients.propTypes = {
-  data: ingredientsPropType.isRequired,
-  data: PropTypes.array.isRequired
-}
 
 export default BurgerIngredients;
