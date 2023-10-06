@@ -1,0 +1,5 @@
+export const GET_CHOSEN_ITEMS = 'GET_CHOSEN_ITEMS';
+export const SET_TOTAL_SUM = 'SET_TOTAL_SUM';
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const DRAG_ITEM = 'DRAG_ITEM';
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';

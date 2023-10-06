@@ -1,18 +1,36 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
 import PriceContainer from './price-container/price-container';
 import OrderDetails from '../order-details/order-details';
-import { ItemsContext, TotalSumContext } from '../../services/context';
 import { countTotalSum } from '../../utils/data';
 import Modal from '../modal/modal';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { DRAG_ITEM, SET_TOTAL_SUM } from '../../services/actions/burger-constructor';
 
 
-const BurgerConstructor = () => {
-  const { items } = useContext(ItemsContext);
-  const { totalSum, setTotalSum } = useContext(TotalSumContext);
+const BurgerConstructor = ({dropHandler}) => {
+  const { items, price } = useSelector(store => store.burderConstructor);
   const [ visibility, setVisibility ] = useState(false);
+  const dispatch = useDispatch();
+
+  const dragItem = useCallback((dragIndex, hoverIndex) => {
+    dispatch({
+      type: DRAG_ITEM,
+      dragIndex: dragIndex,
+      hoverIndex: hoverIndex
+    })
+  }, [dispatch])
+
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      dropHandler(item);
+    }
+  })
 
   function openModal() {
     setVisibility(true)
@@ -23,8 +41,8 @@ const BurgerConstructor = () => {
   }
 
   useEffect(() => {
-    setTotalSum(countTotalSum(items))
-  }, [items])
+    dispatch({type: SET_TOTAL_SUM, payload: countTotalSum(items)})
+  }, [items, dispatch])
 
   const modal = (
     <Modal handleClose={closeModal} hasOverlay={true}>
@@ -38,8 +56,8 @@ const BurgerConstructor = () => {
       <>
         { items
         .filter((item) => item.type === 'bun')
-        .map((item, index) => 
-          <div className={burgerConstructorStyles.container} key={ index }>
+        .map((item) => 
+          <div className={burgerConstructorStyles.container} key={ item.key }>
             <ConstructorElement 
               type='top'
               isLocked={true}
@@ -58,15 +76,15 @@ const BurgerConstructor = () => {
             .filter((item) => item.type !== 'bun')
             .map((item, index) => {
               for(let i = 0; i < item.qty; i++) {
-                return (<ConstructorItem key={index} item={item} />)
+                return (<ConstructorItem key={item.index} item={item} dragItem={dragItem} index={index} />)
               }
             })
           }
         </ul>
         { items
           .filter((item) => item.type === 'bun')
-          .map((item, index) =>
-            <div className={burgerConstructorStyles.container} key={index}>
+          .map((item) =>
+            <div className={burgerConstructorStyles.container} key={item.key}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -81,7 +99,7 @@ const BurgerConstructor = () => {
       </>
       }
       <div className={burgerConstructorStyles.price}>
-        <PriceContainer totalSum={totalSum} />
+        <PriceContainer totalSum={price} />
         <Button type='primary' htmlType='button' size='large' onClick={openModal}>Оформить заказ</Button>
       </div>
       {visibility && modal}
@@ -90,3 +108,7 @@ const BurgerConstructor = () => {
 };
 
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+  dropHandler: PropTypes.func.isRequired
+}

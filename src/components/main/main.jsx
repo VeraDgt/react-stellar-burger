@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import React from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import mainStyles from './main.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { TotalSumContext, CurrentItemContext } from '../../services/context';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch } from 'react-redux';
+import { GET_CHOSEN_ITEMS } from '../../services/actions/burger-constructor';
+import { INCREASE_QTY } from '../../services/actions/burger-ingredients';
+import { v4 } from 'uuid';
 
 
 const Main = () => {
-  const [totalSum, setTotalSum] = useState(0);
-  const [ currentItem, setCurrentItem] = useState({});
+  const dispatch = useDispatch();
+
+  const handleDrop = (item) => {
+    dispatch({ type: INCREASE_QTY, payload: item });
+    dispatch({ GET_CHOSEN_ITEMS, payload: item, key: v4() });
+  }
 
   return (
     <main className={mainStyles.main}>
-      <CurrentItemContext.Provider value={{currentItem, setCurrentItem}}>
+      <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
-      </CurrentItemContext.Provider>
-      <TotalSumContext.Provider value={{totalSum, setTotalSum}}>
-        <BurgerConstructor />
-      </TotalSumContext.Provider>
+        <BurgerConstructor onDropHandler={handleDrop}/>
+      </DndProvider>
     </main>
   );
 };

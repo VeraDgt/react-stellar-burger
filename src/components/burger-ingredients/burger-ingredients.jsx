@@ -1,55 +1,58 @@
-import { useContext, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { Context, ItemsContext, CurrentItemContext } from '../../services/context';
 import BurgerIngredient from './burger-ingredient/burger-ingredient';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_ITEM_DATA, DELETE_ITEM_DATA } from '../../services/actions/modals';
 
 const BurgerIngredients = () => {
-  const [ current, setCurrent ] = useState('one');
+  const [ current, setCurrent ] = useState('buns');
   const [ visibility, setVisibility ] = useState(false);
-  const { state, setState } = useContext(Context);
-  const { currentItem, setCurrentItem } = useContext(CurrentItemContext);
-  const { items, setItems } = useContext(ItemsContext);
-  const data = state.data;
+
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const fillingsRef = useRef(null);
+  const containerRef = useRef(null);
+
+  const onTabClick = (tab) => {
+    setCurrent(tab)
+    tab === 'buns' && bunsRef.current.scrollIntoView({behaviour: 'smooth'});
+    tab === 'sauces' && saucesRef.current.scrollIntoView({behaviour: 'smooth'});
+    tab === 'fillings' && fillingsRef.current.scrollIntoView({behaviour: 'smooth'});
+  }
+
+  const dispatch = useDispatch();
+  const { items, itemsRequest } = useSelector(store => store.ingredients);
 
   function handleClick(item) {
     setVisibility(true);
-    setCurrentItem(item);
-    setState(
-      { ...state, data: state.data.map((el) => {
-        if(el._id === item._id) {
-          return el.type !== 'bun' ? {...el, qty: ++el.qty} : {...el, qty: 1}
-        } else {
-          return el.type !== 'bun' ? el : item.type === 'bun' ? {...el, qty: 0} : el
-        }
-      })
-      }
-    )
-
-    setItems(item.type !== 'bun' ?
-      [...items, item] : () => {
-        const index = [...items].findIndex((el) => el.type === 'bun');
-        const newState = [...items];
-
-        if(index !== -1) {
-          newState[index] = item
-          return newState
-        } else {
-          return [...items, item]
-        }
-      }
-    )
+    dispatch({type: ADD_ITEM_DATA, payload: item});
   }
 
   function closeModal() {
-    setVisibility(false)
+    setVisibility(false);
+    dispatch({type: DELETE_ITEM_DATA});
+  }
+
+  function handleScroll() {
+    const bunsInterval = Math.abs(bunsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+    const saucesInterval = Math.abs(saucesRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+    const fillingsInterval = Math.abs(fillingsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
+
+    if(bunsInterval < saucesInterval) {
+      setCurrent('buns')
+    } else if(saucesInterval < fillingsInterval) {
+      setCurrent('sausces')
+    } else if(fillingsInterval < bunsInterval) {
+      setCurrent('fillings')
+    }
   }
 
   const modal = (
     <Modal handleClose={closeModal} title='Детали ингредиента' hasOverlay={true}>
-      <IngredientDetails item={currentItem}/>
+      <IngredientDetails />
     </Modal>
   )
 
@@ -65,39 +68,42 @@ const BurgerIngredients = () => {
       <ul className={ingredientsStyles.menu}>
         <li>
           <a className={ingredientsStyles.link} href="#buns">
-            <Tab value="one" active={current === 'one'} onClick={setCurrent}>Булки</Tab>
+            <Tab value="buns" active={current === 'buns'} onClick={onTabClick}>Булки</Tab>
           </a>
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#sauces">
-            <Tab value="two" active={current === 'two'} onClick={setCurrent}>Соусы</Tab>
+            <Tab value="two" active={current === 'two'} onClick={onTabClick}>Соусы</Tab>
           </a>
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#fillings">
-            <Tab value="three" active={current === 'three'} onClick={setCurrent}>Начинки</Tab>
+            <Tab value="three" active={current === 'three'} onClick={onTabClick}>Начинки</Tab>
           </a>  
         </li>
       </ul>
 
-      <ul className={`${ingredientsStyles.items} custom-scroll`}>
-        <li id='buns'>
+      <ul className={`${ingredientsStyles.items} custom-scroll`} onScroll={handleScroll}>
+        <li ref={bunsRef}>
           <h3 className={ingredientsStyles.subtitle}>Булки</h3>
-          <ul className={ingredientsStyles.item}>
-            { filterIngredients(data, 'bun') }
+          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+            { filterIngredients(items, 'bun') }
           </ul>
+          }
         </li>
-        <li id='sauces'>
+        <li ref={saucesRef}>
           <h3 className={ingredientsStyles.subtitle}>Соусы</h3>
-          <ul className={ingredientsStyles.item}>
-            { filterIngredients(data, 'sauce') }
+          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+            { filterIngredients(items, 'sauce') }
           </ul>
+          }
         </li>
-        <li id='fillings'>
+        <li ref={saucesRef}>
           <h3 className={ingredientsStyles.subtitle}>Начинки</h3>
-          <ul className={ingredientsStyles.item}>
-            { filterIngredients(data, 'main') }
+          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+            { filterIngredients(items, 'main') }
           </ul>
+          }
         </li>
       </ul>
       {visibility && modal}
