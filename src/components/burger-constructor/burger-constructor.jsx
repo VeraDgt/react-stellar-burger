@@ -77,7 +77,7 @@ const BurgerConstructor = ({dropHandler}) => {
             .filter((item) => item.type !== 'bun')
             .map((item, index) => {
               for(let i = 0; i < item.qty; i++) {
-                return (<ConstructorItem key={item.index} item={item} dragItem={dragItem} index={index} />)
+                return (<ConstructorItem key={item.key} item={item} dragItem={dragItem} index={index} />)
               }
             })
           }
