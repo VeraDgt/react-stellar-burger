@@ -64,7 +64,7 @@ const ConstructorItem = ({item, index, dragItem}) => {
     dispatch({ type: DECREASE_QTY, payload: item });
   }
   return (
-    <li className={constructorItemStyles.item}>
+    <li className={constructorItemStyles.item} data-handler-id={handlerId} ref={ref} >
       <DragIcon type="primary" />
       <ConstructorElement
         isLocked={false}

@@ -15,7 +15,7 @@ const Main = () => {
 
   const handleDrop = (item) => {
     dispatch({ type: INCREASE_QTY, payload: item });
-    dispatch({ GET_CHOSEN_ITEMS, payload: item, key: v4() });
+    dispatch({ type: GET_CHOSEN_ITEMS, payload: item, key: v4() });
   }
 
   return (

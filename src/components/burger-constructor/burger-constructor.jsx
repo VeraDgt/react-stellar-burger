@@ -51,7 +51,7 @@ const BurgerConstructor = ({dropHandler}) => {
   )
   
   return (
-    <section className={burgerConstructorStyles.section}>
+    <section className={burgerConstructorStyles.section} ref={dropTarget}>
       { 
       <>
         { chosenItems
@@ -100,7 +100,7 @@ const BurgerConstructor = ({dropHandler}) => {
       }
       <div className={burgerConstructorStyles.price}>
         <PriceContainer totalSum={price} />
-        <Button type='primary' htmlType='button' size='large' onClick={openModal}>Оформить заказ</Button>
+        <Button type='primary' htmlType='button' size='large' onClick={openModal} >Оформить заказ</Button>
       </div>
       {visibility && modal}
     </section>
