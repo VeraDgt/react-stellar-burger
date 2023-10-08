@@ -5,7 +5,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch } from 'react-redux';
-import { GET_CHOSEN_ITEMS } from '../../services/actions/burger-constructor';
+import { GET_BURGER_DATA } from '../../services/actions/burger-constructor';
 import { INCREASE_QTY } from '../../services/actions/burger-ingredients';
 import { v4 } from 'uuid';
 
@@ -15,7 +15,7 @@ const Main = () => {
 
   const handleDrop = (item) => {
     dispatch({ type: INCREASE_QTY, payload: item });
-    dispatch({ type: GET_CHOSEN_ITEMS, payload: item, key: v4() });
+    dispatch({ type: GET_BURGER_DATA, payload: item, key: v4() });
   }
 
   return (

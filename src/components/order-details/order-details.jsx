@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 const OrderDetails = () => {
-  const chosenItems = useSelector(store => store.burgerConstructor.chosenItems);
-  const idArr = chosenItems.map((el) => el._id);
+  const burgersData = useSelector(store => store.burgerConstructor.burgersData);
+  const idArr = burgersData.map((el) => el._id);
   const { order, orderRequest } = useSelector(store => store.order);
 
   const dispatch = useDispatch();

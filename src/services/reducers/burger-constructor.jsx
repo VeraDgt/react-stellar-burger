@@ -1,8 +1,8 @@
-import { GET_CHOSEN_ITEMS, DELETE_ITEM, DRAG_ITEM, CLEAR_CONSTRUCTOR } from "../actions/burger-constructor";
+import { GET_BURGER_DATA, DELETE_ITEM, DRAG_ITEM, CLEAR_CONSTRUCTOR } from "../actions/burger-constructor";
 
 const initialState = {
+  bun: null,
   burgersData: [],
-  price: 0
 }
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -19,7 +19,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
   }
 
   switch (action.type) {
-    case GET_CHOSEN_ITEMS: {
+    case GET_BURGER_DATA: {
       return {
         ...state,
         burgersData: action.payload.type !== 'bun' ? 
