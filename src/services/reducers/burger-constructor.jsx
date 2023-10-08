@@ -2,7 +2,7 @@ import { GET_CHOSEN_ITEMS, SET_TOTAL_SUM, DELETE_ITEM, DRAG_ITEM, CLEAR_CONSTRUC
 
 const initialState = {
   chosenItems: [],
-  sum: 0
+  price: 0
 }
 
 export const burgerConstructorReducer = (state = initialState, action) => {

@@ -13,7 +13,7 @@ import { DRAG_ITEM, SET_TOTAL_SUM } from '../../services/actions/burger-construc
 
 
 const BurgerConstructor = ({dropHandler}) => {
-  const { items, price } = useSelector(store => store.burderConstructor);
+  const { chosenItems, price } = useSelector(store => store.burgerConstructor);
   const [ visibility, setVisibility ] = useState(false);
   const dispatch = useDispatch();
 
@@ -41,8 +41,8 @@ const BurgerConstructor = ({dropHandler}) => {
   }
 
   useEffect(() => {
-    dispatch({type: SET_TOTAL_SUM, payload: countTotalSum(items)})
-  }, [items, dispatch])
+    dispatch({type: SET_TOTAL_SUM, payload: countTotalSum(chosenItems)})
+  }, [chosenItems, dispatch])
 
   const modal = (
     <Modal handleClose={closeModal} hasOverlay={true}>
@@ -54,7 +54,7 @@ const BurgerConstructor = ({dropHandler}) => {
     <section className={burgerConstructorStyles.section}>
       { 
       <>
-        { items
+        { chosenItems
         .filter((item) => item.type === 'bun')
         .map((item) => 
           <div className={burgerConstructorStyles.container} key={ item.key }>
@@ -72,7 +72,7 @@ const BurgerConstructor = ({dropHandler}) => {
         
         <ul className={`${burgerConstructorStyles.list} custom-scroll`}>
           {
-            items
+            chosenItems
             .filter((item) => item.type !== 'bun')
             .map((item, index) => {
               for(let i = 0; i < item.qty; i++) {
@@ -81,7 +81,7 @@ const BurgerConstructor = ({dropHandler}) => {
             })
           }
         </ul>
-        { items
+        { chosenItems
           .filter((item) => item.type === 'bun')
           .map((item) =>
             <div className={burgerConstructorStyles.container} key={item.key}>

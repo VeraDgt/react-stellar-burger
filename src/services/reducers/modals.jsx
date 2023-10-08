@@ -1,7 +1,7 @@
-import { isAction } from "@reduxjs/toolkit";
 import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS, ADD_ITEM_DATA, DELETE_ITEM_DATA } from "../actions/modals";
 
 const initialState = {
+  order: {},
   orderRequest: false,
   orderFailed: false,
   currItem: {}
@@ -29,14 +29,14 @@ export const itemModalReducer = (state = initialState, action) => {
   }
 }
 
-export const orderModalReducer = (state = initialState, ation) => {
-  switch (isAction.type) {
+export const orderModalReducer = (state = initialState, action) => {
+  switch (action.type) {
     case GET_ORDER: {
       return { ...state, orderReqest: true }
     }
 
     case GET_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, order: isAction.order, orderReqest: false };
+      return { ...state, orderFailed: false, order: action.order, orderReqest: false };
     }
 
     case GET_ORDER_FAILED: {

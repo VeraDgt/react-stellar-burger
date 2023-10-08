@@ -24,7 +24,7 @@ const BurgerIngredients = () => {
   }
 
   const dispatch = useDispatch();
-  const { items, itemsRequest } = useSelector(store => store.ingredients);
+  const { items, itemsRequest } = useSelector(store => store.burgerIngredients);
 
   function handleClick(item) {
     setVisibility(true);
@@ -44,7 +44,7 @@ const BurgerIngredients = () => {
     if(bunsInterval < saucesInterval) {
       setCurrent('buns')
     } else if(saucesInterval < fillingsInterval) {
-      setCurrent('sausces')
+      setCurrent('sauces')
     } else if(fillingsInterval < bunsInterval) {
       setCurrent('fillings')
     }
@@ -63,7 +63,7 @@ const BurgerIngredients = () => {
   }
 
   return (
-    <section className={ingredientsStyles.section}>
+    <section className={ingredientsStyles.section} ref={containerRef}>
       <h2 className={ingredientsStyles.title}>Соберите бургер</h2>
       <ul className={ingredientsStyles.menu}>
         <li>
@@ -73,12 +73,12 @@ const BurgerIngredients = () => {
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#sauces">
-            <Tab value="two" active={current === 'two'} onClick={onTabClick}>Соусы</Tab>
+            <Tab value="sauces" active={current === 'sauces'} onClick={onTabClick}>Соусы</Tab>
           </a>
         </li>
         <li>
           <a className={ingredientsStyles.link} href="#fillings">
-            <Tab value="three" active={current === 'three'} onClick={onTabClick}>Начинки</Tab>
+            <Tab value="fillings" active={current === 'fillings'} onClick={onTabClick}>Начинки</Tab>
           </a>  
         </li>
       </ul>
@@ -98,7 +98,7 @@ const BurgerIngredients = () => {
           </ul>
           }
         </li>
-        <li ref={saucesRef}>
+        <li ref={fillingsRef}>
           <h3 className={ingredientsStyles.subtitle}>Начинки</h3>
           { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
             { filterIngredients(items, 'main') }

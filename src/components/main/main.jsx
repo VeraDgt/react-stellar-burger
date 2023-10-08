@@ -22,7 +22,7 @@ const Main = () => {
     <main className={mainStyles.main}>
       <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
-        <BurgerConstructor onDropHandler={handleDrop}/>
+        <BurgerConstructor dropHandler={handleDrop}/>
       </DndProvider>
     </main>
   );

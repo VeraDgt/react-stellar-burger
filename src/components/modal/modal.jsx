@@ -7,6 +7,9 @@ import PropTypes from 'prop-types';
 import { modalRoot } from '../../utils/data';
 
 const Modal = ({ handleClose, title, children, hasOverlay }) => {
+  function handleKeydown(event) {
+    return event.key === 'Escape' && handleClose();
+  }
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleKeydown)
@@ -14,10 +17,6 @@ const Modal = ({ handleClose, title, children, hasOverlay }) => {
       document.removeEventListener('keydown', handleKeydown)
     }
   }, []);
-
-  function handleKeydown(event) {
-    return event.key === 'Escape' && handleClose();
-  }
 
   return ReactDOM.createPortal(
     (

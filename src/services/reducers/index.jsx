@@ -4,8 +4,8 @@ import { burgerIngredientsReducer } from "./burger-ingredients";
 import { orderModalReducer, itemModalReducer } from "./modals";
 
 export const rootReducer = combineReducers({
-  ingredients: burgerIngredientsReducer,
-  constructor: burgerConstructorReducer,
+  burgerIngredients: burgerIngredientsReducer,
+  burgerConstructor: burgerConstructorReducer,
   item: itemModalReducer,
   order: orderModalReducer,
 });

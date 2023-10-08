@@ -3,9 +3,10 @@ import "./index.css";
 import { compose, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers/index';
-import { createRoot } from 'react-dom';
+import ReactDOM from "react-dom";
 import App from "./components/app/app";
 import thunk from 'redux-thunk';
+import reportWebVitals from "./reportWebVitals";
 
 
 const composeEnhancers = 
@@ -14,17 +15,18 @@ const composeEnhancers =
   : compose;
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = createStore(rootReducer, enhancer);
-const container = document.getElementById('root');
-const root = createRoot(container);
 
-root.render(
+
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>,
+document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
