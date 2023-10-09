@@ -1,29 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styles from "./app.module.css";
-import getIngredients from "../../utils/api";
+import { useDispatch } from 'react-redux';
+import { getItems } from "../../services/actions/burger-ingredients";
 import AppHeader from "../app-header/app-header.jsx";
 import Main from "../main/main.jsx";
-import { Context, ItemsContext } from '../../services/context';
 
 
 function App() {
-  const [state, setState ] = useState({
-    data: [],
-    order: null
-  });
+  const dispatch = useDispatch();
 
-  const [ items, setItems ] = useState([]);
-
-  useEffect(() => { getIngredients(setState, state) }, [])
+  useEffect(() => { dispatch(getItems()) }, [dispatch]);
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Context.Provider value={{ state, setState }}>
-        <ItemsContext.Provider value={{ items, setItems }}>
         <Main />
-        </ItemsContext.Provider>
-      </Context.Provider>
     </div>
   );
 }

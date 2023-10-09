@@ -1,3 +1,4 @@
+import React from 'react';
 import priceStyles from './price-container.module.css';
 import PropTypes from 'prop-types';
 

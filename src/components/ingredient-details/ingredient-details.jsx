@@ -1,6 +1,10 @@
+import React from 'react';
 import detailsStyles from './ingredient-details.module.css';
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = ({ item }) => {
+const IngredientDetails = () => {
+  const item = useSelector(store => store.item.currItem);
+  
   return (
     <>
       <img src={item.image_large} alt={item.title} />
