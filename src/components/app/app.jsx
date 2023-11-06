@@ -5,6 +5,10 @@ import { getItems } from "../../services/actions/burger-ingredients";
 import AppHeader from "../app-header/app-header.jsx";
 import HomePage from "../../pages/home";
 import { Routes, Route } from 'react-router-dom';
+import LoginPage from '../../pages/login';
+import RegisterPage from '../../pages/register';
+import ForgotPwPage from '../../pages/forgot-password';
+import ResetPwPage from '../../pages/reset-password';
 
 
 function App() {
@@ -17,6 +21,10 @@ function App() {
       <AppHeader />
       <Routes>
           <Route path="/" element={<HomePage/>}></Route>
+          <Route path="/login" element={<LoginPage/>}></Route>
+          <Route path="/register" element={<RegisterPage/>}></Route>
+          <Route path="/forgot-password" element={<ForgotPwPage/>}></Route>
+          <Route path="/reset-password" element={<ResetPwPage/>}></Route>
       </Routes>
     </div>
   );

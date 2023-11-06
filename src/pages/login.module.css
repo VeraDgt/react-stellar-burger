@@ -1,0 +1,13 @@
+.page {
+  max-width: 1280px;
+  margin: auto;
+  text-align: center;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  border: 0;
+  padding: 24px;
+}
