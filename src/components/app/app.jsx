@@ -9,6 +9,9 @@ import LoginPage from '../../pages/login';
 import RegisterPage from '../../pages/register';
 import ForgotPwPage from '../../pages/forgot-password';
 import ResetPwPage from '../../pages/reset-password';
+import ProfilePage from '../../pages/profile';
+import NoPage from '../../pages/no-page';
+import ProfileData from '../profile/profile-data';
 
 
 function App() {
@@ -20,11 +23,19 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <Routes>
-          <Route path="/" element={<HomePage/>}></Route>
-          <Route path="/login" element={<LoginPage/>}></Route>
-          <Route path="/register" element={<RegisterPage/>}></Route>
-          <Route path="/forgot-password" element={<ForgotPwPage/>}></Route>
-          <Route path="/reset-password" element={<ResetPwPage/>}></Route>
+        <Route index element={<HomePage/>} />
+        <Route path="/" element={<HomePage/>} />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+        <Route path="/forgot-password" element={<ForgotPwPage/>} />
+        <Route path="/reset-password" element={<ResetPwPage/>} / >
+        <Route path="/profile" element={<ProfilePage/>}>
+          <Route index element={<ProfileData/>}/>
+          <Route path="/profile/account" element={<ProfileData/>}/>
+          <Route path="/profile/orders" element={<NoPage/>}/>
+          <Route path="*" element={<NoPage/>}/>
+        </Route>
+        <Route path="*" element={<NoPage/>} />
       </Routes>
     </div>
   );

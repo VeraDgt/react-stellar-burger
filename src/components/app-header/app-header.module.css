@@ -22,9 +22,10 @@
 }
 
 .listItem {
-  composes: mr-7 ml-5 from global;
+  composes: mr-7 ml-5 text_type_main-default from global;
   display: flex;
   align-items: center;
+  text-decoration: none;
 }
 
 .listItem:last-of-type {
