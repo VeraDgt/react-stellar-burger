@@ -9,8 +9,9 @@
   width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 34px;
+  gap: 32px;
   margin: 0;
+  margin-top: 50px;
 }
 
 .link {

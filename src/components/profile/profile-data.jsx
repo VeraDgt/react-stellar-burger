@@ -14,8 +14,8 @@ const ProfileData = () => {
   const { user } = useSelector(store => store.user);
 
   return (
-    <form className='ml-15 mt-20'>
-      <fieldset className='fieldset mb-6'>
+    <form className={styles.form}>
+      <fieldset className={styles.fieldset}>
         <Input 
           type='text'
           name='name'
@@ -35,7 +35,7 @@ const ProfileData = () => {
       {
         <>
           <Button type='secondary' htmlType='button'>Отмена</Button>
-          <Button type='secondary' htmlType='button'>Сохранить</Button>
+          <Button htmlType='submit'>Сохранить</Button>
         </>
       }
     </form>

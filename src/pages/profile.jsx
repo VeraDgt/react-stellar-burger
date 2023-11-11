@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
 import { logout } from "../services/actions/auth";
@@ -6,6 +6,9 @@ import { logout } from "../services/actions/auth";
 export default function ProfilePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const textStyle = (url) => location.pathname === url ? `${styles.link} text_color_primary` : `${styles.link} text_color_inactive`;
 
   const handleClick = () => {
     dispatch(navigate('/login', {replace: true}));
@@ -15,11 +18,11 @@ export default function ProfilePage() {
     <div className={styles.page}>
       <ul className={styles.list}>
         <li>
-          <NavLink to="/profile/account" className={styles.link}>Профиль
+          <NavLink to="/profile/account" className={textStyle('/profile/account')}>Профиль
           </NavLink>
         </li>
         <li>
-        <NavLink to="profile/orders" className={styles.link}>История заказов
+        <NavLink to="profile/orders" className={textStyle('/profile/orders')}>История заказов
           </NavLink>
         </li>
         <li>

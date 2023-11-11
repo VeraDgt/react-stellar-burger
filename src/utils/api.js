@@ -1,4 +1,5 @@
 import { URL } from './data';
+import { getCookie, setCookie } from './utils';
 
 const checkResponse = (res) => {
   if(res.ok) {
