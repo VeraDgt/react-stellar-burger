@@ -3,6 +3,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../services/actions/auth';
 
 export default function LoginPage() {
   const [ form, setForm ] = useState({
@@ -15,7 +16,14 @@ export default function LoginPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(navigate('/', {replace: true}));
+    dispatch(login(form, () => navigate('/', {replace: true})));
+  }
+
+  const onChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   }
 
 
@@ -24,8 +32,8 @@ export default function LoginPage() {
       <h1 className='text text_type_main-medium'>Вход</h1>
       <form className='form' onSubmit={onSubmit}>
         <fieldset className={styles.fieldset}>
-          <Input type='email' placeholder='E-mail' name='email' value={form.email} />
-          <PasswordInput name='password' value={form.password} />
+          <Input type='email' placeholder='E-mail' name='email' value={form.email} onChange={onChange} />
+          <PasswordInput name='password' value={form.password} onChange={onChange} />
         </fieldset>
         <Button type='primary' size='large' htmlType='submit'>Войти</Button>
       </form>

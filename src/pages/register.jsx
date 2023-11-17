@@ -3,6 +3,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../services/actions/auth';
 
 export default function RegisterPage() {
   const [ form, setForm ] = useState({
@@ -16,7 +17,14 @@ export default function RegisterPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(navigate('/', {replace: true}));
+    dispatch(register(form, () => navigate('/', {replace: true})));
+  }
+
+  const onChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   }
 
   return (
@@ -24,9 +32,9 @@ export default function RegisterPage() {
       <h1 className='text text_type_main-medium'>Регистрация</h1>
       <form className='form' onSubmit={onSubmit}>
         <fieldset className={styles.fieldset}>
-          <Input type='text' placeholder='Имя' name='name' value={form.name} />
-          <Input type='email' placeholder='E-mail' name='email' value={form.email} />
-          <PasswordInput name='password' value={form.password} />
+          <Input type='text' placeholder='Имя' name='name' value={form.name} onChange={onChange} />
+          <Input type='email' placeholder='E-mail' name='email' value={form.email} onChange={onChange} />
+          <PasswordInput name='password' value={form.password} onChange={onChange} />
         </fieldset>
         <Button type='primary' size='large' htmlType='submit'>Войти</Button>
       </form>

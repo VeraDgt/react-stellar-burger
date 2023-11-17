@@ -17,13 +17,20 @@ export default function ResetPwPage() {
     dispatch(navigate('/login', {replace: true}));
   }
 
+  const onChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  }
+
   return (
     <div className={styles.page}>
       <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
       <form className='form' onSubmit={onSubmit}>
         <fieldset className={styles.fieldset}>
-          <PasswordInput name='password' value={form.password} placeholder='Введите новый пароль'/>
-          <Input type='text' placeholder='Введите код из письма' name='token' value={form.token} />
+          <PasswordInput name='password' value={form.password} placeholder='Введите новый пароль' onChange={onChange} />
+          <Input type='text' placeholder='Введите код из письма' name='token' value={form.token} onChange={onChange} />
         </fieldset>
         <Button type='primary' size='large' htmlType='submit'>Сохранить</Button>
       </form>

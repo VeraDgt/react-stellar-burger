@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { burgerConstructorReducer } from "./burger-constructor";
 import { burgerIngredientsReducer } from "./burger-ingredients";
 import { orderModalReducer, itemModalReducer } from "./modals";
-import { userAuthReducer } from "./auth-user";
+import { userAuthReducer } from "./auth-reducer";
 
 export const rootReducer = combineReducers({
   burgerIngredients: burgerIngredientsReducer,

@@ -16,25 +16,39 @@ export function getIngredients() {
   return request(`${URL}/ingredients`);
 }
 
-const getUser = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        user: {},
-      });
-    }, 1000);
-  });
+const getUser = () => {
+  return fetch(`${URL}/auth/user`, {
+  method: 'GET',
+  headers: { 
+      "Content-Type": "application/json",
+      Authorization: getCookie('accessToken')
+    }
+  })
+  .then(res => res.json())
+}
 
-const login = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        accessToken: "test-token",
-        refreshToken: "test-refresh-token",
-        user: {},
-      });
-    }, 1000);
-  });
+const login = (user) => {
+  return request(`${URL}/auth/login`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+        email: user.email, 
+        password: user.password
+    })
+  })
+}
+
+const register = (user) => {
+  return request(`${URL}/auth/register`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: user.name,
+      email: user.email, 
+      password: user.password
+    })
+})
+}
 
 const logout = () =>
   new Promise((resolve, reject) => {
@@ -46,6 +60,7 @@ const logout = () =>
 export const api = {
   getUser,
   login,
+  register,
   logout
 };
 

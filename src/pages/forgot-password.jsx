@@ -17,13 +17,20 @@ export default function ForgotPwPage() {
     dispatch(navigate('/reset-password', {replace: true}));
   }
 
+  const onChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  }
+
 
   return (
     <div className={styles.page}>
       <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
       <form className='form' onSubmit={onSubmit}>
         <fieldset className={styles.fieldset}>
-          <Input type='email' placeholder='E-mail' name='email' value={form.email} />
+          <Input type='email' placeholder='E-mail' name='email' value={form.email} onChange={onChange} />
         </fieldset>
         <Button type='primary' size='large' htmlType='submit'>Восстановить</Button>
       </form>
