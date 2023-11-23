@@ -10,12 +10,19 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/actions/burger-constructor';
+import { getOrder } from '../../services/actions/modals';
+import { getCookie } from '../../utils/utils';
+import { useNavigate } from 'react-router-dom';
+import { userSelector } from '../../services/selector';
 
 
 const BurgerConstructor = ({dropHandler}) => {
   const { burgersData } = useSelector(store => store.burgerConstructor);
+  const items = burgersData.map((el) => el._id);
   const [ visibility, setVisibility ] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(userSelector);
 
   const dragItem = useCallback((dragIndex, hoverIndex) => {
     dispatch({
@@ -38,7 +45,13 @@ const BurgerConstructor = ({dropHandler}) => {
   
 
   function openModal() {
-    setVisibility(true)
+    console.log(getCookie('refreshToken'))
+    if (user) {
+      setVisibility(true);
+      dispatch(getOrder(items))
+    } else {
+      navigate('/login', { replace: false });
+    }
   }
 
   function closeModal() {
@@ -99,7 +112,8 @@ const BurgerConstructor = ({dropHandler}) => {
       }
       <div className={burgerConstructorStyles.price}>
         <PriceContainer totalSum={totalPrice} />
-        <Button type='primary' htmlType='button' size='large' onClick={openModal} >Оформить заказ</Button>
+        <Button type='primary' htmlType='button' size='large' onClick={openModal} disabled= {burgersData
+            .length < 2 || burgersData.find(el => el.type === 'bun') === undefined }>Оформить заказ</Button>
       </div>
       {visibility && modal}
     </section>

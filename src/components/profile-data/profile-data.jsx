@@ -12,6 +12,7 @@ const ProfileData = () => {
   });
 
   const { user } = useSelector(store => store.user);
+  console.log(user);
 
   return (
     <form className={styles.form}>

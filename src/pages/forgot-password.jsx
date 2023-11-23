@@ -3,6 +3,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { recoverPassword } from '../services/actions/auth';
 
 export default function ForgotPwPage() {
   const [ form, setForm ] = useState({
@@ -14,7 +15,7 @@ export default function ForgotPwPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(navigate('/reset-password', {replace: true}));
+    dispatch(recoverPassword(form, () => navigate('/reset-password', {replace: true})));
   }
 
   const onChange = (e) => {
@@ -23,7 +24,6 @@ export default function ForgotPwPage() {
       [e.target.name]: e.target.value
     });
   }
-
 
   return (
     <div className={styles.page}>

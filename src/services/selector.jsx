@@ -1,0 +1,1 @@
+export const userSelector = (store) => Object.values(store.user).every((item) => !!item);

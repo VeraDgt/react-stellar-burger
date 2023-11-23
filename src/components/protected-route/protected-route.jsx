@@ -1,6 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { getCookie, setCookie } from "../../utils/utils";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена

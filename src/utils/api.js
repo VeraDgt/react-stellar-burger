@@ -1,5 +1,5 @@
 import { URL } from './data';
-import { getCookie, setCookie } from './utils';
+import { getCookie } from './utils';
 
 const checkResponse = (res) => {
   if(res.ok) {
@@ -47,7 +47,27 @@ const register = (user) => {
       email: user.email, 
       password: user.password
     })
-})
+  })
+}
+
+const recoverPassword = (email) => {
+  return request(`${URL}/password-reset`, {
+    method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      email: email
+    })
+  })
+}
+
+const getToken = () => {
+  return request(`${URL}/auth/token`, {
+    method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      token: getCookie('refreshToken')
+    })
+  })
 }
 
 const logout = () =>
@@ -61,13 +81,16 @@ export const api = {
   getUser,
   login,
   register,
+  recoverPassword,
+  getToken,
   logout
 };
 
 export function getOrderNumber(arr) {
   return request(`${URL}/orders`, {
     method: 'POST',
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json",
+              Authorization: getCookie('accessToken') },
     body: JSON.stringify({
       ingredients: arr
     })

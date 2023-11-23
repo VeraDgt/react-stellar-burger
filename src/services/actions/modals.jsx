@@ -1,6 +1,8 @@
 import { getOrderNumber } from "../../utils/api";
+import { getCookie } from "../../utils/utils";
 import { CLEAR_CONSTRUCTOR } from "./burger-constructor";
 import { CLEAR_QTY } from "./burger-ingredients";
+import { checkToken } from "./auth";
 
 export const ADD_ITEM_DATA = 'ADD_ITEM_DATA';
 export const DELETE_ITEM_DATA = 'DELETE_ITEM_DATA';
@@ -26,6 +28,9 @@ export function getOrder(num) {
         dispatch({ type: CLEAR_QTY });
       } else {
         dispatch(getOrderFailed())
+      }
+      if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
+        dispatch(checkToken())
       }
     })
     .catch(err => {

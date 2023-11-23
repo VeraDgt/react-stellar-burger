@@ -13,7 +13,7 @@ import ForgotPwPage from '../../pages/forgot-password';
 import ResetPwPage from '../../pages/reset-password';
 import ProfilePage from '../../pages/profile';
 import NoPage from '../../pages/no-page';
-import ProfileData from '../profile/profile-data';
+import ProfileData from '../profile-data/profile-data';
 import IngredientInfoPage from '../../pages/ingredient-info';
 
 
