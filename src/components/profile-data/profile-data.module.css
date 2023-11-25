@@ -12,3 +12,7 @@
   row-gap: 24px;
   border: 0;
 }
+
+.input__icon {
+  cursor: pointer;
+}

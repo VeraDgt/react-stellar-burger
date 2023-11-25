@@ -9,7 +9,10 @@ import {
   REGISTER_FAILED, 
   RECOVER_PASSWORD,
   RECOVER_PASSWORD_SUCCESS,
-  RECOVER_PASSWORD_FAILED
+  RECOVER_PASSWORD_FAILED,
+  UPDATE_USER,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_SUCCESS,
   } from '../actions/auth';
 
 const initialState = {
@@ -20,6 +23,8 @@ const initialState = {
     loginRequest: false,
     recoverPwRequest: false,
     recoverPwFailed: false,
+    updateUserRequest: false,
+    updateUserFailed: false,
 };
 
 export const userAuthReducer = (state = initialState, action) => {
@@ -40,13 +45,20 @@ export const userAuthReducer = (state = initialState, action) => {
         loginRequest: true
       }
 
-      case LOGIN_SUCCESS: {
-        return { ...state, user: action.payload, loginRequest: false, loginFailed: false}
-    }
+    case LOGIN_SUCCESS: 
+      return { 
+        ...state, 
+        user: action.payload, 
+        loginRequest: false, 
+        loginFailed: false
+      }
 
-    case LOGIN_FAILED: {
-        return { ...state, loginRequest: false, loginFailed: true}
-    }
+    case LOGIN_FAILED:
+      return { 
+        ...state, 
+        loginRequest: false, 
+        loginFailed: true
+      }
     
     case REGISTER: 
       return { 
@@ -69,17 +81,47 @@ export const userAuthReducer = (state = initialState, action) => {
         registerSuccess: true
       }
 
-      case RECOVER_PASSWORD: {
-        return { ...state, recoverPwRequest: true }
-      }
+      case RECOVER_PASSWORD: 
+        return { 
+          ...state, 
+          recoverPwRequest: true 
+        }
 
-      case RECOVER_PASSWORD_SUCCESS: {
-        return { ...state, user: { ...state.user, email: action.payload }, recoverPwRequest: false, recoverPwFailed: false }
-      }
+      case RECOVER_PASSWORD_SUCCESS: 
+        return { 
+          ...state, 
+          user: { ...state.user, email: action.payload }, 
+          recoverPwRequest: false, 
+          recoverPwFailed: false 
+        }
 
-      case RECOVER_PASSWORD_FAILED: {
-        return { ...state, recoverPwRequest: false, recoverPwFailed: true }
-      }
+      case RECOVER_PASSWORD_FAILED: 
+        return { 
+          ...state, 
+          recoverPwRequest: false, 
+          recoverPwFailed: true 
+        }
+
+      case UPDATE_USER:
+        return { 
+          ...state, 
+          updateUserRequest: true 
+        }
+
+      case UPDATE_USER_SUCCESS:
+        return { 
+          ...state, 
+          user: action.payload, 
+          updateUserFailed: false, 
+          updateUserRequest: false
+        }
+
+      case UPDATE_USER_FAILED:
+        return { 
+          ...state, 
+          updateUserFailed: true, 
+          updateUserRequest: false 
+        }
       
     default:
       return state;    

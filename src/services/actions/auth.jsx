@@ -19,6 +19,10 @@ export const RECOVER_PASSWORD_FAILED = 'RECOVER_PASSWORD_FAILED';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
+
 
 
 function loginFailed() {
@@ -39,6 +43,10 @@ function recoverPwFailed() {
 
 function refreshTokenFalied() {
   return { type: REFRESH_TOKEN_FAILED };
+}
+
+function updateUserFailed() {
+  return { type: UPDATE_USER_FAILED};
 }
 
 export const setAuthChecked = (value) => ({
@@ -162,6 +170,29 @@ export const checkToken = () => {
   }
 }
 
+export const updateUser = (form) => {
+  return function(dispatch) {
+    dispatch({type: UPDATE_USER});
+
+    api.updateUser(form).then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: res.user
+        })
+      } else {
+        dispatch(updateUserFailed())
+      }
+      if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
+        dispatch(checkToken());
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(updateUserFailed());
+    })
+  }
+}
 
 export const logout = () => {
   return (dispatch) => {

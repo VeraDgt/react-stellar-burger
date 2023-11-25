@@ -4,7 +4,6 @@ import img from '../../images/done.png';
 import { getOrder } from '../../services/actions/modals';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 const OrderDetails = () => {
   const burgersData = useSelector(store => store.burgerConstructor.burgersData);
   const idArr = burgersData.map((el) => el._id);

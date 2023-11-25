@@ -11,9 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/actions/burger-constructor';
 import { getOrder } from '../../services/actions/modals';
-import { getCookie } from '../../utils/utils';
 import { useNavigate } from 'react-router-dom';
-import { userSelector } from '../../services/selector';
 
 
 const BurgerConstructor = ({dropHandler}) => {
@@ -22,7 +20,7 @@ const BurgerConstructor = ({dropHandler}) => {
   const [ visibility, setVisibility ] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(userSelector);
+  const user = useSelector(store => store.user.user);
 
   const dragItem = useCallback((dragIndex, hoverIndex) => {
     dispatch({
@@ -42,16 +40,18 @@ const BurgerConstructor = ({dropHandler}) => {
   const totalPrice = useMemo(()=> {
     return countTotalSum(burgersData)
   }, [burgersData])
-  
 
-  function openModal() {
-    console.log(getCookie('refreshToken'))
+  function acceptOrder() {
     if (user) {
-      setVisibility(true);
-      dispatch(getOrder(items))
+      dispatch(getOrder(items));
+      openModal();
     } else {
       navigate('/login', { replace: false });
     }
+  }
+
+  function openModal() {
+    setVisibility(true);
   }
 
   function closeModal() {
@@ -112,7 +112,7 @@ const BurgerConstructor = ({dropHandler}) => {
       }
       <div className={burgerConstructorStyles.price}>
         <PriceContainer totalSum={totalPrice} />
-        <Button type='primary' htmlType='button' size='large' onClick={openModal} disabled= {burgersData
+        <Button type='primary' htmlType='button' size='large' onClick={acceptOrder} disabled= {burgersData
             .length < 2 || burgersData.find(el => el.type === 'bun') === undefined }>Оформить заказ</Button>
       </div>
       {visibility && modal}

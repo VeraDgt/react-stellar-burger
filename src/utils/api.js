@@ -70,6 +70,22 @@ const getToken = () => {
   })
 }
 
+const updateUser = (user) => {
+  return fetch(`${URL}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie('accessToken')
+    },
+    body: JSON.stringify({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    })
+  })
+  .then(res => res.json())
+}
+
 const logout = () =>
   new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -83,6 +99,7 @@ export const api = {
   register,
   recoverPassword,
   getToken,
+  updateUser,
   logout
 };
 
