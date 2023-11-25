@@ -126,7 +126,7 @@ export const checkUserAuth = () => {
     };
 };
 
-export const recoverPassword = (email, path) => {
+export const recoverPassword = (email) => {
   return function (dispatch) {
     dispatch({type: RECOVER_PASSWORD});
 
@@ -136,7 +136,6 @@ export const recoverPassword = (email, path) => {
           type: RECOVER_PASSWORD_SUCCESS,
           payload: email
         })
-        path();
       } else {
         dispatch(recoverPwFailed())
       }

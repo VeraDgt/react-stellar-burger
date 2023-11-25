@@ -48,7 +48,7 @@ const ProfileData = () => {
     setForm({
       name: user.name,
       email: user.email,
-      password: '********',
+      password: user.password,
     })
   }
 
@@ -62,6 +62,7 @@ const ProfileData = () => {
           value={form.name}
           onChange={onChange}
           icon="EditIcon"
+          aria-invalid={validForm ? "false" : "true"}
           >
         </Input>
         <Input 
@@ -71,6 +72,7 @@ const ProfileData = () => {
           value={form.email}
           onChange={onChange}
           icon="EditIcon"
+          aria-invalid={validForm ? "false" : "true"}
           >
         </Input>
         <Input 
@@ -80,10 +82,11 @@ const ProfileData = () => {
           value={form.password}
           onChange={onChange}
           icon="EditIcon"
+          aria-invalid={validForm ? "false" : "true"}
           >
         </Input>
       </fieldset>
-      { (form.name !== user.name  || form.email !== user.email  || form.password !== '********') && validForm ?
+      { (form.name !== user.name  || form.email !== user.email  || form.password !== user.password) && validForm ?
         <>
           <Button type='secondary' htmlType='button' onClick={resetForm}>Отмена</Button>
           <Button htmlType='submit'>Сохранить</Button>

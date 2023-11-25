@@ -50,12 +50,12 @@ const register = (user) => {
   })
 }
 
-const recoverPassword = (email) => {
+const recoverPassword = (user) => {
   return request(`${URL}/password-reset`, {
     method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-      email: email
+      email: user.email
     })
   })
 }

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { regexPassword, regexToken } from '../utils/data';
 
 export default function ResetPwPage() {
   const [ form, setForm ] = useState({
@@ -24,17 +25,35 @@ export default function ResetPwPage() {
     });
   }
 
+  const [ validForm, setValidForm ] = useState(false);
+
+  useEffect(() => {
+    setValidForm(regexPassword.test(form.password));
+    setValidForm(regexToken.test(form.token));
+  }, [form.password, form.token])
+
   return (
     <div className={styles.page}>
       <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
       <form className='form' onSubmit={onSubmit}>
         <fieldset className={styles.fieldset}>
-          <PasswordInput name='password' value={form.password} placeholder='Введите новый пароль' onChange={onChange} />
-          <Input type='text' placeholder='Введите код из письма' name='token' value={form.token} onChange={onChange} />
+          <PasswordInput 
+          name='password' 
+          value={form.password} 
+          placeholder='Введите новый пароль' 
+          onChange={onChange} 
+          aria-invalid={validForm ? "false" : "true"}/>
+          <Input 
+          type='text' 
+          placeholder='Введите код из письма' 
+          name='token' 
+          value={form.token} 
+          onChange={onChange} 
+          aria-invalid={validForm ? "false" : "true"}/>
         </fieldset>
-        <Button type='primary' size='large' htmlType='submit'>Сохранить</Button>
+        <Button type='primary' size='large' htmlType='submit' disabled={!validForm}>Сохранить</Button>
       </form>
-      <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className="link" to="/login">Войти</Link></p>
+      <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className="link" to="/login" disabled={!validForm}>Войти</Link></p>
     </div>
   )
 };
