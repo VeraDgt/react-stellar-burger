@@ -11,7 +11,8 @@ export default function ProfilePage() {
   const textStyle = (url) => location.pathname === url ? `${styles.link} text_color_primary` : `${styles.link} text_color_inactive`;
 
   const handleClick = () => {
-    dispatch(navigate('/login', {replace: true}));
+    dispatch(logout());
+    navigate('/login', {replace: true})
   }
   
   return (

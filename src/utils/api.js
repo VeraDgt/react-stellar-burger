@@ -97,12 +97,15 @@ const updateUser = (user) => {
   .then(res => res.json())
 }
 
-const logout = () =>
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, 1000);
-  });  
+const logout = () => {
+  return request(`${URL}/auth/logout`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      token: getCookie('refreshToken')
+    })
+  })
+};  
 
 export const api = {
   getUser,
