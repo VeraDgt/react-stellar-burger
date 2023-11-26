@@ -10,9 +10,15 @@ import {
   RECOVER_PASSWORD,
   RECOVER_PASSWORD_SUCCESS,
   RECOVER_PASSWORD_FAILED,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILED,
   UPDATE_USER,
   UPDATE_USER_FAILED,
   UPDATE_USER_SUCCESS,
+  RESET_PASSWORD,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILED
   } from '../actions/auth';
 
 const initialState = {
@@ -25,6 +31,10 @@ const initialState = {
     recoverPwFailed: false,
     updateUserRequest: false,
     updateUserFailed: false,
+    refreshTokenRequest: false,
+    refreshTokenFailed: false,
+    resetPasswordRequest: false,
+    resetPasswordFailed: false,
 };
 
 export const userAuthReducer = (state = initialState, action) => {
@@ -100,6 +110,46 @@ export const userAuthReducer = (state = initialState, action) => {
           ...state, 
           recoverPwRequest: false, 
           recoverPwFailed: true 
+        }
+
+      case RESET_PASSWORD: 
+        return { 
+          ...state, 
+          resetPasswordRequest: true
+        }
+
+      case RESET_PASSWORD_SUCCESS: 
+        return { 
+          ...state, 
+          resetPasswordRequest: false, 
+          resetPasswordFailed: false 
+        }
+
+      case RESET_PASSWORD_FAILED: 
+        return { 
+          ...state, 
+          resetPasswordRequest: false, 
+          resetPasswordFailed: true 
+        }
+
+      case REFRESH_TOKEN: 
+        return { 
+          ...state, 
+          refreshTokenRequest: true 
+        }
+
+      case REFRESH_TOKEN_SUCCESS: 
+        return { 
+          ...state, 
+          refreshTokenRequest: false, 
+          refreshTokenFailed: false 
+        }
+
+      case REFRESH_TOKEN_FAILED: 
+        return { 
+          ...state, 
+          refreshTokenRequest: false, 
+          refreshTokenFailed: true 
         }
 
       case UPDATE_USER:

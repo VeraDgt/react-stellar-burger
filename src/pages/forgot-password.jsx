@@ -16,7 +16,8 @@ export default function ForgotPwPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(recoverPassword(form, () => navigate('/reset-password', {replace: true})));
+    dispatch(recoverPassword(form));
+    navigate('/reset-password', {replace: true});
   }
 
   const onChange = (e) => {

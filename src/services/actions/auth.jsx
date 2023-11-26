@@ -22,7 +22,9 @@ export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
 export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
-
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 
 
 function loginFailed() {
@@ -47,6 +49,10 @@ function refreshTokenFalied() {
 
 function updateUserFailed() {
   return { type: UPDATE_USER_FAILED};
+}
+
+function resetPasswordFailed() {
+  return { type: RESET_PASSWORD_FAILED};
 }
 
 export const setAuthChecked = (value) => ({
@@ -189,6 +195,26 @@ export const updateUser = (form) => {
     .catch(err => {
       console.log(err);
       dispatch(updateUserFailed());
+    })
+  }
+}
+
+export const resetPassword = (form) => {
+  return function(dispatch) {
+    dispatch({type: RESET_PASSWORD});
+
+    api.resetPassword(form).then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS
+        })
+      } else {
+        dispatch(resetPasswordFailed());
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(resetPasswordFailed());
     })
   }
 }

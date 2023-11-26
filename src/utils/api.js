@@ -53,9 +53,20 @@ const register = (user) => {
 const recoverPassword = (user) => {
   return request(`${URL}/password-reset`, {
     method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-      email: user.email
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+    email: user.email
+    })
+  })
+}
+
+const resetPassword = (form) => {
+  return request(`${URL}/password-reset/reset`, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      password: form.password,
+      token: form.token
     })
   })
 }
@@ -98,6 +109,7 @@ export const api = {
   login,
   register,
   recoverPassword,
+  resetPassword,
   getToken,
   updateUser,
   logout

@@ -4,10 +4,12 @@ import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { regexPassword, regexToken } from '../utils/data';
+import { resetPassword } from '../services/actions/auth';
 
 export default function ResetPwPage() {
   const [ form, setForm ] = useState({
-    password: ''
+    password: '',
+    token: ''
   });
 
   const dispatch = useDispatch();
@@ -15,7 +17,8 @@ export default function ResetPwPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(navigate('/login', {replace: true}));
+    dispatch(resetPassword(form));
+    navigate('/login', {replace: true});
   }
 
   const onChange = (e) => {
