@@ -5,7 +5,7 @@ import { ingredientPropType } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const BurgerIngredient = ({item}) => {
   const location = useLocation();
