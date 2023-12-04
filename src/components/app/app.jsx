@@ -15,29 +15,35 @@ import ProfilePage from '../../pages/profile';
 import NoPage from '../../pages/no-page';
 import ProfileData from '../profile-data/profile-data';
 import IngredientInfoPage from '../../pages/ingredient-info';
-
-
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
 function App() {
   const dispatch = useDispatch();
-
   useEffect(() => { dispatch(getItems()) }, [dispatch]);
+  const location = useLocation();
+  const background = location.state?.background;
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(checkUserAuth());
   }, []);
+  
+  const closeModal = () => {
+    navigate(-1);
+  }
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route index element={<HomePage/>} />
         <Route path="/" element={<HomePage/>} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>} />} />
         <Route path="/forgot-password"  element={<OnlyUnAuth component={<ForgotPwPage/>} />} />
         <Route path="/reset-password"  element={<ResetPwPage/>} />
-        <Route path="/ingredients/:id" element={IngredientInfoPage} />
+        <Route path="/ingredients/:id" element={<IngredientInfoPage/>} />
         <Route path="/profile"element={<OnlyAuth component={<ProfilePage/>} />} >
           <Route index element={<ProfileData/>}/>
           <Route path="/profile/account" element={<ProfileData/>}/>
@@ -46,6 +52,18 @@ function App() {
         </Route>
         <Route path="*" element={<NoPage/>} />
       </Routes>
+      {background && (
+        <Routes>
+          <Route 
+            path="/ingredients/:id"
+            element={
+              <Modal header="Детали ингредиента" handleClose={closeModal}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };

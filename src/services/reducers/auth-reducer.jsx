@@ -29,6 +29,7 @@ const initialState = {
     loginRequest: false,
     recoverPwRequest: false,
     recoverPwFailed: false,
+    recoverPwSuccess: false,
     updateUserRequest: false,
     updateUserFailed: false,
     refreshTokenRequest: false,
@@ -94,7 +95,8 @@ export const userAuthReducer = (state = initialState, action) => {
       case RECOVER_PASSWORD: 
         return { 
           ...state, 
-          recoverPwRequest: true 
+          recoverPwRequest: true,
+          recoverPwSuccess: false, 
         }
 
       case RECOVER_PASSWORD_SUCCESS: 
@@ -102,14 +104,16 @@ export const userAuthReducer = (state = initialState, action) => {
           ...state, 
           user: { ...state.user, email: action.payload }, 
           recoverPwRequest: false, 
-          recoverPwFailed: false 
+          recoverPwFailed: false,
+          recoverPwSuccess: true, 
         }
 
       case RECOVER_PASSWORD_FAILED: 
         return { 
           ...state, 
           recoverPwRequest: false, 
-          recoverPwFailed: true 
+          recoverPwFailed: true,
+          recoverPwSuccess: false 
         }
 
       case RESET_PASSWORD: 

@@ -4,8 +4,6 @@ import { CLEAR_CONSTRUCTOR } from "./burger-constructor";
 import { CLEAR_QTY } from "./burger-ingredients";
 import { checkToken } from "./auth";
 
-export const ADD_ITEM_DATA = 'ADD_ITEM_DATA';
-export const DELETE_ITEM_DATA = 'DELETE_ITEM_DATA';
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';

@@ -1,15 +1,12 @@
 import React, { useRef, useState } from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import BurgerIngredient from './burger-ingredient/burger-ingredient';
-import { useDispatch, useSelector } from 'react-redux';
-import { ADD_ITEM_DATA, DELETE_ITEM_DATA } from '../../services/actions/modals';
+import { useSelector } from 'react-redux';
+
 
 const BurgerIngredients = () => {
   const [ current, setCurrent ] = useState('buns');
-  const [ visibility, setVisibility ] = useState(false);
 
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
@@ -23,18 +20,7 @@ const BurgerIngredients = () => {
     tab === 'fillings' && fillingsRef.current.scrollIntoView({behaviour: 'smooth'});
   }
 
-  const dispatch = useDispatch();
   const { items, itemsRequest } = useSelector(store => store.burgerIngredients);
-
-  function handleClick(item) {
-    setVisibility(true);
-    dispatch({type: ADD_ITEM_DATA, payload: item});
-  }
-
-  function closeModal() {
-    setVisibility(false);
-    dispatch({type: DELETE_ITEM_DATA});
-  }
 
   function handleScroll() {
     const bunsInterval = Math.abs(bunsRef.current.getBoundingClientRect().top - containerRef.current.getBoundingClientRect().top);
@@ -50,16 +36,10 @@ const BurgerIngredients = () => {
     }
   }
 
-  const modal = (
-    <Modal handleClose={closeModal} title='Детали ингредиента' hasOverlay={true}>
-      <IngredientDetails />
-    </Modal>
-  )
-
   function filterIngredients(data, type) {
     return data
     .filter((item) => item.type === type)
-    .map((el) => <BurgerIngredient key={el._id} item={el} handleClick={() => handleClick(el)}/>)
+    .map((el) => <BurgerIngredient key={el._id} item={el} />)
   }
 
   return (
@@ -106,7 +86,6 @@ const BurgerIngredients = () => {
           }
         </li>
       </ul>
-      {visibility && modal}
     </section>
   );
 };
