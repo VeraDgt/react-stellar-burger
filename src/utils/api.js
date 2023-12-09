@@ -8,27 +8,35 @@ const checkResponse = (res) => {
   return Promise.reject(`Error: ${res.status}`)
 }
 
-function request(url, options) {
-  return fetch(url, options).then(checkResponse);
+const checkSuccess = (res) => {
+  if (res && res.success) {
+    return res;
+  }
+  return Promise.reject(`Ответ не success: ${res}`);
+};
+
+function request(endpoint, options) {
+  return fetch(`${URL}${endpoint}`, options)
+  .then(checkResponse)
+  .then(checkSuccess);
 }
 
 export function getIngredients() {
-  return request(`${URL}/ingredients`);
+  return request("/ingredients");
 }
 
 const getUser = () => {
-  return fetch(`${URL}/auth/user`, {
+  return request("/auth/user", {
   method: 'GET',
   headers: { 
       "Content-Type": "application/json",
       Authorization: getCookie('accessToken')
     }
   })
-  .then(res => res.json())
-}
+};
 
 const login = (user) => {
-  return request(`${URL}/auth/login`, {
+  return request("/auth/login", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -39,7 +47,7 @@ const login = (user) => {
 }
 
 const register = (user) => {
-  return request(`${URL}/auth/register`, {
+  return request("/auth/register", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -48,20 +56,20 @@ const register = (user) => {
       password: user.password
     })
   })
-}
+};
 
 const recoverPassword = (user) => {
-  return request(`${URL}/password-reset`, {
+  return request("/password-reset", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
     email: user.email
     })
   })
-}
+};
 
 const resetPassword = (form) => {
-  return request(`${URL}/password-reset/reset`, {
+  return request("/password-reset/reset", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -69,20 +77,20 @@ const resetPassword = (form) => {
       token: form.token
     })
   })
-}
+};
 
 const getToken = () => {
-  return request(`${URL}/auth/token`, {
+  return request("/auth/token", {
     method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
       token: getCookie('refreshToken')
     })
   })
-}
+};
 
 const updateUser = (user) => {
-  return fetch(`${URL}/auth/user`, {
+  return request("/auth/user", {
     method: 'PATCH',
     headers: {
       "Content-Type": "application/json",
@@ -94,11 +102,10 @@ const updateUser = (user) => {
       password: user.password,
     })
   })
-  .then(res => res.json())
-}
+};
 
 const logout = () => {
-  return request(`${URL}/auth/logout`, {
+  return request("/auth/logout", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -119,7 +126,7 @@ export const api = {
 };
 
 export function getOrderNumber(arr) {
-  return request(`${URL}/orders`, {
+  return request("/orders", {
     method: 'POST',
     headers: { "Content-Type": "application/json",
               Authorization: getCookie('accessToken') },
@@ -127,4 +134,4 @@ export function getOrderNumber(arr) {
       ingredients: arr
     })
   })
-}
+};

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile-data.module.css';
@@ -86,7 +86,7 @@ const ProfileData = () => {
           >
         </Input>
       </fieldset>
-      { (form.name !== user.name  || form.email !== user.email  || form.password !== user.password) && validForm ?
+      { (form.name !== user.name  || form.email !== user.email  || form.password !== '********') && validForm ?
         <>
           <Button type='secondary' htmlType='button' onClick={resetForm}>Отмена</Button>
           <Button htmlType='submit'>Сохранить</Button>

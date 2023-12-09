@@ -20,7 +20,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
 
         if (type === wsInit) {
             socket = !setAuthChecked
-                    ? new WebSocket(`${wsUrl}/all`)
+                    ? new WebSocket(`${wsUrl}${payload}`)
                     : new WebSocket(`${wsUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`)
                     }
 

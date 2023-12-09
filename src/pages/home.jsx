@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getItems } from "../services/actions/burger-ingredients";
+import React from 'react';
 import Main from "../components/main/main";
 
 function HomePage() {
-  const dispatch = useDispatch();
-
-  useEffect(() => { dispatch(getItems()) }, [dispatch]);
 
   return (
     <Main />

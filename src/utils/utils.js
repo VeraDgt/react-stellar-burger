@@ -31,8 +31,6 @@ for (const propName in props) {
 document.cookie = updatedCookie;
 }
 
-export function deleteCookie(cookies) {
-  cookies.forEach((cookie) => {
+export function deleteCookie(cookie) {
     setCookie(cookie, null, { expires: -1 });
-  });
-}
+};

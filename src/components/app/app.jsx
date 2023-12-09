@@ -57,7 +57,7 @@ function App() {
           <Route 
             path="/ingredients/:id"
             element={
-              <Modal header="Детали ингредиента" handleClose={closeModal}>
+              <Modal header="Детали ингредиента" handleClose={closeModal} hasOverlay={true}>
                 <IngredientDetails />
               </Modal>
             }

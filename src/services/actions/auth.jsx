@@ -3,7 +3,9 @@ import { getCookie, setCookie, deleteCookie } from "../../utils/utils";
 import { cookieLive } from "../../utils/data";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
+export const GET_USER = "GET_USER";
 export const SET_USER = "SET_USER";
+export const SET_USER_FAILED = "SET_USER_FAILED";
 export const LOGIN = 'LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
@@ -29,6 +31,10 @@ export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 
 function loginFailed() {
   return { type: LOGIN_FAILED };
+}
+
+function setUserFailed() {
+  return { type: SET_USER_FAILED }
 }
 
 function logoutFailed() {
@@ -67,10 +73,22 @@ export const setUser = (user) => ({
 
 export const getUser = () => {
   return (dispatch) => {
+    dispatch({type: GET_USER});
     return api.getUser().then((res) => {
+      if (res && res.success) {
       dispatch(setUser(res.user));
-    });
-  };
+    } else {
+      dispatch(setUserFailed())
+    }
+    if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
+      dispatch(checkToken());
+    }
+  })
+  .catch(err => {
+    console.log(err);
+    dispatch(setUserFailed())
+  })
+  }
 };
 
 export const login = (form) => (dispatch) => {
@@ -118,11 +136,11 @@ export const register = (form) => (dispatch) => {
 
 export const checkUserAuth = () => {
     return (dispatch) => {
-        if (localStorage.getItem("accessToken")) {
+        if (getCookie("accessToken")) {
             dispatch(getUser())
               .catch(() => {
-                  localStorage.removeItem("accessToken");
-                  localStorage.removeItem("refreshToken");
+                  deleteCookie("accessToken");
+                  deleteCookie("refreshToken");
                   dispatch(setUser(null));
               })
               .finally(() => dispatch(setAuthChecked(true)));
@@ -217,14 +235,18 @@ export const resetPassword = (form) => {
       dispatch(resetPasswordFailed());
     })
   }
-}
+};
 
 export const logout = () => {
   return (dispatch) => {
     return api.logout().then(() => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      deleteCookie("accessToken");
+      deleteCookie("refreshToken");
       dispatch(setUser(null));
-    });
-  };
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(logoutFailed());
+    })
+  }
 };

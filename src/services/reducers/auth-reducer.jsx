@@ -1,6 +1,8 @@
 import { 
   SET_AUTH_CHECKED, 
+  GET_USER,
   SET_USER, 
+  SET_USER_FAILED,
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
@@ -24,7 +26,9 @@ import {
 const initialState = {
     user: null,
     isAuthChecked: false,
-    resisterSuccess: false,
+    getUserRequest: false,
+    setUserFailed: false,
+    registerSuccess: false,
     registerFailed: false,
     loginRequest: false,
     recoverPwRequest: false,
@@ -45,11 +49,28 @@ export const userAuthReducer = (state = initialState, action) => {
         ...state,
         isAuthChecked: action.payload
       }
+
+    case GET_USER: 
+      return {
+        ...state, 
+        getUserRequest: true
+      }
+
     case SET_USER:
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        getUserRequest: false,
+        setUserFailed: false
       }
+
+    case SET_USER_FAILED:
+      return {
+        ...state,
+        getUserRequest: false,
+        setUserFailed: true
+      }
+
     case LOGIN: 
       return { 
         ...state, 
