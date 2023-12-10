@@ -25,6 +25,7 @@ import {
 
 const initialState = {
     user: null,
+    recoverEmail: null,
     isAuthChecked: false,
     getUserRequest: false,
     setUserFailed: false,
@@ -123,7 +124,7 @@ export const userAuthReducer = (state = initialState, action) => {
       case RECOVER_PASSWORD_SUCCESS: 
         return { 
           ...state, 
-          user: { ...state.user, email: action.payload }, 
+          recoverEmail: action.payload, 
           recoverPwRequest: false, 
           recoverPwFailed: false,
           recoverPwSuccess: true, 

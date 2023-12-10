@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { recoverPassword } from '../services/actions/auth';
 import { regexEmail } from '../utils/data';
@@ -17,7 +17,7 @@ export default function ForgotPwPage() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(recoverPassword(form));
+    dispatch(recoverPassword(form.email));
     navigate('/reset-password', {state: {from: location}});
   }
 

@@ -58,12 +58,12 @@ const register = (user) => {
   })
 };
 
-const recoverPassword = (user) => {
+const recoverPassword = (email) => {
   return request("/password-reset", {
     method: 'POST',
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-    email: user.email
+    email: email
     })
   })
 };
