@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { regexPassword, regexToken } from '../utils/data';
 import { resetPassword } from '../services/actions/auth';
 
@@ -14,7 +14,8 @@ export default function ResetPwPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { recoverPwSuccess } = useSelector((store) => store.user);
+  const location = useLocation();
+  const fromPage = location.state?.from?.pathname || '/';
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +37,7 @@ export default function ResetPwPage() {
     setValidForm(regexToken.test(form.token));
   }, [form.password, form.token])
 
-  return recoverPwSuccess ? (
+  return fromPage === '/forgot-password' ? (
     <div className={styles.page}>
       <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
       <form className='form' onSubmit={onSubmit}>
@@ -59,5 +60,6 @@ export default function ResetPwPage() {
       </form>
       <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className="link" to="/login" disabled={!validForm}>Войти</Link></p>
     </div>
-  ) : (<Navigate to={"/login"} replace />)
+  ) 
+  : (<Navigate to={"/login"} replace />)
 };

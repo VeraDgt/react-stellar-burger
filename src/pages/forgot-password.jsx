@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { recoverPassword } from '../services/actions/auth';
 import { regexEmail } from '../utils/data';
 
@@ -13,11 +13,12 @@ export default function ForgotPwPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(recoverPassword(form));
-    navigate('/reset-password', {replace: true});
+    navigate('/reset-password', {state: {from: location}});
   }
 
   const onChange = (e) => {
@@ -55,5 +56,5 @@ export default function ForgotPwPage() {
       </form>
       <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className={styles.link} to="/login">Войти</Link></p>
     </div>
-  )
-}
+  ) 
+};

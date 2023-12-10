@@ -10,7 +10,7 @@ const AppHeader = () => {
 
   return (
     <header className={styles.header}>
-      <span className={styles.logo}><Logo /></span>
+      <span className={styles.logo}><NavLink to="/"><Logo /></NavLink></span>
         <ul className={styles.nav}>
           <NavLink to="/" className={isActive => `${styles.listItem} text_color_${isActive ? 'primary' : 'inactive'}`}>
             <BurgerIcon type={iconType('/')}/>

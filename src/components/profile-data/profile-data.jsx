@@ -10,7 +10,7 @@ const ProfileData = () => {
   const [ form, setForm ] = useState({
     name: '',
     email: '',
-    password: '********'
+    password: ''
   });
 
   const { user } = useSelector(store => store.user);
