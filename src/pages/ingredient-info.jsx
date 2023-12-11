@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./ingredient-info.module.css";
-import { getIngredients } from "../utils/api";
 import { useParams, useLocation } from "react-router-dom";
 import detailsStyles from "../components/ingredient-details/ingredient-details.module.css";
+import { useSelector } from "react-redux";
 
 
 const IngredientInfoPage = () => {
   const { id } = useParams();
-
-  const [ currItem, setCurrItem ] = useState({
-    image_large: '',
-    calories: '',
-    proteins: '',
-    fat: '',
-    carbohydrates: ''
-});
-
-useEffect(() => {
-  getIngredients().then((res) => {
-    const item = res.data.find(item => item._id === id);
-    setCurrItem(item);
-  })
-}, [id]);
-
+  const { items } = useSelector((store) => store.burgerIngredients);
+  const currItem = items.find((item) => item._id === id);
   const location = useLocation();
   const background = location.state?.background;
 
   
-
   return !currItem ?  (<p className="text text_type_main-large mt-30 ml-30">...</p>) :
     (<div className={styles.page}>
       { !background && <h1 className="text text_type_main-large mt-30">Детали ингредиента</h1> }

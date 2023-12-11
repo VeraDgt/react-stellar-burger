@@ -1,28 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import detailsStyles from './ingredient-details.module.css';
 import { useParams, useLocation } from "react-router-dom";
-import { getIngredients } from '../../utils/api';
+import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
 
   const location = useLocation();
   const background = location.state?.background;
   const { id } = useParams();
-
-  const [ currItem, setCurrItem ] = useState({
-    image_large: '',
-    calories: '',
-    proteins: '',
-    fat: '',
-    carbohydrates: ''
-});
-
-useEffect(() => {
-  getIngredients().then((res) => {
-    const item = res.data.find(item => item._id === id);
-    setCurrItem(item);
-  })
-}, [id]);
+  const { items } = useSelector((store) => store.burgerIngredients);
+  const currItem = items.find((item) => item._id === id);
 
   return (
     <>
