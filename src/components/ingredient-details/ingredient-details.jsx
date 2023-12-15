@@ -11,6 +11,8 @@ const IngredientDetails = () => {
   const { items } = useSelector((store) => store.burgerIngredients);
   const currItem = items.find((item) => item._id === id);
 
+  if (!currItem) return null;
+
   return (
     <>
       { background && <h1 className="text text_type_main-large mt-30">Детали ингредиента</h1> }
