@@ -10,7 +10,8 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEMS: {
       return {
-        ...state, itemsRequest: true
+        ...state, 
+        itemsRequest: true
       }
     }
 

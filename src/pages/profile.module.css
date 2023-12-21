@@ -1,0 +1,32 @@
+.page {
+  display: flex;
+  margin: 40px auto auto auto;
+}
+
+.list {
+  composes: default-list mt-20 from global;
+  list-style-type: none;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 0;
+  margin-top: 50px;
+}
+
+.link {
+  composes: text text_type_main-medium text_color_primary from global;
+  text-decoration: none;
+}
+
+.button {
+  composes: text text_type_main-medium text_color_inactive from global;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+.paragraph {
+  composes: mt-20 text text_type_main-default text_color_inactive from global;
+  opacity: 0.4;
+}

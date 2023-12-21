@@ -1,32 +1,9 @@
-import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS, ADD_ITEM_DATA, DELETE_ITEM_DATA } from "../actions/modals";
+import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS } from "../actions/modals";
 
 const initialState = {
   order: {},
   orderRequest: false,
-  orderFailed: false,
-  currItem: {}
-}
-
-export const itemModalReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_ITEM_DATA: {
-      return {
-        ...state,
-        currItem: action.payload
-      }
-    }
-
-    case DELETE_ITEM_DATA: {
-      return {
-        ...state,
-        currItem: {}
-      }
-    }
-
-    default: {
-      return state;
-    }
-  }
+  orderFailed: false
 }
 
 export const orderModalReducer = (state = initialState, action) => {

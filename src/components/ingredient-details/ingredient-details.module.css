@@ -6,6 +6,7 @@
   composes: mb-15 from global;
   display: flex;
   gap: 20px;
+  justify-content: center;
 }
 
 .parameter {
