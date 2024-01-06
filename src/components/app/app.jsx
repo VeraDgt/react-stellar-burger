@@ -17,6 +17,7 @@ import ProfileData from '../profile-data/profile-data';
 import IngredientInfoPage from '../../pages/ingredient-info';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import FeedPage from '../../pages/feed';
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
       <Routes location={background || location}>
         <Route index element={<HomePage/>} />
         <Route path="/" element={<HomePage/>} />
+        <Route path="/feed" element={<FeedPage/>} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>} />} />
         <Route path="/forgot-password"  element={<OnlyUnAuth component={<ForgotPwPage/>} />} />
