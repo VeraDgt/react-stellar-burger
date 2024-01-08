@@ -1,6 +1,7 @@
 .header {
   height: 88px;
   width: 100%;
+  box-sizing: border-box;
   background-color: #1C1C21;
   padding: 16px ;
   display: flex;

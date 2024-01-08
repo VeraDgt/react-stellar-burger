@@ -34,3 +34,23 @@ document.cookie = updatedCookie;
 export function deleteCookie(cookie) {
     setCookie(cookie, null, { expires: -1 });
 };
+
+export const getOrderIngredients = (arr, items) => arr?.map(el => items.find(i => el === i._id));
+
+
+export function getOrderStatus(status) {
+  switch (status) {
+    case 'done':
+      return 'Выполнен';
+    case 'pending':
+      return 'Готовится';
+    case 'created':
+      return 'Создан';
+    default:
+      return '';
+  }
+};
+
+export function orderTotalPrice(sum) {
+  return sum.reduce((arr, item) => arr += item.price, 0)
+};

@@ -35,11 +35,13 @@ export default function FeedPage () {
       <h1 className={styles.header}>Лента заказов</h1>
       { orders ? 
         <div className={styles.orders}>
-          <ul className={styles.list}>
-            {
-              orders.orders.map(el => <FeedItem key={el._id} item={el} status={false} />)
-            }
-          </ul>
+          <div className="mr-15">
+            <ul className={styles.list}>
+              {
+                orders.orders.map(el => <FeedItem key={el._id} item={el} orderStatus={false} />)
+              }
+            </ul>
+          </div>
           <div className={styles.statuses}>
             <div>
               <div  className={styles.orderNums}>

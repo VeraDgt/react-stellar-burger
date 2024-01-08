@@ -24,7 +24,7 @@
 }
 
 .list {
-  composes: default-list custom-scroll from global;
+  composes: default-list custom-scroll pr-4 from global;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -32,7 +32,8 @@
   padding-left: 0;
   gap: 16px;
   width: 584px;
-  height: 90vh;
+  height: 80vh;
+  box-sizing: border-box;
 }
 
 .statuses {
@@ -46,7 +47,7 @@
   list-style-type: none;
   margin: 0;
   padding-left: 0;
-  max-height: 206px;
+  max-height: 116px;
   min-width: 280px;
   overflow-y: scroll;
 }
