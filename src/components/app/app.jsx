@@ -18,6 +18,8 @@ import IngredientInfoPage from '../../pages/ingredient-info';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import FeedPage from '../../pages/feed';
+import OrderPage from '../../pages/order';
+import FeedOrder from '../feed-order-info/feed-order-info';
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ function App() {
         <Route index element={<HomePage/>} />
         <Route path="/" element={<HomePage/>} />
         <Route path="/feed" element={<FeedPage/>} />
+        <Route path="/feed/:number" element={<OrderPage/>} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage/>} />} />
         <Route path="/forgot-password"  element={<OnlyUnAuth component={<ForgotPwPage/>} />} />
@@ -61,6 +64,14 @@ function App() {
             element={
               <Modal header="Детали ингредиента" handleClose={closeModal} hasOverlay={true}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route 
+            path="/feed/:number"
+            element={
+              <Modal handleClose={closeModal} hasOverlay={true}>
+                <FeedOrder />
               </Modal>
             }
           />

@@ -47,14 +47,23 @@
   list-style-type: none;
   margin: 0;
   padding-left: 0;
-  max-height: 116px;
+  max-height: 236px;
   min-width: 280px;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  /* overflow-x: hidden; */
+}
+
+.columns {
+  padding-right: 98px;
 }
 
 .orderNums {
   display: flex;
   gap: 36px;
+  width: max-content;
 }
 
 .totalOrders {

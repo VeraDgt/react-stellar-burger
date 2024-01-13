@@ -9,7 +9,7 @@ const FeedItem = ({item, orderStatus}) => {
   const { items } = useSelector(store => store.burgerIngredients);
   const ingredients = Array.from(new Set(getOrderIngredients(item.ingredients, items)));
   const [ status, setStatus ] = useState('');
-  const price = orderTotalPrice(ingredients);
+  const price = orderTotalPrice(getOrderIngredients(item.ingredients, items));
   const date = item.createdAt;
   const profile = !useMatch('/profile');
   const location = useLocation();
@@ -53,7 +53,11 @@ const path = profile ? `/feed/${item._id}` : `/profile/orders/${item._id}`;
   
   return (
     <li className={styles.order}>
-      <Link to={{pathname: path, state: { background: location, num: `#${item.number}`}}} className={styles.link}>
+      <Link
+      className={styles.link}
+      to={{pathname: path, number: `#${item.number}`}}
+      state={{ background: location }}
+      >
         <div className={styles.container}>
           <p className="text text_type_digits-default">#{item.number}</p>
           <div>

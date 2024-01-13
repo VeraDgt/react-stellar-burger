@@ -1,0 +1,75 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+}
+
+.wrapper_onPage {
+  composes: wrapper;
+  margin: 122px auto;
+  text-align: left;
+}
+
+.number {
+  composes: text text_type_digits-default from global;
+}
+
+.number_onPage {
+  composes: number;
+  text-align: center;
+}
+
+.status {
+  composes: text text_type_main-default from global;
+
+}
+
+.status_state_done {
+  composes: status;
+  color: #00CCCC;
+}
+
+.list {
+  composes: mb-10 mt-6 pr-8 custom-scroll from global;
+  max-height: 312px;
+  overflow-y: scroll;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.list_onPage {
+  composes: list;
+  max-height: 366px;
+}
+
+.ingredient {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  background: #131316;
+  border: 2px solid var(--button-normal, #801AB2);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.price {
+  composes: text text_type_digits-default from global;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.totals {
+  composes: mb-10 from global;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

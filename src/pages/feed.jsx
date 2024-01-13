@@ -24,7 +24,7 @@ export default function FeedPage () {
 
   const pendingOrdersList = (arr) => {
     return arr
-      .filter(el => el.status === 'pending' || el.status === 'created')
+      .filter(el => ( el.status === 'pending' || el.status === 'created' ))
       .map(el => <li key={el.number} className="text text_type_digits-default">
         {el.number}
       </li>)
@@ -45,7 +45,7 @@ export default function FeedPage () {
           <div className={styles.statuses}>
             <div>
               <div  className={styles.orderNums}>
-                <div>
+                <div className={styles.columns}>
                   <p className='text text_type_main-medium mb-6'>Готовы:</p>
                   <ul className={styles.statusesList}>
                     {
