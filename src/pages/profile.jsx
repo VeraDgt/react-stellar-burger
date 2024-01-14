@@ -23,7 +23,7 @@ export default function ProfilePage() {
           </NavLink>
         </li>
         <li>
-        <NavLink to="profile/orders" className={textStyle('/profile/orders')}>История заказов
+        <NavLink to="/profile/orders" className={textStyle('/profile/orders')}>История заказов
           </NavLink>
         </li>
         <li>

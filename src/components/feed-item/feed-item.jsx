@@ -11,7 +11,8 @@ const FeedItem = ({item, orderStatus}) => {
   const [ status, setStatus ] = useState('');
   const price = orderTotalPrice(getOrderIngredients(item.ingredients, items));
   const date = item.createdAt;
-  const profile = !useMatch('/profile');
+  const profile = !useMatch('/profile/orders/*');
+  // console.log(!!useMatch('/profile/orders/*'))
   const location = useLocation();
 
   const itemsToRender = () => {

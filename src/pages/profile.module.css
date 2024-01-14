@@ -12,6 +12,8 @@
   gap: 32px;
   margin: 0;
   margin-top: 50px;
+  padding-left: 0;
+  padding-right: 60px;
 }
 
 .link {

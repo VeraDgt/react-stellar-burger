@@ -20,6 +20,7 @@ import Modal from '../modal/modal';
 import FeedPage from '../../pages/feed';
 import OrderPage from '../../pages/order';
 import FeedOrder from '../feed-order-info/feed-order-info';
+import ProfileOrders from '../profile-orders/profile-orders';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ function App() {
         <Route path="/profile"element={<OnlyAuth component={<ProfilePage/>} />} >
           <Route index element={<ProfileData/>}/>
           <Route path="/profile/account" element={<ProfileData/>}/>
-          <Route path="/profile/orders" element={<NoPage/>}/>
+          <Route path="/profile/orders" element={<ProfileOrders/>}/>
+          <Route path="/profile/orders/:number" element={<OrderPage/>} />
           <Route path="*" element={<NoPage/>}/>
         </Route>
         <Route path="*" element={<NoPage/>} />
@@ -74,6 +76,14 @@ function App() {
                 <FeedOrder />
               </Modal>
             }
+          />
+          <Route 
+            path="/profile/orders/:number"
+            element={<OnlyAuth component={
+              <Modal handleClose={closeModal} hasOverlay={true}>
+                <FeedOrder />
+              </Modal>
+            } />}
           />
         </Routes>
       )}

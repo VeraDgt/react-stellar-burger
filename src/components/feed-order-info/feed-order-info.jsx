@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useMatch, useParams } from "react-router-dom";
 import { getOrderIngredients, getOrderStatus, orderTotalPrice, countItems } from "../../utils/utils";
@@ -11,7 +11,7 @@ const FeedOrder = () => {
   const { items } = useSelector(store => store.burgerIngredients);
   const location = useLocation();
   const dispatch = useDispatch();
-  const profile = !!useMatch('/profile');
+  const profile = !useMatch('/profile');
   const { orders } = useSelector(store => profile ? store.ordersHistory : store.ordersList);
   const background = location.state?.background;
   const id = useParams().number;
@@ -23,18 +23,14 @@ const FeedOrder = () => {
     OrderNum: '',
     orderIngrs: []
   });
-  
+
   const item = orders?.orders ? orders?.orders.find(el => el._id === id) : {
     name: '',
     status: '',
     date: '', 
-    number: '',
+    OrderNum: '',
     orderIngrs: []
   };
-
-  const date = order.date !== '' && order.date;
-  const totalPrice = orderTotalPrice(getOrderIngredients(item?.ingredients, items));
-  const { qty } = countItems(getOrderIngredients(item?.ingredients, items));
 
 
   useEffect(() => {
@@ -47,11 +43,18 @@ const FeedOrder = () => {
       ...order,
       name: item?.name,
       status: getOrderStatus(item?.status),
-      date: item?.createdAt, /*updatedAt*/
+      date: item?.createdAt, 
       orderNum: item?.number,
       orderIngrs: Array.from(new Set(getOrderIngredients(item?.ingredients, items)))
     });
   }, [orders?.orders]);
+
+
+  if (!orders) return null;
+
+  const date = order.date !== '' && order.date;
+  const totalPrice = orderTotalPrice(getOrderIngredients(item?.ingredients, items));
+  const { qty } = countItems(getOrderIngredients(item?.ingredients, items));
 
   return ( orders ? 
     <div className={ background ? styles.wrapper : styles.wrapper_onPage }>
