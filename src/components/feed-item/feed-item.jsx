@@ -12,7 +12,6 @@ const FeedItem = ({item, orderStatus}) => {
   const price = orderTotalPrice(getOrderIngredients(item.ingredients, items));
   const date = item.createdAt;
   const profile = !useMatch('/profile/orders/*');
-  // console.log(!!useMatch('/profile/orders/*'))
   const location = useLocation();
 
   const itemsToRender = () => {
@@ -50,7 +49,7 @@ const FeedItem = ({item, orderStatus}) => {
     setStatus(getOrderStatus(item.status))
   }, [])
 
-const path = profile ? `/feed/${item._id}` : `/profile/orders/${item._id}`;
+const path = profile ? `/feed/${item.number}` : `/profile/orders/${item.number}`;
   
   return (
     <li className={styles.order}>

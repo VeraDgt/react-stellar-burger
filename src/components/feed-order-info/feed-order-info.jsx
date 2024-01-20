@@ -15,15 +15,9 @@ const FeedOrder = () => {
   const profile = useMatch('/profile/*');
   const  orders  = useSelector(store => profile ? store.ordersHistory.orders : store.ordersList.orders);
   const background = location.state?.background;
-  const id = useParams().number;
+  const orderNumber = useParams().number;
+  
   const extraOrder = useSelector(store => store.order.extraOrder);
-  const listedOrder = orders?.orders.find(el => el._id === id)._id;
-
-  useEffect(() => {
-    if(!orders.orders.length) {
-      dispatch(getExtraOrderInfo(id));
-    }
-  }, [orders, dispatch, id]);
 
   const [ order, setOrder ] = useState({
     name: '',
@@ -33,9 +27,8 @@ const FeedOrder = () => {
     orderIngrs: []
   });
 
-  const item = !listedOrder ? 
-  extraOrder :
-  orders?.orders.find(el => el._id === id);
+  const item = extraOrder ? extraOrder
+  : orders?.orders.find(el => el.number.toString() === orderNumber);
 
   useEffect(() => {
     dispatch(
@@ -46,6 +39,10 @@ const FeedOrder = () => {
       ? { type: WS_AUTH_CLOSED } 
       : { type: WS_CONNECTION_CLOSED });
   }, [dispatch, profile]);
+
+  useEffect(() => {
+      dispatch(getExtraOrderInfo(orderNumber));
+  }, [orders, dispatch, orderNumber]);
 
   useEffect(() => {
     setOrder({
