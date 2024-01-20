@@ -6,15 +6,24 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/actions/socket-auth";
 import styles from "./feed-order-info.module.css";
+import { getExtraOrderInfo } from "../../services/actions/modals";
 
 const FeedOrder = () => {
   const { items } = useSelector(store => store.burgerIngredients);
   const location = useLocation();
   const dispatch = useDispatch();
-  const profile = !useMatch('/profile');
-  const { orders } = useSelector(store => profile ? store.ordersHistory : store.ordersList);
+  const profile = useMatch('/profile/*');
+  const  orders  = useSelector(store => profile ? store.ordersHistory.orders : store.ordersList.orders);
   const background = location.state?.background;
   const id = useParams().number;
+  const extraOrder = useSelector(store => store.order.extraOrder);
+  const listedOrder = orders?.orders.find(el => el._id === id)._id;
+
+  useEffect(() => {
+    if(!orders.orders.length) {
+      dispatch(getExtraOrderInfo(id));
+    }
+  }, [orders, dispatch, id]);
 
   const [ order, setOrder ] = useState({
     name: '',
@@ -24,18 +33,18 @@ const FeedOrder = () => {
     orderIngrs: []
   });
 
-  const item = orders?.orders ? orders?.orders.find(el => el._id === id) : {
-    name: '',
-    status: '',
-    date: '', 
-    OrderNum: '',
-    orderIngrs: []
-  };
-
+  const item = !listedOrder ? 
+  extraOrder :
+  orders?.orders.find(el => el._id === id);
 
   useEffect(() => {
-    dispatch(profile ? { type: WS_AUTH_START } : { type: WS_CONNECTION_START, payload: '/all'});
-    return () => dispatch(profile ? { type: WS_AUTH_CLOSED } : { type: WS_CONNECTION_CLOSED });
+    dispatch(
+      profile ? 
+      { type: WS_AUTH_START } : 
+      { type: WS_CONNECTION_START, payload: '/all'});
+    return () => dispatch(profile 
+      ? { type: WS_AUTH_CLOSED } 
+      : { type: WS_CONNECTION_CLOSED });
   }, [dispatch, profile]);
 
   useEffect(() => {
@@ -48,7 +57,6 @@ const FeedOrder = () => {
       orderIngrs: Array.from(new Set(getOrderIngredients(item?.ingredients, items)))
     });
   }, [orders?.orders]);
-
 
   if (!orders) return null;
 
