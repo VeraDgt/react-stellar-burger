@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, RedirectFunction } from 'react-router-dom';
-import { register } from '../services/actions/auth';
-import { regexName, regexEmail, regexPassword } from '../utils/data';
+import { register } from '../../services/actions/auth';
+import { regexName, regexEmail, regexPassword } from '../../utils/data';
 
 export default function RegisterPage() {
   const [ form, setForm ] = useState({

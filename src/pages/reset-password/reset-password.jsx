@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from '../login/login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { regexPassword, regexToken } from '../utils/data';
-import { resetPassword } from '../services/actions/auth';
+import { regexPassword, regexToken } from '../../utils/data';
+import { resetPassword } from '../../services/actions/auth';
 
 export default function ResetPwPage() {
   const [ form, setForm ] = useState({

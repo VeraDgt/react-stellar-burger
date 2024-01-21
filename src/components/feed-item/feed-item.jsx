@@ -6,7 +6,7 @@ import styles from './feed-item.module.css';
 import { Link, useLocation, useMatch } from "react-router-dom";
 
 const FeedItem = ({item, orderStatus}) => {
-  const { items } = useSelector(store => store.burgerIngredients);
+  const items = useSelector(store => store.burgerIngredients.items);
   const ingredients = Array.from(new Set(getOrderIngredients(item.ingredients, items)));
   const [ status, setStatus ] = useState('');
   const price = orderTotalPrice(getOrderIngredients(item.ingredients, items));
@@ -19,7 +19,7 @@ const FeedItem = ({item, orderStatus}) => {
     let zIndex = 6;
 
     if(ingredients.length <= 6) {
-      return ingredients.map((el, index) => {
+      return (ingredients.map((el, index) => {
         zIndex -= 1;
         return <li className={styles.ingredient} style={{zIndex: zIndex}} key={index} >
           <div className="bg"></div>
@@ -27,9 +27,10 @@ const FeedItem = ({item, orderStatus}) => {
             <img className={styles.img} src={el.image} alt={el.title} />
           </div>
         </li>
-      })
-    } else {
-      return ingredients.slice(0, 6).map((el, index) => {
+      }))
+    } 
+    else {
+      return (ingredients.slice(0, 6).map((el, index) => {
         zIndex -= 1;
         return <li className={styles.ingredient} style={{zIndex: zIndex}} key={index} >
           <div className={styles.ingredients}>
@@ -41,7 +42,7 @@ const FeedItem = ({item, orderStatus}) => {
             }
           </div>
         </li>
-      })
+      }))
     }
   }
 

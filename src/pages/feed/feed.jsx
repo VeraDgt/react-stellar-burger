@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../services/actions/socket";
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/socket";
 import styles from "./feed.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import FeedItem from "../components/feed-item/feed-item";
+import FeedItem from "../../components/feed-item/feed-item";
 
 
 export default function FeedPage () {

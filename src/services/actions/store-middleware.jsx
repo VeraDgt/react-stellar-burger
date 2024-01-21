@@ -5,7 +5,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
   return (store) => {
     let socket = null;
 
-      return next => action => {
+      return next => action => { 
         const { dispatch } = store;
         const { type, payload } = action;
         const { wsInit,
@@ -18,7 +18,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
         
         const token = getCookie('accessToken')?.replace('Bearer ', '');
 
-        if (type === wsInit) {
+        if (type === wsInit && !socket) {
             socket = !setAuthChecked
                     ? new WebSocket(`${wsUrl}${payload}`)
                     : new WebSocket(`${wsUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`)

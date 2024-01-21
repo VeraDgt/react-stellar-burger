@@ -5,7 +5,7 @@ import styles from "./profile-orders.module.css";
 import FeedItem from "../feed-item/feed-item";
 
 const ProfileOrders = () => {
-  const { orders } = useSelector(store => store.ordersHistory);
+  const orders = useSelector(store => store.ordersHistory.orders);
   const dispatch = useDispatch();
 
   useEffect(() => {

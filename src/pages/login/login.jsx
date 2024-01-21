@@ -3,8 +3,8 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login } from '../services/actions/auth';
-import { regexEmail, regexPassword } from '../utils/data';
+import { login } from '../../services/actions/auth';
+import { regexEmail, regexPassword } from '../../utils/data';
 
 export default function LoginPage() {
   const [ form, setForm ] = useState({
