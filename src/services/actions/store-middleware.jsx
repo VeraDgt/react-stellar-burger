@@ -4,6 +4,7 @@ import { getCookie } from "../../utils/utils";
 const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
   return (store) => {
     let socket = null;
+    let disconnect = false;
 
       return next => action => { 
         const { dispatch } = store;
@@ -13,6 +14,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
                 onClose,
                 onError,
                 wsSendMessage,
+                wsDisconnect,
                 onMessage
               } = socketActions;
         
@@ -24,7 +26,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
                     : new WebSocket(`${wsUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`)
                     }
 
-        if (socket) {
+        if (socket && !disconnect) {
               socket.onopen = event => {
               dispatch({ type: onOpen, payload: event });
               };
@@ -32,7 +34,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
               dispatch({ type: onClose, payload: event });
               };
               socket.onerror = event => {
-              dispatch({ type: onError, payload: event });
+              dispatch({ type: onError, payload: "Ошибка подключения к серверу" });
               };
               socket.onmessage = event => {
                 const { data } = event;
@@ -42,6 +44,11 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
               if (type === wsSendMessage) {
                 const message = payload;
                 socket.send(JSON.stringify(message));
+            }
+            if (type === wsDisconnect) {
+              disconnect = true;
+              socket.close();
+              socket = null;
             }
         } 
           next(action);

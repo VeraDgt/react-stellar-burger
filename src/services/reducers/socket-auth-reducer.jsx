@@ -2,7 +2,8 @@ import {
   WS_AUTH_SUCCESS,
   WS_AUTH_CLOSED,
   WS_AUTH_ERROR,
-  WS_AUTH_ORDERS } from "../actions/socket-auth";
+  WS_AUTH_ORDERS,
+  WS_AUTH_DISCONNECT } from "../actions/socket-auth";
 
   const initialState = {
     connected: false,
@@ -35,6 +36,13 @@ import {
           ...state,
           error: undefined,
           orders: {...action.payload, orders: action.payload.orders?.reverse()}
+        };
+        case WS_AUTH_DISCONNECT: {
+          return {
+            ...state,
+            error: undefined,
+            connected: false
+          }
         };
       default: return state;
     }
