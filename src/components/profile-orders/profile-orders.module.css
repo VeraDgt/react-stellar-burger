@@ -1,0 +1,12 @@
+.list {
+  composes: default-list custom-scroll pr-4 from global;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  margin: 0;
+  padding-left: 0;
+  gap: 16px;
+  width: 844px;
+  height: 80vh;
+  box-sizing: border-box;
+}

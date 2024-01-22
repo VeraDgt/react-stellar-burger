@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './login.module.css';
+import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { recoverPassword } from '../services/actions/auth';
-import { regexEmail } from '../utils/data';
+import { recoverPassword } from '../../services/actions/auth';
+import { regexEmail } from '../../utils/data';
 
 export default function ForgotPwPage() {
   const [ form, setForm ] = useState({

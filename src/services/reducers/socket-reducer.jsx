@@ -2,7 +2,8 @@ import {
   WS_CONNECTION_SUCCESS, 
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
-  WS_GET_ORDERS } from "../actions/socket";
+  WS_GET_ORDERS,
+  WS_DISCONNECT } from "../actions/socket";
 
   const initialState = {
     connected: false,
@@ -39,6 +40,14 @@ import {
           error: undefined,
           orders: action.payload
         };
+
+      case WS_DISCONNECT: {
+        return {
+          ...state,
+          error: undefined,
+          connected: false
+        }
+      }
 
       default: return state;
     }

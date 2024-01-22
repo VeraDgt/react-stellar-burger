@@ -34,3 +34,31 @@ document.cookie = updatedCookie;
 export function deleteCookie(cookie) {
     setCookie(cookie, null, { expires: -1 });
 };
+
+export const getOrderIngredients = (arr, items) => arr?.map(el => items.find(i => el === i._id));
+
+export const countItems = (arr) => {
+  return arr.reduce((sum, el) =>{
+    const id = el._id
+    sum.ingredient[id] = el;
+    sum.qty[id] = (sum.qty[id] || 0) +1
+    return sum
+  }, { ingredient: {}, qty: {} })
+}
+
+export function getOrderStatus(status) {
+  switch (status) {
+    case 'done':
+      return 'Выполнен';
+    case 'pending':
+      return 'Готовится';
+    case 'created':
+      return 'Создан';
+    default:
+      return '';
+  }
+};
+
+export function orderTotalPrice(sum) {
+  return sum.reduce((arr, item) => arr += item.price, 0)
+};

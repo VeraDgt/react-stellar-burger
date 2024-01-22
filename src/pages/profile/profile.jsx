@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
-import { logout } from "../services/actions/auth";
+import { logout } from "../../services/actions/auth";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function ProfilePage() {
           </NavLink>
         </li>
         <li>
-        <NavLink to="profile/orders" className={textStyle('/profile/orders')}>История заказов
+        <NavLink to="/profile/orders" className={textStyle('/profile/orders')}>История заказов
           </NavLink>
         </li>
         <li>

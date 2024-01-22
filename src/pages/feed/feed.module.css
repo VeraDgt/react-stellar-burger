@@ -1,0 +1,76 @@
+.page {
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.header {
+  composes: text text_type_main-large mt-10 mb-5 from global;
+}
+
+.done {
+  composes: text text_type_digits-default from global;
+  color: #00CCCC;
+}
+
+.orders {
+  composes: pr-4 from global;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 40px;
+}
+
+.list {
+  composes: default-list custom-scroll pr-4 from global;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  margin: 0;
+  padding-left: 0;
+  gap: 16px;
+  width: 584px;
+  height: 80vh;
+  box-sizing: border-box;
+}
+
+.statuses {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.statusesList {
+  composes: default-list custom-scroll from global;
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+  max-height: 236px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  /* overflow-x: hidden; */
+}
+
+.columns {
+  padding-right: 98px;
+}
+
+.orderNums {
+  display: flex;
+  gap: 36px;
+  width: max-content;
+}
+
+.totalOrders {
+  composes: text text_type_digits-large from global;
+  text-shadow: 
+    0px 0px 16px rgba(51, 51, 255, 0.25), 
+    0px 0px 8px rgba(51, 51, 255, 0.25),
+    0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+

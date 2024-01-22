@@ -4,8 +4,9 @@ import { getCookie } from "../../utils/utils";
 const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
   return (store) => {
     let socket = null;
+    let disconnect = false;
 
-      return next => action => {
+      return next => action => { 
         const { dispatch } = store;
         const { type, payload } = action;
         const { wsInit,
@@ -13,18 +14,19 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
                 onClose,
                 onError,
                 wsSendMessage,
+                wsDisconnect,
                 onMessage
               } = socketActions;
         
         const token = getCookie('accessToken')?.replace('Bearer ', '');
 
-        if (type === wsInit) {
+        if (type === wsInit && !socket) {
             socket = !setAuthChecked
                     ? new WebSocket(`${wsUrl}${payload}`)
                     : new WebSocket(`${wsUrl}?token=${getCookie('accessToken')?.replace('Bearer ', '')}`)
                     }
 
-        if (socket) {
+        if (socket && !disconnect) {
               socket.onopen = event => {
               dispatch({ type: onOpen, payload: event });
               };
@@ -32,7 +34,7 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
               dispatch({ type: onClose, payload: event });
               };
               socket.onerror = event => {
-              dispatch({ type: onError, payload: event });
+              dispatch({ type: onError, payload: "Ошибка подключения к серверу" });
               };
               socket.onmessage = event => {
                 const { data } = event;
@@ -42,6 +44,11 @@ const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
               if (type === wsSendMessage) {
                 const message = payload;
                 socket.send(JSON.stringify(message));
+            }
+            if (type === wsDisconnect) {
+              disconnect = true;
+              socket.close();
+              socket = null;
             }
         } 
           next(action);

@@ -16,9 +16,9 @@ const AppHeader = () => {
             <BurgerIcon type={iconType('/')}/>
             <span className={textStyle('/')}>Конструктор</span>
           </NavLink>
-          <NavLink to="/orders" className={isActive => `${styles.listItem} text_color_${isActive ? 'primary' : 'inactive'}`}>
-            <ListIcon type={iconType('/profile/orders')} />
-            <span className={textStyle('/profile/orders')}>Лента заказов</span>
+          <NavLink to="/feed" className={isActive => `${styles.listItem} text_color_${isActive ? 'primary' : 'inactive'}`}>
+            <ListIcon type={iconType('/feed')} />
+            <span className={textStyle('/feed')}>Лента заказов</span>
           </NavLink>
           <NavLink to="/profile" className={isActive => `${styles.listItem} text_color_${isActive ? 'primary' : 'inactive'}`}>
             <ProfileIcon type={iconType('/profile')} />

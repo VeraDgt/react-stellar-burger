@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styles from './login.module.css';
+import styles from '../login/login.module.css';
 
 const NoPage = () => {
   return (

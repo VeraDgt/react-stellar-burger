@@ -135,3 +135,11 @@ export function getOrderNumber(arr) {
     })
   })
 };
+
+export function getExtraOrder(number) {
+  return request(`/orders/${number}`, {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+    Authorization: getCookie('accessToken'),
+  })
+};
