@@ -8,12 +8,13 @@ import { useDispatch } from 'react-redux';
 import { GET_BURGER_DATA } from '../../services/actions/burger-constructor';
 import { INCREASE_QTY } from '../../services/actions/burger-ingredients';
 import { v4 } from 'uuid';
+import { TIngredient } from '../../types';
 
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const handleDrop = (item) => {
+  const handleDrop = (item: TIngredient) => {
     dispatch({ type: INCREASE_QTY, payload: item });
     dispatch({ type: GET_BURGER_DATA, payload: item, key: v4() });
   }

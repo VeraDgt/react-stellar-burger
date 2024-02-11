@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
@@ -6,8 +6,14 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
 import { modalRoot } from '../../utils/data';
 
-const Modal = ({ handleClose, title, children, hasOverlay }) => {
-  function handleKeydown(event) {
+export interface IModal extends React.HTMLAttributes<HTMLDivElement> {
+  handleClose: () => void,
+  title?: string,
+  hasOverlay: boolean,
+}
+
+const Modal: FunctionComponent<IModal> = ({ handleClose, title, children, hasOverlay }) => {
+  function handleKeydown(event: KeyboardEvent) {
     return event.key === 'Escape' && handleClose();
   }
 
@@ -31,7 +37,7 @@ const Modal = ({ handleClose, title, children, hasOverlay }) => {
         </div>
       </>
     ),
-      modalRoot
+      modalRoot!
   )
 }
 

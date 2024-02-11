@@ -1,8 +1,8 @@
 import React from 'react';
 import priceStyles from './price-container.module.css';
-import PropTypes from 'prop-types';
+import { FunctionComponent } from 'react';
 
-const PriceContainer = ({totalSum}) => {
+const PriceContainer: FunctionComponent<{totalSum: number}> = ({totalSum}) => {
   return (
     <span className={priceStyles.price}>
       {totalSum}
@@ -10,9 +10,5 @@ const PriceContainer = ({totalSum}) => {
     </span>
   );
 };
-
-PriceContainer.propTypes = {
-  totalSum: PropTypes.number.isRequired
-}
 
 export default PriceContainer;

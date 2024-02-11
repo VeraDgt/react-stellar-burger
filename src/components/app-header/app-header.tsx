@@ -5,8 +5,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 const AppHeader = () => {
   const location = useLocation();
-  const iconType = (url) => location.pathname === url ? 'primary' : 'secondary';
-  const textStyle = (url) => location.pathname === url ? 'text text_type_main-default text_color_primary ml-2' : 'text text_type_main-default text_color_inactive ml-2';
+  const iconType = (url: string) => location.pathname === url ? 'primary' : 'secondary';
+  const textStyle = (url: string) => location.pathname === url ? 'text text_type_main-default text_color_primary ml-2' : 'text text_type_main-default text_color_inactive ml-2';
 
   return (
     <header className={styles.header}>

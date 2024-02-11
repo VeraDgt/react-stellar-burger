@@ -77,11 +77,4 @@ const ConstructorItem = ({item, index, dragItem}) => {
   );
 };
 
-ConstructorItem.propTypes = {
-  item: ingredientPropType.isRequired,
-  index: PropTypes.number.isRequired,
-  dragItem: PropTypes.func.isRequired,
-}
-
 export default ConstructorItem;
-
