@@ -2,9 +2,10 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
-import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { register } from '../../services/actions/auth';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
+import { getCookie } from '../../utils/utils';
 
 export default function RegisterPage() {
   const [ form, setForm ] = useState({
@@ -14,13 +15,10 @@ export default function RegisterPage() {
   });
 
   const dispatch = useDispatch();
-  // const navigate: NavigateFunction<> = useNavigate();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(register(form, 
-      // () => navigate('/', {replace: true})
-      ));
+    dispatch(register(form));
   }
 
   const onChange = (e: FormEvent) => {
@@ -37,6 +35,12 @@ export default function RegisterPage() {
     setValidForm(regexEmail.test(form.email));
     setValidForm(regexPassword.test(form.password));
   }, [form.name, form.email, form.password])
+
+  if(getCookie('accessToken')) {
+    return (
+      <Navigate to={'/'}/>
+    )
+  }
 
   return (
     <div className={styles.page}>
