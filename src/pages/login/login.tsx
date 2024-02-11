@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
 import { useDispatch } from 'react-redux';
@@ -21,15 +21,15 @@ export default function LoginPage() {
 
   const dispatch = useDispatch();
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     dispatch(login(form))
   }
 
-  const onChange = (e) => {
+  const onChange = (e: FormEvent) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
     });
   }
 

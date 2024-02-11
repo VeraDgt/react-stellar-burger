@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { register } from '../../services/actions/auth';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
 
@@ -14,17 +14,19 @@ export default function RegisterPage() {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate: NavigateFunction<> = useNavigate();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    dispatch(register(form, () => navigate('/', {replace: true})));
+    dispatch(register(form, 
+      // () => navigate('/', {replace: true})
+      ));
   }
 
-  const onChange = (e) => {
+  const onChange = (e: FormEvent) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
     });
   }
 

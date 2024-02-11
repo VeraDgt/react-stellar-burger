@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { regexPassword, regexToken } from '../../utils/data';
 import { resetPassword } from '../../services/actions/auth';
@@ -17,16 +17,16 @@ export default function ResetPwPage() {
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '/';
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(resetPassword(form));
     navigate('/login', {replace: true});
   }
 
-  const onChange = (e) => {
+  const onChange = (e: FormEvent) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
     });
   }
 
@@ -58,7 +58,7 @@ export default function ResetPwPage() {
         </fieldset>
         <Button type='primary' size='large' htmlType='submit' disabled={!validForm}>Сохранить</Button>
       </form>
-      <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className="link" to="/login" disabled={!validForm}>Войти</Link></p>
+      <p className="mt-20 text text_type_main-default text_color_inactive">Вспомнили пароль? <Link className="link" to="/login">Войти</Link></p>
     </div>
   ) 
   : (<Navigate to={"/login"} replace />)
