@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorItemStyles from './constructor-item.module.css';
-import { ingredientPropType } from '../../../utils/prop-types';
 import { useDispatch } from 'react-redux';
 import { DECREASE_QTY } from '../../../services/actions/burger-ingredients';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import { DELETE_ITEM } from '../../../services/actions/burger-constructor';
+import { TIngredient } from '../../../types';
 
-const ConstructorItem = ({item, index, dragItem}) => {
+interface IConstructorItem {
+  item: TIngredient,
+  index: number,
+  dragItem: (dragIndex: number, hoverIndex: number) => void
+}
+
+const ConstructorItem: FunctionComponent<IConstructorItem> = ({item, index, dragItem}) => {
   const id = item._id;
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
 
   const [, drag] = useDrag({
@@ -28,7 +33,7 @@ const ConstructorItem = ({item, index, dragItem}) => {
         handlerId: monitor.getHandlerId(),
       }
     },
-    hover(el, monitor) {
+    hover(el: IConstructorItem, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return
       }
@@ -43,12 +48,12 @@ const ConstructorItem = ({item, index, dragItem}) => {
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset && clientOffset.y - hoverBoundingRect.top;
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      if (hoverClientY && dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
       }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      if (hoverClientY && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styles from "./app.module.css";
 import { useDispatch } from 'react-redux';
 import { getItems } from "../../services/actions/burger-ingredients";
-import AppHeader from "../app-header/app-header.tsx";
+import AppHeader from "../app-header/app-header";
 import HomePage from "../../pages/home/home";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
@@ -64,7 +64,7 @@ function App() {
           <Route 
             path="/ingredients/:id"
             element={
-              <Modal header="Детали ингредиента" handleClose={closeModal} hasOverlay={true}>
+              <Modal handleClose={closeModal} hasOverlay={true}>
                 <IngredientDetails />
               </Modal>
             }
