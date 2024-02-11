@@ -8,7 +8,7 @@ export default function ProfilePage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const textStyle = (url) => location.pathname === url ? `${styles.link} text_color_primary` : `${styles.link} text_color_inactive`;
+  const textStyle = (url: string) => location.pathname === url ? `${styles.link} text_color_primary` : `${styles.link} text_color_inactive`;
 
   const handleClick = () => {
     dispatch(logout());
