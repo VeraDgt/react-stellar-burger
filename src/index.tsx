@@ -6,6 +6,9 @@ import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./services/actions/store";
+import { rootReducer } from "./services/reducers/index-reducer";
+
+export type AppState = ReturnType<typeof rootReducer>;
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,9 +1,23 @@
-import { wsUrl } from "../../utils/data";
 import { getCookie } from "../../utils/utils";
+import { Middleware } from "redux";
+import { AppState } from "../..";
 
-const storeMiddleware = (wsUrl, socketActions, setAuthChecked) => {
+export type TsoketActions = {
+  wsInit: string;
+  onOpen: string;
+  onClose: string;
+  onError: string;
+  wsSendMessage?: string;
+  wsDisconnect: string;
+  onMessage: string;
+}
+
+const storeMiddleware = (
+  wsUrl: string, 
+  socketActions: TsoketActions, 
+  setAuthChecked: boolean): Middleware<{}, AppState> => {
   return (store) => {
-    let socket = null;
+    let socket: WebSocket | null  = null;
     let disconnect = false;
 
       return next => action => { 

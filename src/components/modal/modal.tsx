@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, type MouseEvent, type ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
@@ -10,6 +10,7 @@ export interface IModal extends React.HTMLAttributes<HTMLDivElement> {
   handleClose: () => void,
   title?: string,
   hasOverlay: boolean,
+  children?: ReactNode,
 }
 
 const Modal: FunctionComponent<IModal> = ({ handleClose, title, children, hasOverlay }) => {
@@ -22,7 +23,7 @@ const Modal: FunctionComponent<IModal> = ({ handleClose, title, children, hasOve
     return () => {
       document.removeEventListener('keydown', handleKeydown)
     }
-  }, []);
+  }, [handleKeydown]);
 
   return ReactDOM.createPortal(
     (

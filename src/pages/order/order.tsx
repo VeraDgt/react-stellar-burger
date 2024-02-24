@@ -1,3 +1,4 @@
+import React from "react";
 import FeedOrder from "../../components/feed-order-info/feed-order-info";
 import styles from "./order.module.css";
 

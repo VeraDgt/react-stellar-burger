@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/actions/socket-auth";
 import styles from "./profile-orders.module.css";

@@ -1,3 +1,4 @@
+import React from "react";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import styles from './profile.module.css';
