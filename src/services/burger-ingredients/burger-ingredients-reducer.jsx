@@ -1,4 +1,4 @@
-import { GET_ITEMS, GET_ITEMS_SUCCESS, INCREASE_QTY, DECREASE_QTY, GET_ITEMS_FAILED, CLEAR_QTY } from "../actions/burger-ingredients";
+import { GET_ITEMS, GET_ITEMS_SUCCESS, INCREASE_QTY, DECREASE_QTY, GET_ITEMS_FAILED, CLEAR_QTY } from "./burger-ingredients-action";
 
 const initialState = {
   items: [],

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styles from "./app.module.css";
 import { useDispatch } from 'react-redux';
-import { getItems } from "../../services/actions/burger-ingredients";
+import { getItems } from "../../services/burger-ingredients/burger-ingredients-action";
 import AppHeader from "../app-header/app-header";
 import HomePage from "../../pages/home/home";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';

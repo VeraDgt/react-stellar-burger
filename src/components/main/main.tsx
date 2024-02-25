@@ -6,7 +6,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch } from 'react-redux';
 import { GET_BURGER_DATA } from '../../services/actions/burger-constructor';
-import { INCREASE_QTY } from '../../services/actions/burger-ingredients';
+import { INCREASE_QTY } from '../../services/burger-ingredients/burger-ingredients-action';
 import { v4 } from 'uuid';
 import { TIngredient } from '../../types';
 
