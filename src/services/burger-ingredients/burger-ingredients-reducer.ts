@@ -1,12 +1,29 @@
-import { GET_ITEMS, GET_ITEMS_SUCCESS, INCREASE_QTY, DECREASE_QTY, GET_ITEMS_FAILED, CLEAR_QTY } from "./burger-ingredients-action";
+import { 
+  GET_ITEMS, 
+  GET_ITEMS_SUCCESS, 
+  INCREASE_QTY, 
+  DECREASE_QTY, 
+  GET_ITEMS_FAILED, 
+  CLEAR_QTY,
+  IngredientsActions,
+  TMapItems } from "./burger-ingredients-action";
+import { TIngredient } from "../../types";
+
+export type TIngredientsState = {
+  items: Array<TIngredient>,
+  itemsRequest: boolean,
+  itemsFailed: boolean,
+  mapItems: TMapItems,
+}
 
 const initialState = {
   items: [],
   itemsRequest: false,
   itemsFailed: false,
+  mapItems: new Map,
 }
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state:TIngredientsState = initialState, action:IngredientsActions) => {
   switch (action.type) {
     case GET_ITEMS: {
       return {

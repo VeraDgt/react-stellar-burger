@@ -26,11 +26,13 @@ type TGetItemsFailed = {
 }
 
 export type TIncreaseQty = {
-  type: typeof INCREASE_QTY
+  type: typeof INCREASE_QTY,
+  payload: TIngredient,
 }
 
 export type TDecreaseQty = {
   type: typeof DECREASE_QTY
+  payload: TIngredient,
 }
 
 export type TClearQty = {
