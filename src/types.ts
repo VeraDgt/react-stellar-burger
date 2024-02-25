@@ -30,3 +30,12 @@ export type TUser = {
   email: string,
   password: string
 }
+
+export type TRes = {
+  success: boolean,
+}
+
+export type TForm = {
+  password: string,
+  token: string,
+  }

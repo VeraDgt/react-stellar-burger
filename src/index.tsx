@@ -1,14 +1,37 @@
 import React from "react";
 import "./index.css";
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, TypedUseSelectorHook, useSelector } from 'react-redux';
 import ReactDOM from "react-dom";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./services/actions/store";
 import { rootReducer } from "./services/reducers/index-reducer";
+import type {} from "redux-thunk/extend-redux";
+import { ThunkAction } from "redux-thunk";
+import { TUserActions } from "./services/actions/auth";
 
 export type AppState = ReturnType<typeof rootReducer>;
+
+// type AppActions =
+  // | ConstructorActions
+//   | FeedActions
+  // | IngredientsActions
+//   | OrdersActions
+//   | OrderActions
+  // | TUserActions;
+
+// export type AppThunk<ReturnType = void> = ThunkAction<
+//   ReturnType,
+//   AppState,
+//   unknown,
+//   AppActions
+// >;
+
+export type AppDispatch = typeof store.dispatch;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
 
 ReactDOM.render(
   <React.StrictMode>
