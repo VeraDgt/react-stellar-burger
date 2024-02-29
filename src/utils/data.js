@@ -12,9 +12,3 @@ export function countTotalSum(items) {
       arr += curr.type === 'bun' ? curr.price*2 : curr.price, 0
    )
 };
-
-export const Tabs = {
-   buns: 'buns',
-   sauces: 'sauces',
-   fillings: 'fillings'
-}
