@@ -9,7 +9,7 @@ import { store } from "./services/actions/store";
 import { rootReducer } from "./services/reducers/index-reducer";
 import type {} from "redux-thunk/extend-redux";
 import { ThunkAction } from "redux-thunk";
-// import { TUserActions } from "./services/actions/auth";
+import { TUserActions } from "./services/user-auth/auth-action";
 import { IngredientsActions } from "./services/burger-ingredients/burger-ingredients-action";
 import { ConstructorActions } from "./services/burger-constructor/burger-constructor-action";
 
@@ -18,10 +18,10 @@ export type AppState = ReturnType<typeof rootReducer>;
 type AppActions =
 | ConstructorActions
 //   | FeedActions
-| IngredientsActions;
+| IngredientsActions
 //   | OrdersActions
 //   | OrderActions
-  // | TUserActions;
+  | TUserActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

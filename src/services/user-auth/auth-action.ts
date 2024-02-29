@@ -1,6 +1,8 @@
 import { api } from "../../utils/api";
 import { getCookie, setCookie, deleteCookie } from "../../utils/utils";
 import { cookieLive } from "../../utils/data";
+import { TUser } from "../../types";
+import { AppDispatch } from "../..";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const GET_USER = "GET_USER";
@@ -28,6 +30,120 @@ export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
 
+type TSetAuthChecked = {
+  type: typeof SET_AUTH_CHECKED,
+  payload: boolean,
+}
+
+type TGetUser = {
+  type: typeof GET_USER,
+}
+
+type TSetUser = {
+  type: typeof SET_USER,
+  payload: TUser,
+}
+
+type TSetUserFailed = {
+  type: typeof SET_USER_FAILED,
+}
+
+type TLogin = {
+  type: typeof LOGIN,
+}
+
+type TLoginSuccess = {
+  type: typeof LOGIN_SUCCESS,
+}
+
+type TLoginFailed = {
+  type: typeof LOGIN_FAILED,
+}
+
+type TLogout = {
+  type: typeof LOGOUT,
+}
+
+type TLogoutSuccess = {
+  type: typeof LOGOUT_SUCCESS,
+}
+
+type TLogoutFailed = {
+  type: typeof LOGOUT_FAILED,
+}
+
+type TRegister = {
+  type: typeof REGISTER,
+}
+
+type TRegisterSuccess = {
+  type: typeof REGISTER_SUCCESS,
+  payload: TUser
+}
+
+type TRegisterFailed = {
+  type: typeof REGISTER_FAILED,
+}
+
+type TRecoverPassword = {
+  type: typeof RECOVER_PASSWORD,
+}
+
+type TRecoverPasswordSuccess = {
+  type: typeof RECOVER_PASSWORD_SUCCESS,
+  payload: string,
+}
+
+type TRecoverPasswordFailed = {
+  type: typeof RECOVER_PASSWORD_FAILED,
+}
+
+type TRefreshToken = {
+  type: typeof REFRESH_TOKEN,
+}
+
+type TRefreshTokenSuccess = {
+  type: typeof REFRESH_TOKEN_SUCCESS,
+}
+
+type TRefreshTokenFailed = {
+  type: typeof REFRESH_TOKEN_FAILED,
+}
+
+type TUpdateUser = {
+  type: typeof UPDATE_USER,
+}
+
+type TUpdateUserSuccess = {
+  type: typeof UPDATE_USER_SUCCESS,
+  payload: TUser,
+}
+
+type TUpdateUserFailed = {
+  type: typeof UPDATE_USER_FAILED,
+}
+
+type TResetPassword = {
+  type: typeof RESET_PASSWORD,
+}
+
+type TResetPasswordSuccess = {
+  type: typeof RESET_PASSWORD_SUCCESS,
+}
+
+type TResetPasswordFailed = {
+  type: typeof RESET_PASSWORD_FAILED,
+}
+
+export type TUserActions = 
+| TSetAuthChecked | TGetUser | TSetUser | TSetUserFailed
+| TLogin | TLoginSuccess | TLoginFailed
+| TLogout | TLogoutSuccess | TLogoutFailed
+| TRegister | TRegisterSuccess | TRegisterFailed
+| TRecoverPassword | TRecoverPasswordSuccess | TRecoverPasswordFailed
+| TRefreshToken | TRefreshTokenSuccess | TRefreshTokenFailed 
+| TUpdateUser | TUpdateUserSuccess | TUpdateUserFailed 
+| TResetPassword | TResetPasswordSuccess | TResetPasswordFailed
 
 function loginFailed() {
   return { type: LOGIN_FAILED };
@@ -61,18 +177,18 @@ function resetPasswordFailed() {
   return { type: RESET_PASSWORD_FAILED};
 }
 
-export const setAuthChecked = (value) => ({
+export const setAuthChecked = (value: boolean) => ({
   type: SET_AUTH_CHECKED,
   payload: value,
 });
 
-export const setUser = (user) => ({
+export const setUser = (user: TUser | null) => ({
   type: SET_USER,
   payload: user,
 });
 
 export const getUser = () => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     dispatch({type: GET_USER});
     return api.getUser().then((res) => {
       if (res && res.success) {
@@ -91,7 +207,7 @@ export const getUser = () => {
   }
 };
 
-export const login = (form) => (dispatch) => {
+export const login = (form: { email: string, password: string}) => (dispatch: AppDispatch) => {
   dispatch({type: LOGIN});
 
   api.login(form).then(res => {
@@ -112,7 +228,7 @@ export const login = (form) => (dispatch) => {
   })
 };
 
-export const register = (form) => (dispatch) => {
+export const register = (form: TUser) => (dispatch: AppDispatch) => {
   dispatch({type: REGISTER});
 
   api.register(form).then(res => {
@@ -135,7 +251,7 @@ export const register = (form) => (dispatch) => {
 }
 
 export const checkUserAuth = () => {
-    return (dispatch) => {
+    return (dispatch: AppDispatch) => {
         if (getCookie("accessToken")) {
             dispatch(getUser())
               .catch(() => {
@@ -150,8 +266,8 @@ export const checkUserAuth = () => {
     };
 };
 
-export const recoverPassword = (email) => {
-  return function (dispatch) {
+export const recoverPassword = (email: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({type: RECOVER_PASSWORD});
 
     api.recoverPassword(email).then(res => {
@@ -172,7 +288,7 @@ export const recoverPassword = (email) => {
 }
 
 export const checkToken = () => {
-  return function (dispatch) {
+  return function (dispatch: AppDispatch) {
     dispatch({type: REFRESH_TOKEN});
 
     api.getToken().then(res => {
@@ -193,8 +309,8 @@ export const checkToken = () => {
   }
 }
 
-export const updateUser = (form) => {
-  return function(dispatch) {
+export const updateUser = (form: TUser) => {
+  return function(dispatch: AppDispatch) {
     dispatch({type: UPDATE_USER});
 
     api.updateUser(form).then(res => {
@@ -217,8 +333,8 @@ export const updateUser = (form) => {
   }
 }
 
-export const resetPassword = (form) => {
-  return function(dispatch) {
+export const resetPassword = (form: { password: string, token: string }) => {
+  return function(dispatch: AppDispatch) {
     dispatch({type: RESET_PASSWORD});
 
     api.resetPassword(form).then(res => {
@@ -238,7 +354,7 @@ export const resetPassword = (form) => {
 };
 
 export const logout = () => {
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     return api.logout().then(() => {
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
