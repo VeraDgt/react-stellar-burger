@@ -56,7 +56,7 @@ const BurgerIngredients = ():JSX.Element => {
   function filterIngredients(data: Array<TIngredient>, type: string) {
     return data
     .filter((item) => item.type === type)
-    .map((el) => <BurgerIngredient key={el._id} item={el} />)
+    .map((el) => <BurgerIngredient key={el._id} item={el}/>)
   }
 
   return (

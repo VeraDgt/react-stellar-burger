@@ -18,7 +18,6 @@ type TGetItems = {
 type TGetItemsSuccess = {
   type: typeof GET_ITEMS_SUCCESS,
   items: Array<TIngredient>,
-  mapItems: TMapItems,
 }
 
 type TGetItemsFailed = {
@@ -53,14 +52,6 @@ function getItemsFailed():TGetItemsFailed {
   return { type: GET_ITEMS_FAILED }
 };
 
-const mapItems = (sortedItemsArr:Array<TIngredient>) => {
-  const map:TMapItems = new Map()
-  sortedItemsArr.forEach((el) => {
-    map.set(el._id, el);
-  });
-  return map
-}
-
 function getItemsRequest():TGetItems {
   return { type: GET_ITEMS}
 }
@@ -68,8 +59,7 @@ function getItemsRequest():TGetItems {
 export function getItemsSuccess(items:Array<TIngredient>):TGetItemsSuccess {
   return {
     type: GET_ITEMS_SUCCESS,
-    items: sortItems(items),
-    mapItems: mapItems(items)
+    items: sortItems(items).map(el => {return {...el, qty: 0}}),
   }
 }
 

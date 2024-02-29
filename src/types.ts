@@ -12,7 +12,7 @@ export type TIngredient = {
   image_large: string,
   __v: number,
   qty: number,
-  key?: number
+  key?: number,
 }
 
 export type TOrder = {

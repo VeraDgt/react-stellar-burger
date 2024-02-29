@@ -3,7 +3,6 @@ import ingredientStyles from './burger-ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { FunctionComponent } from 'react';
 import { TIngredient } from '../../../types';
 
@@ -16,7 +15,6 @@ const BurgerIngredient: FunctionComponent<{item: TIngredient}> = ({item}) => {
     type: 'ingredient',
     item: item
   })
-
   return (
       <li className={ingredientStyles.ingredient} ref={dragRef} >
         <Link 
