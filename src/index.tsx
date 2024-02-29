@@ -11,11 +11,12 @@ import type {} from "redux-thunk/extend-redux";
 import { ThunkAction } from "redux-thunk";
 // import { TUserActions } from "./services/actions/auth";
 import { IngredientsActions } from "./services/burger-ingredients/burger-ingredients-action";
+import { ConstructorActions } from "./services/burger-constructor/burger-constructor-action";
 
 export type AppState = ReturnType<typeof rootReducer>;
 
 type AppActions =
-  // | ConstructorActions
+| ConstructorActions
 //   | FeedActions
 | IngredientsActions;
 //   | OrdersActions

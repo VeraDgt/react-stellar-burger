@@ -1,8 +1,8 @@
 import { getOrderNumber, getExtraOrder } from "../../utils/api";
 import { getCookie } from "../../utils/utils";
-import { CLEAR_CONSTRUCTOR } from "./burger-constructor";
+import { CLEAR_CONSTRUCTOR } from "../burger-constructor/burger-constructor-action";
 import { CLEAR_QTY } from "../burger-ingredients/burger-ingredients-action";
-import { checkToken } from "./auth";
+import { checkToken } from "../user-auth/auth-action";
 
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';

@@ -6,7 +6,7 @@ import AppHeader from "../app-header/app-header";
 import HomePage from "../../pages/home/home";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
-import { checkUserAuth } from '../../services/actions/auth';
+import { checkUserAuth } from '../../services/user-auth/auth-action';
 import LoginPage from '../../pages/login/login';
 import RegisterPage from '../../pages/register/register';
 import ForgotPwPage from '../../pages/forgot-password/forgot-password';

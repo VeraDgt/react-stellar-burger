@@ -9,7 +9,7 @@ import Modal from '../modal/modal';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { DRAG_ITEM } from '../../services/actions/burger-constructor';
+import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
 import { getOrder } from '../../services/actions/modals';
 import { useNavigate } from 'react-router-dom';
 

@@ -4,7 +4,7 @@ import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { regexPassword, regexToken } from '../../utils/data';
-import { resetPassword } from '../../services/actions/auth';
+import { resetPassword } from '../../services/user-auth/auth-action';
 
 export default function ResetPwPage() {
   const [ form, setForm ] = useState({

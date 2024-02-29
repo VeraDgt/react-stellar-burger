@@ -3,7 +3,7 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { recoverPassword } from '../../services/actions/auth';
+import { recoverPassword } from '../../services/user-auth/auth-action';
 import { regexEmail } from '../../utils/data';
 
 export default function ForgotPwPage() {

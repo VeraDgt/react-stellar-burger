@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
-import { register } from '../../services/actions/auth';
+import { register } from '../../services/user-auth/auth-action';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
 import { getCookie } from '../../utils/utils';
 

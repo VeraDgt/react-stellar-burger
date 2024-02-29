@@ -21,7 +21,7 @@ import {
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED
-  } from '../actions/auth';
+  } from './auth-action';
 
 const initialState = {
     user: null,

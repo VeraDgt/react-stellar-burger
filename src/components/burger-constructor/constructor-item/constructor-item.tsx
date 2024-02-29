@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { DECREASE_QTY } from '../../../services/burger-ingredients/burger-ingredients-action';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { useRef } from 'react';
-import { DELETE_ITEM } from '../../../services/actions/burger-constructor';
+import { DELETE_ITEM } from '../../../services/burger-constructor/burger-constructor-action';
 import { TIngredient } from '../../../types';
 
 interface IConstructorItem {

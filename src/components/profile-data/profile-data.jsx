@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './profile-data.module.css';
-import { getUser, updateUser } from '../../services/actions/auth';
+import { getUser, updateUser } from '../../services/user-auth/auth-action';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
 
 const ProfileData = () => {

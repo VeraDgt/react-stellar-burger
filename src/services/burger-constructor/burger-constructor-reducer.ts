@@ -1,12 +1,18 @@
-import { GET_BURGER_DATA, DELETE_ITEM, DRAG_ITEM, CLEAR_CONSTRUCTOR } from "../actions/burger-constructor";
+import { TIngredient } from "../../types";
+import { GET_BURGER_DATA, DELETE_ITEM, DRAG_ITEM, CLEAR_CONSTRUCTOR, ConstructorActions, TGetBurgerData } from "./burger-constructor-action";
 
-const initialState = {
+type TConstructorState = {
+  burgersData: Array<TIngredient>,
+  bun: TIngredient | null,
+}
+
+const initialState: TConstructorState = {
   bun: null,
   burgersData: [],
 }
 
-export const burgerConstructorReducer = (state = initialState, action) => {
-  function addBun(state, action) {
+export const burgerConstructorReducer = (state = initialState, action: ConstructorActions) => {
+  function addBun(state: TConstructorState, action: TGetBurgerData) {
     const index = [...state.burgersData].findIndex((el) => el.type === 'bun');
     const newState = [...state.burgersData];
 
