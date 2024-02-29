@@ -54,6 +54,7 @@ type TLogin = {
 
 type TLoginSuccess = {
   type: typeof LOGIN_SUCCESS,
+  payload: TUser,
 }
 
 type TLoginFailed = {

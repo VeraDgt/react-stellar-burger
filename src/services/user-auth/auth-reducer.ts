@@ -20,7 +20,8 @@ import {
   UPDATE_USER_SUCCESS,
   RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILED
+  RESET_PASSWORD_FAILED,
+  TUserActions
   } from './auth-action';
 
 const initialState = {
@@ -43,7 +44,7 @@ const initialState = {
     resetPasswordFailed: false,
 };
 
-export const userAuthReducer = (state = initialState, action) => {
+export const userAuthReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case SET_AUTH_CHECKED:
       return {
