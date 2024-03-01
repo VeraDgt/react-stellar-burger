@@ -1,3 +1,5 @@
+import { AppDispatch } from "../..";
+import { TOrder } from "../../types";
 import { getOrderNumber, getExtraOrder } from "../../utils/api";
 import { getCookie } from "../../utils/utils";
 import { CLEAR_CONSTRUCTOR } from "../burger-constructor/burger-constructor-action";
@@ -11,13 +13,46 @@ export const EXTRA_ORDER_REQUEST = 'EXTRA_ORDER_REQUEST';
 export const EXTRA_ORDER_SUCCESS = 'EXTRA_ORDER_SUCCESS';
 export const EXTRA_ORDER_FAILED = 'EXTRA_ORDER_FAILED';
 
+type TGetOrder = {
+  type: typeof GET_ORDER
+}
+
+type TGetOrderSuccess = {
+  type: typeof GET_ORDER_SUCCESS,
+  order: TOrder,
+}
+
+type TGetOrderFailed = {
+  type: typeof GET_ORDER_FAILED
+}
+
+type TGetExtraOrder = {
+  type: typeof EXTRA_ORDER_REQUEST
+}
+
+type TExtraOrderSuccess = {
+  type: typeof EXTRA_ORDER_SUCCESS,
+  payload: TOrder,
+}
+
+type TExtraOrderFailed = {
+  type: typeof EXTRA_ORDER_FAILED
+}
+
+export type OrderActions = 
+| TGetOrder
+| TGetOrderSuccess
+| TGetOrderFailed
+| TGetExtraOrder
+| TExtraOrderSuccess
+| TExtraOrderFailed;
 
 function getOrderFailed() {
   return { type: GET_ORDER_FAILED }
 }
 
-export function getOrder(num) {
-  return function(dispatch) {
+export function getOrder(num: Array<string>) {
+  return function(dispatch: AppDispatch) {
     dispatch({ type: GET_ORDER });
 
     getOrderNumber(num).then(res => {
@@ -42,8 +77,8 @@ export function getOrder(num) {
   }
 };
 
-export function getExtraOrderInfo(number) {
-  return function(dispatch) {
+export function getExtraOrderInfo(number: string) {
+  return function(dispatch: AppDispatch) {
     dispatch({
       type: EXTRA_ORDER_REQUEST
     });

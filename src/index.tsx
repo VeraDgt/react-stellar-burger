@@ -5,13 +5,14 @@ import ReactDOM from "react-dom";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import { store } from "./services/actions/store";
+import { store } from "./services/store";
 import { rootReducer } from "./services/reducers/index-reducer";
 import type {} from "redux-thunk/extend-redux";
 import { ThunkAction } from "redux-thunk";
 import { TUserActions } from "./services/user-auth/auth-action";
 import { IngredientsActions } from "./services/burger-ingredients/burger-ingredients-action";
 import { ConstructorActions } from "./services/burger-constructor/burger-constructor-action";
+import { OrderActions } from "./services/modals/modals-action";
 
 export type AppState = ReturnType<typeof rootReducer>;
 
@@ -20,7 +21,7 @@ type AppActions =
 //   | FeedActions
 | IngredientsActions
 //   | OrdersActions
-//   | OrderActions
+  | OrderActions
   | TUserActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<

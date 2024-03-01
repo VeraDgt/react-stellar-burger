@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import orderStyles from './order-details.module.css';
 import img from '../../images/done.png';
-import { getOrder } from '../../services/actions/modals';
+import { getOrder } from '../../services/modals/modals-action';
 import { useDispatch, useSelector } from 'react-redux';
 
 const OrderDetails = () => {

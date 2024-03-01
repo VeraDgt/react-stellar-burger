@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
-import { getOrder } from '../../services/actions/modals';
+import { getOrder } from '../../services/modals/modals-action';
 import { useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../types';
 import { burgerConstructor } from '../../services/burger-constructor/burger-constructor-selector';

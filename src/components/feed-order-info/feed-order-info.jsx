@@ -6,7 +6,7 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/actions/socket-auth";
 import styles from "./feed-order-info.module.css";
-import { getExtraOrderInfo } from "../../services/actions/modals";
+import { getExtraOrderInfo } from "../../services/modals/modals-action";
 
 const FeedOrder = () => {
   const { items } = useSelector(store => store.burgerIngredients);
