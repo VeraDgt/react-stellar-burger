@@ -1,3 +1,3 @@
 import { AppState } from "../..";
 
-export const user = (store: AppState) => store.user
+export const currUser = (store: AppState) => store.user

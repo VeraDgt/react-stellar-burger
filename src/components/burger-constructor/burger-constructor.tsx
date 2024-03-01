@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, FunctionComponent } from 'react';
+import { useAppSelector } from '../..';
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
@@ -7,20 +8,23 @@ import OrderDetails from '../order-details/order-details';
 import { countTotalSum } from '../../utils/data';
 import Modal from '../modal/modal';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
 import { getOrder } from '../../services/actions/modals';
 import { useNavigate } from 'react-router-dom';
+import { TIngredient } from '../../types';
+import { burgerConstructor } from '../../services/burger-constructor/burger-constructor-selector';
+import { currUser } from '../../services/user-auth/auth-selector';
 
 
-const BurgerConstructor = ({dropHandler}) => {
-  const { burgersData } = useSelector(store => store.burgerConstructor);
+const BurgerConstructor: FunctionComponent<{dropHandler: (item: TIngredient) => void }> = ({dropHandler}) => {
+  const { burgersData } = useAppSelector(burgerConstructor);
   const items = burgersData.map((el) => el._id);
   const [ visibility, setVisibility ] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(store => store.user.user);
+  const user = useAppSelector(currUser);
 
   const dragItem = useCallback((dragIndex, hoverIndex) => {
     dispatch({
@@ -32,7 +36,7 @@ const BurgerConstructor = ({dropHandler}) => {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item) {
+    drop(item: TIngredient) {
       dropHandler(item);
     }
   })
@@ -78,7 +82,6 @@ const BurgerConstructor = ({dropHandler}) => {
               text={`${item.name} (верх)`}
               price={item.price}
               thumbnail={item.image}
-              className={burgerConstructorStyles.item}
             />
           </div>
           )
@@ -103,7 +106,6 @@ const BurgerConstructor = ({dropHandler}) => {
               text={`${item.name} (низ)`}
               price={item.price}
               thumbnail={item.image}
-              className={burgerConstructorStyles.item}
               />
             </div>
           )
