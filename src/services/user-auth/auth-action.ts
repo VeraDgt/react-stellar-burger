@@ -146,44 +146,44 @@ export type TUserActions =
 | TUpdateUser | TUpdateUserSuccess | TUpdateUserFailed 
 | TResetPassword | TResetPasswordSuccess | TResetPasswordFailed
 
-function loginFailed() {
+function loginFailed(): TLoginFailed {
   return { type: LOGIN_FAILED };
 }
 
-function setUserFailed() {
+function setUserFailed(): TSetUserFailed {
   return { type: SET_USER_FAILED }
 }
 
-function logoutFailed() {
+function logoutFailed(): TLogoutFailed {
     return { type: LOGOUT_FAILED };
 }
 
-function registerFailed() {
+function registerFailed(): TRegisterFailed {
   return { type: REGISTER_FAILED };
 }
 
-function recoverPwFailed() {
+function recoverPwFailed(): TRecoverPasswordFailed {
   return { type: RECOVER_PASSWORD_FAILED};
 }
 
-function refreshTokenFalied() {
+function refreshTokenFalied(): TRefreshTokenFailed {
   return { type: REFRESH_TOKEN_FAILED };
 }
 
-function updateUserFailed() {
+function updateUserFailed(): TUpdateUserFailed {
   return { type: UPDATE_USER_FAILED};
 }
 
-function resetPasswordFailed() {
+function resetPasswordFailed(): TResetPasswordFailed {
   return { type: RESET_PASSWORD_FAILED};
 }
 
-export const setAuthChecked = (value: boolean) => ({
+export const setAuthChecked = (value: boolean): TSetAuthChecked => ({
   type: SET_AUTH_CHECKED,
   payload: value,
 });
 
-export const setUser = (user: TUser | null) => ({
+export const setUser = (user: TUser): TSetUser => ({
   type: SET_USER,
   payload: user,
 });
@@ -258,7 +258,6 @@ export const checkUserAuth = () => {
               .catch(() => {
                   deleteCookie("accessToken");
                   deleteCookie("refreshToken");
-                  dispatch(setUser(null));
               })
               .finally(() => dispatch(setAuthChecked(true)));
         } else {
@@ -359,7 +358,6 @@ export const logout = () => {
     return api.logout().then(() => {
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
-      dispatch(setUser(null));
     })
     .catch(err => {
       console.log(err);

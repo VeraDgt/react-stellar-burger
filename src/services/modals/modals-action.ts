@@ -1,4 +1,4 @@
-import { AppDispatch } from "../..";
+import { AppDispatch, AppThunk } from "../..";
 import { TOrder } from "../../types";
 import { getOrderNumber, getExtraOrder } from "../../utils/api";
 import { getCookie } from "../../utils/utils";
@@ -47,12 +47,12 @@ export type OrderActions =
 | TExtraOrderSuccess
 | TExtraOrderFailed;
 
-function getOrderFailed() {
+function getOrderFailed(): TGetOrderFailed {
   return { type: GET_ORDER_FAILED }
 }
 
 export function getOrder(num: Array<string>) {
-  return function(dispatch: AppDispatch) {
+  return function(dispatch: AppDispatch & AppThunk) {
     dispatch({ type: GET_ORDER });
 
     getOrderNumber(num).then(res => {

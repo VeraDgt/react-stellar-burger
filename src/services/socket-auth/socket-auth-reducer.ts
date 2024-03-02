@@ -3,7 +3,8 @@ import {
   WS_AUTH_CLOSED,
   WS_AUTH_ERROR,
   WS_AUTH_ORDERS,
-  WS_AUTH_DISCONNECT } from "./socket-auth-action";
+  WS_AUTH_DISCONNECT,
+  OrdersActions } from "./socket-auth-action";
 
   const initialState = {
     connected: false,
@@ -11,7 +12,7 @@ import {
     error: undefined
   };
 
-  export const socketAuthReducer = (state = initialState, action) => {
+  export const socketAuthReducer = (state = initialState, action: OrdersActions) => {
     switch (action.type) {
       case WS_AUTH_SUCCESS:
         return {
