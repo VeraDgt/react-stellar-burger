@@ -6,23 +6,25 @@ import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./services/store";
-import { rootReducer } from "./services/reducers/index-reducer";
+import { rootReducer } from "./services/index-reducer";
 import type {} from "redux-thunk/extend-redux";
 import { ThunkAction } from "redux-thunk";
 import { TUserActions } from "./services/user-auth/auth-action";
 import { IngredientsActions } from "./services/burger-ingredients/burger-ingredients-action";
 import { ConstructorActions } from "./services/burger-constructor/burger-constructor-action";
 import { OrderActions } from "./services/modals/modals-action";
+import { FeedActions } from "./services/socket/socket-action";
+import { OrdersActions } from "./services/socket-auth/socket-auth-action";
 
 export type AppState = ReturnType<typeof rootReducer>;
 
 type AppActions =
 | ConstructorActions
-//   | FeedActions
+| FeedActions
 | IngredientsActions
-//   | OrdersActions
-  | OrderActions
-  | TUserActions;
+| OrdersActions
+| OrderActions
+| TUserActions;
 
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

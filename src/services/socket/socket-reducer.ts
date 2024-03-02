@@ -1,9 +1,10 @@
 import { 
-  WS_AUTH_SUCCESS,
-  WS_AUTH_CLOSED,
-  WS_AUTH_ERROR,
-  WS_AUTH_ORDERS,
-  WS_AUTH_DISCONNECT } from "../actions/socket-auth";
+  WS_CONNECTION_SUCCESS, 
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_GET_ORDERS,
+  WS_DISCONNECT, 
+  FeedActions} from "./socket-action";
 
   const initialState = {
     connected: false,
@@ -11,39 +12,44 @@ import {
     error: undefined
   };
 
-  export const socketAuthReducer = (state = initialState, action) => {
+  export const wsReducer = (state = initialState, action: FeedActions) => {
     switch (action.type) {
-      case WS_AUTH_SUCCESS:
+      case WS_CONNECTION_SUCCESS:
         return {
           ...state,
           error: undefined,
           connected: true
         };
-      case WS_AUTH_CLOSED:
+
+      case WS_CONNECTION_CLOSED:
         return {
           ...state,
           error: undefined,
           connected: false
         };
-      case WS_AUTH_ERROR:
+
+      case WS_CONNECTION_ERROR:
         return {
           ...state,
           error: action.payload,
           connected: false
         };
-      case WS_AUTH_ORDERS:
+
+      case WS_GET_ORDERS:
         return {
           ...state,
           error: undefined,
-          orders: {...action.payload, orders: action.payload.orders?.reverse()}
+          orders: action.payload
         };
-        case WS_AUTH_DISCONNECT: {
-          return {
-            ...state,
-            error: undefined,
-            connected: false
-          }
-        };
+
+      case WS_DISCONNECT: {
+        return {
+          ...state,
+          error: undefined,
+          connected: false
+        }
+      }
+
       default: return state;
     }
   };

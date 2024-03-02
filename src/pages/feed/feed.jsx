@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/actions/socket";
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/socket/socket-action";
 import styles from "./feed.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import FeedItem from "../../components/feed-item/feed-item";

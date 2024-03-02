@@ -1,4 +1,4 @@
-import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS, EXTRA_ORDER_REQUEST, EXTRA_ORDER_SUCCESS, EXTRA_ORDER_FAILED } from "./modals-action";
+import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS, EXTRA_ORDER_REQUEST, EXTRA_ORDER_SUCCESS, EXTRA_ORDER_FAILED, OrderActions } from "./modals-action";
 
 const initialState = {
   order: {},
@@ -10,7 +10,7 @@ const initialState = {
   extraOrderFailed: false,
 }
 
-export const orderModalReducer = (state = initialState, action) => {
+export const orderModalReducer = (state = initialState, action: OrderActions) => {
   switch (action.type) {
     case GET_ORDER: {
       return { ...state, 

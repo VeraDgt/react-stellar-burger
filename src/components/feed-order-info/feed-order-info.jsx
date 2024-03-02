@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useMatch, useParams } from "react-router-dom";
 import { getOrderIngredients, getOrderStatus, orderTotalPrice, countItems } from "../../utils/utils";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/actions/socket";
-import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/actions/socket-auth";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/socket/socket-action";
+import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/socket-auth/socket-auth-action";
 import styles from "./feed-order-info.module.css";
 import { getExtraOrderInfo } from "../../services/modals/modals-action";
 

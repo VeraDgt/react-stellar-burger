@@ -1,8 +1,8 @@
-import { rootReducer } from "./reducers/index-reducer";
-import storeMiddleware  from './actions/store-middleware';
+import { rootReducer } from "./index-reducer";
+import storeMiddleware  from './middleware/store-middleware';
 import { wsUrl } from '../utils/data';
-import { socketActions } from './actions/socket';
-import { socketAuth } from './actions/socket-auth';
+import { socketActions } from './socket/socket-action';
+import { socketAuth } from './socket-auth/socket-auth-action';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 

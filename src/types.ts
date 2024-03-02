@@ -39,3 +39,9 @@ export type TForm = {
   password: string,
   token: string,
   }
+
+  export type TOrdersArr = {
+    orders: Array<TOrder>,
+    ordersQty: string,
+    ordersTodayQty: string
+  }
