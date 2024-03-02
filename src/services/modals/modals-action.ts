@@ -19,7 +19,7 @@ type TGetOrder = {
 
 type TGetOrderSuccess = {
   type: typeof GET_ORDER_SUCCESS,
-  order: TOrder,
+  order?: string,
 }
 
 type TGetOrderFailed = {
@@ -51,16 +51,18 @@ function getOrderFailed(): TGetOrderFailed {
   return { type: GET_ORDER_FAILED }
 }
 
+const getOrderSuccess = (payload: string | undefined): TGetOrderSuccess => ({
+  type: GET_ORDER_SUCCESS,
+  order: payload,
+})
+
 export function getOrder(num: Array<string>) {
   return function(dispatch: AppDispatch & AppThunk) {
     dispatch({ type: GET_ORDER });
 
     getOrderNumber(num).then(res => {
       if (res && res.success) {
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          order: res.order
-        })
+        dispatch(getOrderSuccess(res.order));
         dispatch({ type: CLEAR_CONSTRUCTOR });
         dispatch({ type: CLEAR_QTY });
       } else {
@@ -78,16 +80,14 @@ export function getOrder(num: Array<string>) {
 };
 
 export function getExtraOrderInfo(number: string) {
-  return function(dispatch: AppDispatch) {
+  return function(dispatch: AppDispatch & AppThunk) {
     dispatch({
       type: EXTRA_ORDER_REQUEST
     });
     getExtraOrder(number)
     .then(res => {
       res.success ? 
-      dispatch({ 
-        type: EXTRA_ORDER_SUCCESS, 
-        payload: res.orders[0]})
+      dispatch(getOrderSuccess(res.order))
       : Promise.reject(`Ошибка: ${res.status}`);
     })
     .catch((err) => {

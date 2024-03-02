@@ -23,16 +23,24 @@ export type TOrder = {
   status: string,
   updatedAt: string,
   _id: string
-}
+} 
 
 export type TUser = {
-  name: string,
+  name?: string,
   email: string,
   password: string
 }
 
 export type TRes = {
   success: boolean,
+  data: TIngredient[],
+  message?: string,
+  order?: string,
+  user?: TUser,
+  orders?: TOrdersArr,
+  status: boolean,
+  accessToken?: string,
+  refreshToken?: string,
 }
 
 export type TForm = {
@@ -41,7 +49,10 @@ export type TForm = {
   }
 
   export type TOrdersArr = {
+    [index: string]:any,
     orders: Array<TOrder>,
     ordersQty: string,
     ordersTodayQty: string
   }
+
+  export type TCookieProps = {[props: string]: string | boolean | number | Date | null}

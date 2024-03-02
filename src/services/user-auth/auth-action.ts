@@ -2,7 +2,7 @@ import { api } from "../../utils/api";
 import { getCookie, setCookie, deleteCookie } from "../../utils/utils";
 import { cookieLive } from "../../utils/data";
 import { TUser } from "../../types";
-import { AppDispatch } from "../..";
+import { AppDispatch, AppThunk } from "../..";
 
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 export const GET_USER = "GET_USER";
@@ -41,7 +41,7 @@ type TGetUser = {
 
 type TSetUser = {
   type: typeof SET_USER,
-  payload: TUser,
+  payload?: TUser | null,
 }
 
 type TSetUserFailed = {
@@ -183,7 +183,7 @@ export const setAuthChecked = (value: boolean): TSetAuthChecked => ({
   payload: value,
 });
 
-export const setUser = (user: TUser): TSetUser => ({
+export const setUser = (user: TUser | undefined | null ): TSetUser => ({
   type: SET_USER,
   payload: user,
 });
@@ -208,6 +208,11 @@ export const getUser = () => {
   }
 };
 
+const loginSuccess = (payload: TUser | any): TLoginSuccess => ({
+  type: LOGIN_SUCCESS,
+  payload,
+})
+
 export const login = (form: { email: string, password: string}) => (dispatch: AppDispatch) => {
   dispatch({type: LOGIN});
 
@@ -215,10 +220,7 @@ export const login = (form: { email: string, password: string}) => (dispatch: Ap
     if (res && res.success) {      
       setCookie('accessToken', res.accessToken, {expires: cookieLive});
       setCookie('refreshToken', res.refreshToken);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.user
-      })
+      dispatch(loginSuccess(res.user));
     } else {
       dispatch(loginFailed())
     }
@@ -229,6 +231,11 @@ export const login = (form: { email: string, password: string}) => (dispatch: Ap
   })
 };
 
+const registerSuccess = (payload: TUser | any): TRegisterSuccess => ({
+  type: REGISTER_SUCCESS,
+  payload,
+})
+
 export const register = (form: TUser) => (dispatch: AppDispatch) => {
   dispatch({type: REGISTER});
 
@@ -237,10 +244,7 @@ export const register = (form: TUser) => (dispatch: AppDispatch) => {
 
     setCookie('accessToken', res.accessToken, { expires: cookieLive });
     setCookie('refreshToken', res.refreshToken);
-    dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res
-    })
+    dispatch(registerSuccess(res));
     } else {
       dispatch(registerFailed())
     }
@@ -258,6 +262,7 @@ export const checkUserAuth = () => {
               .catch(() => {
                   deleteCookie("accessToken");
                   deleteCookie("refreshToken");
+                  dispatch(setUser(null));
               })
               .finally(() => dispatch(setAuthChecked(true)));
         } else {
@@ -309,16 +314,18 @@ export const checkToken = () => {
   }
 }
 
+const updateUserSuccess = (payload: TUser | any): TUpdateUserSuccess => ({
+  type: UPDATE_USER_SUCCESS,
+  payload,
+})
+
 export const updateUser = (form: TUser) => {
-  return function(dispatch: AppDispatch) {
+  return function(dispatch: AppDispatch & AppThunk) {
     dispatch({type: UPDATE_USER});
 
     api.updateUser(form).then(res => {
       if (res && res.success) {
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          payload: res.user
-        })
+        dispatch(updateUserSuccess(res.user));
       } else {
         dispatch(updateUserFailed())
       }
@@ -358,6 +365,7 @@ export const logout = () => {
     return api.logout().then(() => {
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
+      dispatch(setUser(null));
     })
     .catch(err => {
       console.log(err);
