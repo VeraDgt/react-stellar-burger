@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
 import { useDispatch } from 'react-redux';
@@ -15,16 +15,16 @@ export default function ForgotPwPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(recoverPassword(form.email));
     navigate('/reset-password', {state: {from: location}});
   }
 
-  const onChange = (e) => {
+  const onChange = (e: FormEvent) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
     });
   }
 

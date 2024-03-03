@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../..";
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/socket-auth/socket-auth-action";
 import styles from "./profile-orders.module.css";
 import FeedItem from "../feed-item/feed-item";
+import { ordersHistory } from "../../services/socket-auth/socket-auth-selector";
 
 const ProfileOrders = () => {
-  const orders = useSelector(store => store.ordersHistory.orders);
-  const dispatch = useDispatch();
+  const orders = useAppSelector(ordersHistory);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch({ type: WS_AUTH_START });
