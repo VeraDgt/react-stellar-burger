@@ -1,3 +1,4 @@
+import { TOrdersArr } from "../../types";
 import { 
   WS_CONNECTION_SUCCESS, 
   WS_CONNECTION_CLOSED,
@@ -6,13 +7,19 @@ import {
   WS_DISCONNECT, 
   FeedActions} from "./socket-action";
 
+  export type TSocketState = {
+    connected: boolean,
+    orders: TOrdersArr | null,
+    error: string | null | undefined,
+  }
+
   const initialState = {
     connected: false,
     orders: null,
     error: undefined
   };
 
-  export const wsReducer = (state = initialState, action: FeedActions) => {
+  export const wsReducer = (state:TSocketState = initialState, action:FeedActions) => {
     switch (action.type) {
       case WS_CONNECTION_SUCCESS:
         return {

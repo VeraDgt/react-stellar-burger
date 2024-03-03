@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent, MouseEvent } from 'react';
 import overlayStyles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-const ModalOverlay = ({ handleClose }) => {
+const ModalOverlay: FunctionComponent<{ handleClose: () => void }> = ({ handleClose }) => {
   const ref = React.useRef(null);
 
-  function handleClick(e) {
+  function handleClick(e: MouseEvent<HTMLDivElement>) {
     return handleClose();
   }
 

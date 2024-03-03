@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FormEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../..';
 import styles from './profile-data.module.css';
 import { getUser, updateUser } from '../../services/user-auth/auth-action';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
+import { currUser } from '../../services/user-auth/auth-selector';
 
 const ProfileData = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [ form, setForm ] = useState({
     name: '',
     email: '',
     password: ''
   });
 
-  const { user } = useSelector(store => store.user);
+  const { user } = useAppSelector(currUser);
 
   useEffect(() => {
     dispatch(getUser());
@@ -24,10 +25,10 @@ const ProfileData = () => {
     })
   }, [dispatch, user.name, user.email]);
 
-  const onChange = (e) => {
+  const onChange = (e: FormEvent) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value
+      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
     })
   }
 
@@ -39,7 +40,7 @@ const ProfileData = () => {
     setValidForm(regexPassword.test(form.password));
   }, [form.name, form.email, form.password])
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(updateUser(form));
   }

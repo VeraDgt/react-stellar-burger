@@ -79,7 +79,12 @@ export function getOrder(num: Array<string>) {
   }
 };
 
-export function getExtraOrderInfo(number: string) {
+const getExtraOrderSuccess = (payload: TOrder): TExtraOrderSuccess => ({
+  type: EXTRA_ORDER_SUCCESS,
+  payload,
+})
+
+export function getExtraOrderInfo(number: string | undefined) {
   return function(dispatch: AppDispatch & AppThunk) {
     dispatch({
       type: EXTRA_ORDER_REQUEST
@@ -87,7 +92,7 @@ export function getExtraOrderInfo(number: string) {
     getExtraOrder(number)
     .then(res => {
       res.success ? 
-      dispatch(getOrderSuccess(res.order))
+      dispatch(getExtraOrderSuccess(res.orders[0]))
       : Promise.reject(`Ошибка: ${res.status}`);
     })
     .catch((err) => {

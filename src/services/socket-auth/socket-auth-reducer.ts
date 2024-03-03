@@ -1,3 +1,4 @@
+import { TOrdersArr } from "../../types";
 import { 
   WS_AUTH_SUCCESS,
   WS_AUTH_CLOSED,
@@ -6,13 +7,19 @@ import {
   WS_AUTH_DISCONNECT,
   OrdersActions } from "./socket-auth-action";
 
+  export type TSocketAuthState = {
+    connected: boolean,
+    orders: TOrdersArr | null,
+    error: string | null | undefined,
+  }
+
   const initialState = {
     connected: false,
     orders: null,
     error: undefined
   };
 
-  export const socketAuthReducer = (state = initialState, action: OrdersActions) => {
+  export const socketAuthReducer = (state: TSocketAuthState = initialState, action: OrdersActions) => {
     switch (action.type) {
       case WS_AUTH_SUCCESS:
         return {

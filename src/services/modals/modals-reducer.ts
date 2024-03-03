@@ -1,7 +1,17 @@
+import { TOrder } from "../../types";
 import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS, EXTRA_ORDER_REQUEST, EXTRA_ORDER_SUCCESS, EXTRA_ORDER_FAILED, OrderActions } from "./modals-action";
 
+export type TOrderModalState = {
+  order: TOrder | null,
+  orderRequest: boolean,
+  orderFailed: boolean,
+  extraOrder: number | null,
+  extraOrderRequest: boolean,
+  extraOrderFailed: boolean,
+}
+
 const initialState = {
-  order: {},
+  order: null,
   orderRequest: false,
   orderFailed: false,
 
@@ -10,7 +20,7 @@ const initialState = {
   extraOrderFailed: false,
 }
 
-export const orderModalReducer = (state = initialState, action: OrderActions) => {
+export const orderModalReducer = (state: TOrderModalState = initialState, action: OrderActions) => {
   switch (action.type) {
     case GET_ORDER: {
       return { ...state, 
@@ -58,4 +68,4 @@ export const orderModalReducer = (state = initialState, action: OrderActions) =>
       return state;
     }
   }
-}
+};

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState, FunctionComponent } from "react";
+import { useAppSelector } from "../..";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getOrderIngredients, getOrderStatus, orderTotalPrice } from "../../utils/utils";
 import styles from './feed-item.module.css';
 import { Link, useLocation, useMatch } from "react-router-dom";
+import { TIngredient, TOrder } from "../../types";
+import { burgerIngredientsArr } from "../../services/burger-ingredients/burger-ingredients-selector";
 
-const FeedItem = ({item, orderStatus}) => {
-  const items = useSelector(store => store.burgerIngredients.items);
+const FeedItem: FunctionComponent<{item: TOrder, orderStatus: boolean}> = ({item, orderStatus}) => {
+  const items: Array<TIngredient> = useAppSelector(burgerIngredientsArr);
   const ingredients = Array.from(new Set(getOrderIngredients(item.ingredients, items)));
   const [ status, setStatus ] = useState('');
   const price = orderTotalPrice(getOrderIngredients(item.ingredients, items));
@@ -24,7 +26,7 @@ const FeedItem = ({item, orderStatus}) => {
         return <li className={styles.ingredient} style={{zIndex: zIndex}} key={index} >
           <div className="bg"></div>
           <div className="ingr">
-            <img className={styles.img} src={el.image} alt={el.title} />
+            <img className={styles.img} src={el.image} alt={el.name} />
           </div>
         </li>
       }))
@@ -34,7 +36,7 @@ const FeedItem = ({item, orderStatus}) => {
         zIndex -= 1;
         return <li className={styles.ingredient} style={{zIndex: zIndex}} key={index} >
           <div className={styles.ingredients}>
-          <img className={styles.img} src={el.image} alt={el.title} />
+          <img className={styles.img} src={el.image} alt={el.name} />
             { index === 5 && 
             <span className={styles.overlay}>
               <p className=' text text_type_main-default'>+{count}</p>
@@ -56,7 +58,7 @@ const path = profile ? `/feed/${item.number}` : `/profile/orders/${item.number}`
     <li className={styles.order}>
       <Link
       className={styles.link}
-      to={{pathname: path, number: `#${item.number}`}}
+      to={{pathname: path}}
       state={{ background: location }}
       >
         <div className={styles.container}>
@@ -77,7 +79,7 @@ const path = profile ? `/feed/${item.number}` : `/profile/orders/${item.number}`
             </ul>
             <div className={styles.price}>
             <p className="text text_type_digits-default pr-4">{price}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary"/>
           </div>
           </div>
       </Link>

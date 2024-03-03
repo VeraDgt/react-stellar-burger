@@ -137,7 +137,7 @@ export function getOrderNumber(arr: Array<string>) {
   })
 };
 
-export function getExtraOrder(number: string) {
+export function getExtraOrder(number: string | undefined) {
   return request(`/orders/${number}`, {
     method: 'GET',
     headers: { "Content-Type": "application/json",

@@ -1,3 +1,4 @@
+import { TUser } from '../../types';
 import { 
   SET_AUTH_CHECKED, 
   GET_USER,
@@ -24,6 +25,26 @@ import {
   TUserActions
   } from './auth-action';
 
+export type TUserState = {
+  user: TUser | null,
+  recoverEmail: string | null,
+  isAuthChecked: boolean,
+  getUserRequest: boolean,
+  setUserFailed: boolean,
+  registerSuccess: boolean,
+  registerFailed: boolean,
+  loginRequest: boolean,
+  recoverPwRequest: boolean,
+  recoverPwFailed: boolean,
+  recoverPwSuccess: boolean,
+  updateUserRequest: boolean,
+  updateUserFailed: boolean,
+  refreshTokenRequest: boolean,
+  refreshTokenFailed: boolean,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+}
+
 const initialState = {
     user: null,
     recoverEmail: null,
@@ -44,85 +65,85 @@ const initialState = {
     resetPasswordFailed: false,
 };
 
-export const userAuthReducer = (state = initialState, action: TUserActions) => {
+export const userAuthReducer = (state:TUserState = initialState, action:TUserActions) => {
   switch (action.type) {
-    case SET_AUTH_CHECKED:
+    case SET_AUTH_CHECKED: {
       return {
         ...state,
         isAuthChecked: action.payload
       }
-
-    case GET_USER: 
+    };
+    case GET_USER: {
       return {
         ...state, 
         getUserRequest: true
       }
-
-    case SET_USER:
+    };
+    case SET_USER: {
       return {
         ...state,
         user: action.payload,
         getUserRequest: false,
         setUserFailed: false
       }
-
-    case SET_USER_FAILED:
+    };
+    case SET_USER_FAILED: {
       return {
         ...state,
         getUserRequest: false,
         setUserFailed: true
       }
-
-    case LOGIN: 
+    };
+    case LOGIN: {
       return { 
         ...state, 
         loginRequest: true
       }
-
-    case LOGIN_SUCCESS: 
+    };
+    case LOGIN_SUCCESS: {
       return { 
         ...state, 
         user: action.payload, 
         loginRequest: false, 
         loginFailed: false
       }
-
-    case LOGIN_FAILED:
+    };
+    case LOGIN_FAILED: {
       return { 
         ...state, 
         loginRequest: false, 
         loginFailed: true
       }
-    
-    case REGISTER: 
+    };
+    case REGISTER: {
       return { 
         ...state, 
         registerSuccess: true
       }
-    
-    case REGISTER_SUCCESS: 
+    };
+    case REGISTER_SUCCESS: {
       return { 
         ...state,
         registerFailed: false,
         registerSuccess: false,  
         user: action.payload
       }
-    
-    case REGISTER_FAILED: 
+    };
+    case REGISTER_FAILED: {
       return { 
         ...state, 
         registerFailed: false, 
         registerSuccess: true
       }
-
-      case RECOVER_PASSWORD: 
+    };
+      case RECOVER_PASSWORD: {
         return { 
           ...state, 
           recoverPwRequest: true,
           recoverPwSuccess: false, 
         }
-
-      case RECOVER_PASSWORD_SUCCESS: 
+      };
+      case RECOVER_PASSWORD_SUCCESS: {
         return { 
           ...state, 
           recoverEmail: action.payload, 
@@ -130,77 +151,78 @@ export const userAuthReducer = (state = initialState, action: TUserActions) => {
           recoverPwFailed: false,
           recoverPwSuccess: true, 
         }
-
-      case RECOVER_PASSWORD_FAILED: 
+      };
+      case RECOVER_PASSWORD_FAILED: {
         return { 
           ...state, 
           recoverPwRequest: false, 
           recoverPwFailed: true,
           recoverPwSuccess: false 
         }
-
-      case RESET_PASSWORD: 
+      };
+      case RESET_PASSWORD: {
         return { 
           ...state, 
           resetPasswordRequest: true
         }
-
-      case RESET_PASSWORD_SUCCESS: 
+      };
+      case RESET_PASSWORD_SUCCESS: {
         return { 
           ...state, 
           resetPasswordRequest: false, 
           resetPasswordFailed: false 
         }
-
-      case RESET_PASSWORD_FAILED: 
+      };
+      case RESET_PASSWORD_FAILED: {
         return { 
           ...state, 
           resetPasswordRequest: false, 
           resetPasswordFailed: true 
         }
-
-      case REFRESH_TOKEN: 
+      };
+      case REFRESH_TOKEN: {
         return { 
           ...state, 
           refreshTokenRequest: true 
         }
-
-      case REFRESH_TOKEN_SUCCESS: 
+      };
+      case REFRESH_TOKEN_SUCCESS: {
         return { 
           ...state, 
           refreshTokenRequest: false, 
           refreshTokenFailed: false 
         }
-
-      case REFRESH_TOKEN_FAILED: 
+      };
+      case REFRESH_TOKEN_FAILED: {
         return { 
           ...state, 
           refreshTokenRequest: false, 
           refreshTokenFailed: true 
         }
-
-      case UPDATE_USER:
+      };
+      case UPDATE_USER: {
         return { 
           ...state, 
           updateUserRequest: true 
         }
-
-      case UPDATE_USER_SUCCESS:
+      };
+      case UPDATE_USER_SUCCESS: {
         return { 
           ...state, 
           user: action.payload, 
           updateUserFailed: false, 
           updateUserRequest: false
         }
-
-      case UPDATE_USER_FAILED:
+      };
+      case UPDATE_USER_FAILED: {
         return { 
           ...state, 
           updateUserFailed: true, 
           updateUserRequest: false 
         }
-      
-    default:
-      return state;    
+      }
+    default: {
+      return state; 
+    }   
   }
 };

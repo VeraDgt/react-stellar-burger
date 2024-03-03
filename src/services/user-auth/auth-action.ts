@@ -39,7 +39,7 @@ type TGetUser = {
   type: typeof GET_USER,
 }
 
-type TSetUser = {
+export type TSetUser = {
   type: typeof SET_USER,
   payload?: TUser | null,
 }
@@ -144,7 +144,7 @@ export type TUserActions =
 | TRecoverPassword | TRecoverPasswordSuccess | TRecoverPasswordFailed
 | TRefreshToken | TRefreshTokenSuccess | TRefreshTokenFailed 
 | TUpdateUser | TUpdateUserSuccess | TUpdateUserFailed 
-| TResetPassword | TResetPasswordSuccess | TResetPasswordFailed
+| TResetPassword | TResetPasswordSuccess | TResetPasswordFailed;
 
 function loginFailed(): TLoginFailed {
   return { type: LOGIN_FAILED };
@@ -188,8 +188,8 @@ export const setUser = (user: TUser | undefined | null ): TSetUser => ({
   payload: user,
 });
 
-export const getUser = () => {
-  return (dispatch: AppDispatch) => {
+export const getUser: AppThunk = () => {
+  return (dispatch: AppDispatch & AppThunk) => {
     dispatch({type: GET_USER});
     return api.getUser().then((res) => {
       if (res && res.success) {
@@ -256,9 +256,14 @@ export const register = (form: TUser) => (dispatch: AppDispatch) => {
 }
 
 export const checkUserAuth = () => {
-    return (dispatch: AppDispatch) => {
+    return (dispatch: AppDispatch & AppThunk) => {
         if (getCookie("accessToken")) {
-            dispatch(getUser())
+          api.getUser().then((res) => {
+            if (res && res.success) {
+            dispatch(setUser(res.user));
+          } else {
+            dispatch(setUserFailed())
+          }})
               .catch(() => {
                   deleteCookie("accessToken");
                   deleteCookie("refreshToken");

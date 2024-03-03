@@ -16,10 +16,10 @@ export type TIngredient = {
 }
 
 export type TOrder = {
-  createdAt: string, 
-  ingredients: ReadonlyArray<string>,
+  createdAt: string | number | Date, 
+  ingredients: Array<string>,
   name: string,
-  number: number,
+  number: number | string,
   status: string,
   updatedAt: string,
   _id: string
@@ -37,7 +37,7 @@ export type TRes = {
   message?: string,
   order?: string,
   user?: TUser,
-  orders?: TOrdersArr,
+  orders?: any | TOrdersArr,
   status: boolean,
   accessToken?: string,
   refreshToken?: string,
@@ -50,7 +50,7 @@ export type TForm = {
 
   export type TOrdersArr = {
     [index: string]:any,
-    orders: Array<TOrder>,
+    orders?: Array<TOrder>,
     ordersQty: string,
     ordersTodayQty: string
   }

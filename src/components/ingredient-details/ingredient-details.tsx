@@ -1,14 +1,15 @@
 import React from 'react';
 import detailsStyles from './ingredient-details.module.css';
 import { useParams, useLocation } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../..';
+import { burgerIngredients } from '../../services/burger-ingredients/burger-ingredients-selector';
 
 const IngredientDetails = () => {
 
   const location = useLocation();
   const background = location.state?.background;
   const { id } = useParams();
-  const { items } = useSelector((store) => store.burgerIngredients);
+  const { items } = useAppSelector(burgerIngredients);
   const currItem = items.find((item) => item._id === id);
 
   if (!currItem) return null;
@@ -16,7 +17,7 @@ const IngredientDetails = () => {
   return (
     <>
       { background && <h1 className="text text_type_main-large mt-30">Детали ингредиента</h1> }
-      <img src={currItem.image_large} alt={currItem.title} />
+      <img src={currItem.image_large} alt={currItem.name} />
       <p className={detailsStyles.name}>{currItem.name}</p>
       <div className={detailsStyles.container}>
         <p className={detailsStyles.parameter}>Калории,ккал

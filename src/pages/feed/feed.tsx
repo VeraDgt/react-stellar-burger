@@ -1,20 +1,25 @@
 import React, { useEffect } from "react";
 import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from "../../services/socket/socket-action";
 import styles from "./feed.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../..';
 import FeedItem from "../../components/feed-item/feed-item";
+import { ordersListArr, ordersListQty, ordersListTodayQty } from "../../services/socket/socket-selector";
+import { TOrder } from "../../types";
 
 
 export default function FeedPage () {
-  const { orders } = useSelector(store => store.ordersList);
-  const dispatch = useDispatch();
+  
+  const orders = useAppSelector(ordersListArr);
+  const ordersTotal = useAppSelector(ordersListQty);
+  const ordersToday = useAppSelector(ordersListTodayQty);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useEffect((): () => void => {
     dispatch({ type: WS_CONNECTION_START, payload: '/all' });
     return () => dispatch({ type: WS_CONNECTION_CLOSED });
   }, [dispatch]);
 
-  const doneOrdersList = (arr) => {
+  const doneOrdersList = (arr: Array<TOrder>) => {
     return arr
       .filter(el => el.status === 'done')
       .map(el => <li key={el.number} className={styles.done}>
@@ -22,7 +27,7 @@ export default function FeedPage () {
       </li>)
   }
 
-  const pendingOrdersList = (arr) => {
+  const pendingOrdersList = (arr: Array<TOrder>) => {
     return arr
       .filter(el => ( el.status === 'pending' || el.status === 'created' ))
       .map(el => <li key={el.number} className="text text_type_digits-default">
@@ -38,7 +43,7 @@ export default function FeedPage () {
           <div className="mr-15">
             <ul className={styles.list}>
               {
-                orders.orders.map(el => <FeedItem key={el._id} item={el} orderStatus={false} />)
+                orders.map(el => <FeedItem key={el._id} item={el} orderStatus={false} />)
               }
             </ul>
           </div>
@@ -49,7 +54,7 @@ export default function FeedPage () {
                   <p className='text text_type_main-medium mb-6'>Готовы:</p>
                   <ul className={styles.statusesList}>
                     {
-                      doneOrdersList(orders.orders)
+                      doneOrdersList(orders)
                     }
                   </ul>
                 </div>
@@ -57,7 +62,7 @@ export default function FeedPage () {
                   <p className='text text_type_main-medium mb-6'>В работе:</p>
                   <ul className={styles.statusesList}>
                     {
-                      pendingOrdersList(orders.orders)
+                      pendingOrdersList(orders)
                     }
                   </ul>
                 </div>
@@ -65,11 +70,11 @@ export default function FeedPage () {
             </div>
             <div>
               <p className="text text_type_main-medium">Выполнено за все время:</p>
-              <p className={styles.totalOrders}>{orders.total}</p>
+              <p className={styles.totalOrders}>{ordersTotal}</p>
             </div>
             <div>
               <p className="text text_type_main-medium">Выполнено за сегодня:</p>
-              <p className={styles.totalOrders}>{orders.totalToday}</p>
+              <p className={styles.totalOrders}>{ordersToday}</p>
             </div>
           </div>
         </div> : <p className="loading text text_type_main-large">...</p>

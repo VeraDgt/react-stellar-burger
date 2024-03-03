@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../..";
 import { useLocation, useMatch, useParams } from "react-router-dom";
 import { getOrderIngredients, getOrderStatus, orderTotalPrice, countItems } from "../../utils/utils";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,30 +7,41 @@ import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../services/socket
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/socket-auth/socket-auth-action";
 import styles from "./feed-order-info.module.css";
 import { getExtraOrderInfo } from "../../services/modals/modals-action";
+import { burgerIngredients } from "../../services/burger-ingredients/burger-ingredients-selector";
+import { ordersHistory } from "../../services/socket-auth/socket-auth-selector";
+import { ordersListArr } from "../../services/socket/socket-selector";
+import { orderExtra } from "../../services/modals/modals-selector";
+import { TIngredient } from "../../types";
 
 const FeedOrder = () => {
-  const { items } = useSelector(store => store.burgerIngredients);
+  const { items } = useAppSelector(burgerIngredients);
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const profile = useMatch('/profile/*');
-  const  orders  = useSelector(store => profile ? store.ordersHistory.orders : store.ordersList.orders);
+  const orders  = useAppSelector(profile ? ordersHistory : ordersListArr);
   const background = location.state?.background;
   const orderNumber = useParams().number;
   
-  const extraOrder = useSelector(store => store.order.extraOrder);
+  const extraOrder = useAppSelector(orderExtra);
 
-  const [ order, setOrder ] = useState({
+  const [ order, setOrder ] = useState<{
+    name?: string,
+    status: string,
+    createdAt: string | number | Date,
+    orderNum: string,
+    orderIngrs: Array<TIngredient>
+  }>({
     name: '',
     status: '',
-    date: '',
-    OrderNum: '',
+    createdAt: '',
+    orderNum: '',
     orderIngrs: []
   });
 
   const item = extraOrder ? extraOrder
-  : orders?.orders.find(el => el.number.toString() === orderNumber);
+  : orders?.find(el => el.number.toString() === orderNumber);
 
-  useEffect(() => {
+  useEffect((): () => void => {
     dispatch(
       profile ? 
       { type: WS_AUTH_START } : 
@@ -49,15 +60,15 @@ const FeedOrder = () => {
       ...order,
       name: item?.name,
       status: getOrderStatus(item?.status),
-      date: item?.createdAt, 
+      createdAt: item?.createdAt, 
       orderNum: item?.number,
       orderIngrs: Array.from(new Set(getOrderIngredients(item?.ingredients, items)))
     });
-  }, [orders?.orders]);
+  }, [orders]);
 
   if (!orders) return null;
 
-  const date = order.date !== '' && order.date;
+  const date = order.createdAt !== '' && order.createdAt;
   const totalPrice = orderTotalPrice(getOrderIngredients(item?.ingredients, items));
   const { qty } = countItems(getOrderIngredients(item?.ingredients, items));
 
@@ -74,18 +85,18 @@ const FeedOrder = () => {
               <img className={styles.img} src={el.image} alt={el.name} />
               <p className="text text_type_main-default">{el.name}</p>
               <p className={styles.price}>{qty[el._id]} x {el.price}</p>
-              <CurrencyIcon />
+              <CurrencyIcon type="primary"/>
             </li>)
         }
       </ul>
       <div className={styles.totals}>
         <p>
-          <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(date)}/>
+          <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(order.createdAt)}/>
           <span className="text text_type_main-default text_color_inactive">&nbsp;i-GMT+3</span>
         </p>
         <p className={styles.price}>
           <span className="text text_type_digits-default pr-4">{totalPrice}</span>
-          <CurrencyIcon />
+          <CurrencyIcon type="primary"/>
         </p>
       </div>
     </div> : <p className="loading text text_type_main-large">...</p>
