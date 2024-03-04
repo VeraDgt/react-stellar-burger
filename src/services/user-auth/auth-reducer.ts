@@ -26,7 +26,7 @@ import {
   } from './auth-action';
 
 export type TUserState = {
-  user: TUser | null,
+  user: TUser | null | undefined,
   recoverEmail: string | null,
   isAuthChecked: boolean,
   getUserRequest: boolean,
@@ -34,6 +34,7 @@ export type TUserState = {
   registerSuccess: boolean,
   registerFailed: boolean,
   loginRequest: boolean,
+  loginFailed: boolean,
   recoverPwRequest: boolean,
   recoverPwFailed: boolean,
   recoverPwSuccess: boolean,
@@ -54,6 +55,7 @@ const initialState = {
     registerSuccess: false,
     registerFailed: false,
     loginRequest: false,
+    loginFailed: false,
     recoverPwRequest: false,
     recoverPwFailed: false,
     recoverPwSuccess: false,
@@ -65,7 +67,7 @@ const initialState = {
     resetPasswordFailed: false,
 };
 
-export const userAuthReducer = (state:TUserState = initialState, action:TUserActions) => {
+export const userAuthReducer = (state:TUserState = initialState, action:TUserActions):TUserState => {
   switch (action.type) {
     case SET_AUTH_CHECKED: {
       return {

@@ -2,9 +2,9 @@ import React, { useEffect, useState, FormEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAppSelector, useAppDispatch } from '../..';
 import styles from './profile-data.module.css';
-import { getUser, updateUser } from '../../services/user-auth/auth-action';
+import { GET_USER, getUser, updateUser } from '../../services/user-auth/auth-action';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
-import { currUser } from '../../services/user-auth/auth-selector';
+import { currUser, currUserName, currUserEmail, currUserPassword } from '../../services/user-auth/auth-selector';
 
 const ProfileData = () => {
   const dispatch = useAppDispatch();
@@ -14,16 +14,19 @@ const ProfileData = () => {
     password: ''
   });
 
-  const { user } = useAppSelector(currUser);
+  const user = useAppSelector(currUser);
+  const userName = useAppSelector(currUserName);
+  const userEmail = useAppSelector(currUserEmail);
+  const userPassword = useAppSelector(currUserPassword);
 
   useEffect(() => {
     dispatch(getUser());
     user && setForm({
-      name: user.name,
-      email: user.email,
-      password: '********',
+      name: userName ? userName : '',
+      email: userEmail ? userEmail : '',
+      password: userPassword ? userPassword : '',
     })
-  }, [dispatch, user.name, user.email]);
+  }, [dispatch, userName, userEmail, userPassword ]);
 
   const onChange = (e: FormEvent) => {
     setForm({
@@ -47,9 +50,9 @@ const ProfileData = () => {
 
   const resetForm = () => {
     setForm({
-      name: user.name,
-      email: user.email,
-      password: user.password,
+      name: userName ? userName : '',
+      email: userEmail ? userEmail : '',
+      password: userPassword ? userPassword : '',
     })
   }
 
@@ -87,7 +90,7 @@ const ProfileData = () => {
           >
         </Input>
       </fieldset>
-      { (form.name !== user.name  || form.email !== user.email  || form.password !== '********') && validForm ?
+      { (form.name !== userName  || form.email !== userEmail  || form.password !== userPassword) && validForm ?
         <>
           <Button type='secondary' htmlType='button' onClick={resetForm}>Отмена</Button>
           <Button htmlType='submit'>Сохранить</Button>

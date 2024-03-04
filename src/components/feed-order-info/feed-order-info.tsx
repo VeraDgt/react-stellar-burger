@@ -9,16 +9,17 @@ import styles from "./feed-order-info.module.css";
 import { getExtraOrderInfo } from "../../services/modals/modals-action";
 import { burgerIngredients } from "../../services/burger-ingredients/burger-ingredients-selector";
 import { ordersHistory } from "../../services/socket-auth/socket-auth-selector";
-import { ordersListArr } from "../../services/socket/socket-selector";
+import { ordersList } from "../../services/socket/socket-selector";
 import { orderExtra } from "../../services/modals/modals-selector";
 import { TIngredient } from "../../types";
+import { TOrder } from "../../types";
 
 const FeedOrder = () => {
   const { items } = useAppSelector(burgerIngredients);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const profile = useMatch('/profile/*');
-  const orders  = useAppSelector(profile ? ordersHistory : ordersListArr);
+  const orders  = useAppSelector(profile ? ordersHistory : ordersList);
   const background = location.state?.background;
   const orderNumber = useParams().number;
   
@@ -39,7 +40,7 @@ const FeedOrder = () => {
   });
 
   const item = extraOrder ? extraOrder
-  : orders?.find(el => el.number.toString() === orderNumber);
+  : orders?.find((el: TOrder) => el.number.toString() === orderNumber);
 
   useEffect((): () => void => {
     dispatch(

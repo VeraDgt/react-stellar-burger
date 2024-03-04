@@ -5,7 +5,7 @@ export type TOrderModalState = {
   order: TOrder | null,
   orderRequest: boolean,
   orderFailed: boolean,
-  extraOrder: number | null,
+  extraOrder: TOrder | number | null,
   extraOrderRequest: boolean,
   extraOrderFailed: boolean,
 }
@@ -20,24 +20,24 @@ const initialState = {
   extraOrderFailed: false,
 }
 
-export const orderModalReducer = (state: TOrderModalState = initialState, action: OrderActions) => {
+export const orderModalReducer = (state: TOrderModalState = initialState, action: OrderActions): TOrderModalState => {
   switch (action.type) {
     case GET_ORDER: {
       return { ...state, 
-        orderReqest: true }
+        orderRequest: true }
     }
 
     case GET_ORDER_SUCCESS: {
       return { ...state, 
         orderFailed: false, 
         order: action.order, 
-        orderReqest: false };
+        orderRequest: false };
     }
 
     case GET_ORDER_FAILED: {
       return { ...state, 
         orderFailed: true, 
-        orderReqest: false };
+        orderRequest: false };
     }
 
     case EXTRA_ORDER_REQUEST: {

@@ -35,7 +35,7 @@ export type TRes = {
   success: boolean,
   data: TIngredient[],
   message?: string,
-  order?: string,
+  order: TOrder,
   user?: TUser,
   orders?: any | TOrdersArr,
   status: boolean,

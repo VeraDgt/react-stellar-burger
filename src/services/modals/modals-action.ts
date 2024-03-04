@@ -19,7 +19,7 @@ type TGetOrder = {
 
 type TGetOrderSuccess = {
   type: typeof GET_ORDER_SUCCESS,
-  order?: string,
+  order: TOrder,
 }
 
 type TGetOrderFailed = {
@@ -51,7 +51,7 @@ function getOrderFailed(): TGetOrderFailed {
   return { type: GET_ORDER_FAILED }
 }
 
-const getOrderSuccess = (payload: string | undefined): TGetOrderSuccess => ({
+const getOrderSuccess = (payload: TOrder): TGetOrderSuccess => ({
   type: GET_ORDER_SUCCESS,
   order: payload,
 })
