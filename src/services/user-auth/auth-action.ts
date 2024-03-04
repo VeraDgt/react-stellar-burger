@@ -188,8 +188,8 @@ export const setUser = (user: TUser | undefined | null ): TSetUser => ({
   payload: user,
 });
 
-export const getUser: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
+export const getUser = ():AppThunk<Promise<unknown>>  => {
+  return (dispatch: AppDispatch & AppThunk) => {
     dispatch({type: GET_USER});
     return api.getUser().then((res) => {
       if (res && res.success) {

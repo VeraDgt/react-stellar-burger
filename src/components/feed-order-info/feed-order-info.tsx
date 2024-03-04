@@ -69,7 +69,6 @@ const FeedOrder = () => {
 
   if (!orders) return null;
 
-  const date = order.createdAt !== '' && order.createdAt;
   const totalPrice = orderTotalPrice(getOrderIngredients(item?.ingredients, items));
   const { qty } = countItems(getOrderIngredients(item?.ingredients, items));
 

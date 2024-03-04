@@ -3,11 +3,11 @@ import { useAppSelector, useAppDispatch } from "../..";
 import { WS_AUTH_START, WS_AUTH_CLOSED } from "../../services/socket-auth/socket-auth-action";
 import styles from "./profile-orders.module.css";
 import FeedItem from "../feed-item/feed-item";
-import { ordersHistory } from "../../services/socket-auth/socket-auth-selector";
+import { ordersHistoryArr } from "../../services/socket-auth/socket-auth-selector";
 import { TOrder } from "../../types";
 
 const ProfileOrders = () => {
-  const orders = useAppSelector(ordersHistory);
+  const orders = useAppSelector(ordersHistoryArr);
   const dispatch = useAppDispatch();
 
   useEffect((): () => void => {
