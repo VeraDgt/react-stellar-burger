@@ -18,9 +18,9 @@ export type TIngredient = {
 export type TOrder = {
   createdAt: string | number | Date, 
   ingredients: Array<string>,
-  name: string,
+  name: string | undefined,
   number: number | string,
-  status: string,
+  status: string | undefined,
   updatedAt: string,
   _id: string
 } 

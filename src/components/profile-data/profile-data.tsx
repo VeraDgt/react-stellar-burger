@@ -1,8 +1,8 @@
-import React, { useEffect, useState, FormEvent } from 'react';
+import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useAppSelector, useAppDispatch } from '../..';
 import styles from './profile-data.module.css';
-import { GET_USER, getUser, updateUser } from '../../services/user-auth/auth-action';
+import { getUser, updateUser } from '../../services/user-auth/auth-action';
 import { regexName, regexEmail, regexPassword } from '../../utils/data';
 import { currUser, currUserName, currUserEmail, currUserPassword } from '../../services/user-auth/auth-selector';
 
@@ -28,7 +28,7 @@ const ProfileData = () => {
     })
   }, [dispatch, userName, userEmail, userPassword ]);
 
-  const onChange = (e: FormEvent) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
@@ -43,7 +43,7 @@ const ProfileData = () => {
     setValidForm(regexPassword.test(form.password));
   }, [form.name, form.email, form.password])
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUser(form));
   }

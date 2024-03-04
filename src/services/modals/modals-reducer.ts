@@ -5,7 +5,7 @@ export type TOrderModalState = {
   order: TOrder | null,
   orderRequest: boolean,
   orderFailed: boolean,
-  extraOrder: TOrder | number | null,
+  extraOrder: TOrder | null,
   extraOrderRequest: boolean,
   extraOrderFailed: boolean,
 }

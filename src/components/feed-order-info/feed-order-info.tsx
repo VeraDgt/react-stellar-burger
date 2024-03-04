@@ -28,19 +28,28 @@ const FeedOrder = () => {
   const [ order, setOrder ] = useState<{
     name?: string,
     status: string,
-    createdAt: string | number | Date,
-    orderNum: string,
-    orderIngrs: Array<TIngredient>
+    createdAt: string | number | Date | undefined,
+    orderNum: string | number | undefined,
+    ingredients: Array<TIngredient>
   }>({
     name: '',
     status: '',
     createdAt: '',
     orderNum: '',
-    orderIngrs: []
+    ingredients: []
   });
 
-  const item = extraOrder ? extraOrder
-  : orders?.find((el: TOrder) => el.number.toString() === orderNumber);
+  const currOrder = orders?.orders ? orders?.orders.find((el: TOrder) => el.number.toString() === orderNumber) : {
+    number: 0,
+    name: '',
+    status: '',
+    createdAt: '',
+    orderNum: '',
+    ingredients: []
+  };
+
+  const item = extraOrder ? extraOrder : currOrder;
+  const date = item ? item.createdAt : '';
 
   useEffect((): () => void => {
     dispatch(
@@ -63,14 +72,13 @@ const FeedOrder = () => {
       status: getOrderStatus(item?.status),
       createdAt: item?.createdAt, 
       orderNum: item?.number,
-      orderIngrs: Array.from(new Set(getOrderIngredients(item?.ingredients, items)))
+      ingredients: ingredientsArr,
     });
   }, [orders]);
 
   if (!orders) return null;
-
-  const totalPrice = orderTotalPrice(getOrderIngredients(item?.ingredients, items));
-  const { qty } = countItems(getOrderIngredients(item?.ingredients, items));
+  const ingredientsArr = item ? Array.from(new Set(getOrderIngredients(item.ingredients, items))) : []
+  const totalPrice = item ? orderTotalPrice(getOrderIngredients(item.ingredients, items)) : 0;
 
   return ( orders ? 
     <div className={ background ? styles.wrapper : styles.wrapper_onPage }>
@@ -80,18 +88,18 @@ const FeedOrder = () => {
       <h2 className="text text_type_main-medium mt-15">Состав:</h2>
       <ul className={ background ? styles.list : styles.list_onPage }>
         {
-          order.orderIngrs.map(el =>
+          order.ingredients.map(el =>
             <li key={el._id} className={styles.ingredient}>
               <img className={styles.img} src={el.image} alt={el.name} />
               <p className="text text_type_main-default">{el.name}</p>
-              <p className={styles.price}>{qty[el._id]} x {el.price}</p>
+              <p className={styles.price}>{countItems(el._id, ingredientsArr)} x {el.price}</p>
               <CurrencyIcon type="primary"/>
             </li>)
         }
       </ul>
       <div className={styles.totals}>
         <p>
-          <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(order.createdAt)}/>
+          <FormattedDate className="text text_type_main-default text_color_inactive" date={new Date(date)}/>
           <span className="text text_type_main-default text_color_inactive">&nbsp;i-GMT+3</span>
         </p>
         <p className={styles.price}>

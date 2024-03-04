@@ -14,16 +14,16 @@ export interface IModal extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Modal: FunctionComponent<IModal> = ({ handleClose, title, children, hasOverlay }) => {
-  function handleKeydown(event: KeyboardEvent) {
-    return event.key === 'Escape' && handleClose();
-  }
-
+  
   React.useEffect(() => {
+    function handleKeydown(event: KeyboardEvent) {
+      return event.key === 'Escape' && handleClose();
+    }
     document.addEventListener('keydown', handleKeydown)
     return () => {
       document.removeEventListener('keydown', handleKeydown)
     }
-  }, [handleKeydown]);
+  }, []);
 
   return ReactDOM.createPortal(
     (

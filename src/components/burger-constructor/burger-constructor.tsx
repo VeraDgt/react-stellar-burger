@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState, FunctionComponent } from 'react';
-import { useAppSelector } from '../..';
+import { useAppSelector, useAppDispatch } from '../..';
 import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import ConstructorItem from './constructor-item/constructor-item';
@@ -7,8 +7,6 @@ import PriceContainer from './price-container/price-container';
 import OrderDetails from '../order-details/order-details';
 import { countTotalSum } from '../../utils/data';
 import Modal from '../modal/modal';
-import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
 import { getOrder } from '../../services/modals/modals-action';
@@ -22,7 +20,7 @@ const BurgerConstructor: FunctionComponent<{dropHandler: (item: TIngredient) => 
   const { burgersData } = useAppSelector(burgerConstructor);
   const items = burgersData.map((el) => el._id);
   const [ visibility, setVisibility ] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(currUser);
 
@@ -123,7 +121,3 @@ const BurgerConstructor: FunctionComponent<{dropHandler: (item: TIngredient) => 
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  dropHandler: PropTypes.func.isRequired
-}

@@ -39,16 +39,11 @@ export function deleteCookie(cookie: string) {
 
 export const getOrderIngredients = (arr: Array<string>, items: Array<TIngredient>) => arr?.map(el => items.find(i => el === i._id)!);
 
-export const countItems = (arr: Array<TIngredient>) => {
-  return arr.reduce((sum: {ingredient: {[id:string]:TIngredient}, qty:{[id: string]: number}}, el) =>{
-    const id = el._id
-    sum.ingredient[id] = el;
-    sum.qty[id] = (sum.qty[id] || 0) +1
-    return sum
-  }, { ingredient: {}, qty: {} })
+export const countItems = (id: string, arr: (TIngredient | undefined)[]) => {
+  return arr.filter((el) => el?._id === id).length;
 }
 
-export function getOrderStatus(status: string) {
+export function getOrderStatus(status: string | undefined) {
   switch (status) {
     case 'done':
       return 'Выполнен';
