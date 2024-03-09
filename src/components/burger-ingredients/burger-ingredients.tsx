@@ -5,6 +5,7 @@ import BurgerIngredient from './burger-ingredient/burger-ingredient';
 import { useAppSelector } from '../..';
 import { burgerIngredientsArr, burgerIngredientsRequest } from '../../services/burger-ingredients/burger-ingredients-selector';
 import { TIngredient } from '../../types';
+import { Preloader } from '../preloader/preloader';
 
 enum Tabs {
     buns = 'buns',
@@ -86,21 +87,21 @@ const BurgerIngredients = ():JSX.Element => {
       <ul className={`${ingredientsStyles.items} custom-scroll`} onScroll={handleScroll}>
         <li ref={bunsRef}>
           <h3 className={ingredientsStyles.subtitle}>Булки</h3>
-          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+          { itemsRequest ? <Preloader /> : <ul className={ingredientsStyles.item}>
             { filterIngredients(items, 'bun') }
           </ul>
           }
         </li>
         <li ref={saucesRef}>
           <h3 className={ingredientsStyles.subtitle}>Соусы</h3>
-          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+          { itemsRequest ? <Preloader /> : <ul className={ingredientsStyles.item}>
             { filterIngredients(items, 'sauce') }
           </ul>
           }
         </li>
         <li ref={fillingsRef}>
           <h3 className={ingredientsStyles.subtitle}>Начинки</h3>
-          { itemsRequest ? <p className={ingredientsStyles.loading}>...</p> : <ul className={ingredientsStyles.item}>
+          { itemsRequest ? <Preloader /> : <ul className={ingredientsStyles.item}>
             { filterIngredients(items, 'main') }
           </ul>
           }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../..';
 import { Link, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { regexPassword, regexToken } from '../../utils/data';
 import { resetPassword } from '../../services/user-auth/auth-action';
@@ -12,7 +12,7 @@ export default function ResetPwPage() {
     token: ''
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const fromPage = location.state?.from?.pathname || '/';

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorItemStyles from './constructor-item.module.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../..';
 import { DECREASE_QTY } from '../../../services/burger-ingredients/burger-ingredients-action';
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { useRef } from 'react';
@@ -17,7 +17,7 @@ interface IConstructorItem {
 const ConstructorItem: FunctionComponent<IConstructorItem> = ({item, index, dragItem}) => {
   const id = item._id;
   const ref = useRef<HTMLLIElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [, drag] = useDrag({
     type: 'constructorItem',

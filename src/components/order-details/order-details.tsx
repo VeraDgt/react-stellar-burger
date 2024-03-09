@@ -5,6 +5,7 @@ import { getOrder } from '../../services/modals/modals-action';
 import { useAppDispatch, useAppSelector } from '../..';
 import { burgerConstructorFilling } from '../../services/burger-constructor/burger-constructor-selector';
 import { orderNum, orderRequest } from '../../services/modals/modals-selector';
+import { Preloader } from '../preloader/preloader';
 
 const OrderDetails = () => {
   const burgersData = useAppSelector(burgerConstructorFilling);
@@ -20,7 +21,7 @@ const OrderDetails = () => {
 
   return (
     <>
-      { orderRequestActive ? <p className='text text_type_main-large'>...</p> :
+      { orderRequestActive ? <Preloader /> :
       <p className={orderStyles.number}>{order}</p>
       }
       <p className={orderStyles.text}>идентификатор заказа</p>

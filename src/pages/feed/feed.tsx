@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../..';
 import FeedItem from "../../components/feed-item/feed-item";
 import { ordersListArr, ordersListQty, ordersListTodayQty } from "../../services/socket/socket-selector";
 import { TOrder } from "../../types";
+import { Preloader } from "../../components/preloader/preloader";
 
 
 export default function FeedPage () {
@@ -77,7 +78,7 @@ export default function FeedPage () {
               <p className={styles.totalOrders}>{ordersToday}</p>
             </div>
           </div>
-        </div> : <p className="loading text text_type_main-large">...</p>
+        </div> : <Preloader />
       }
     </div>
   )

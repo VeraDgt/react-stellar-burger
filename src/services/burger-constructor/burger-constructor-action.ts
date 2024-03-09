@@ -8,7 +8,7 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 export type TGetBurgerData = {
   type: typeof GET_BURGER_DATA,
   payload: TIngredient,
-  key: number
+  key: number | string,
 }
 
 type TDeteleItem = {

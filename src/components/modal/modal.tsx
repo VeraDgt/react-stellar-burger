@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
 import { modalRoot } from '../../utils/data';
 
 export interface IModal extends React.HTMLAttributes<HTMLDivElement> {
@@ -40,12 +39,6 @@ const Modal: FunctionComponent<IModal> = ({ handleClose, title, children, hasOve
     ),
       modalRoot!
   )
-}
-
-Modal.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  title: PropTypes.string,
-  children: PropTypes.node.isRequired
 }
 
 export default Modal;

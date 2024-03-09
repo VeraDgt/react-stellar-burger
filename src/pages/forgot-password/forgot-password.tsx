@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../..';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { recoverPassword } from '../../services/user-auth/auth-action';
 import { regexEmail } from '../../utils/data';
@@ -11,7 +11,7 @@ export default function ForgotPwPage() {
     email: ''
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

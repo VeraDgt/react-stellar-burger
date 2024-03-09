@@ -4,7 +4,7 @@ import mainStyles from './main.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../..';
 import { GET_BURGER_DATA } from '../../services/burger-constructor/burger-constructor-action';
 import { INCREASE_QTY } from '../../services/burger-ingredients/burger-ingredients-action';
 import { v4 } from 'uuid';
@@ -12,7 +12,7 @@ import { TIngredient } from '../../types';
 
 
 const Main = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleDrop = (item: TIngredient) => {
     dispatch({ type: INCREASE_QTY, payload: item });

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from "./app.module.css";
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../..';
 import { getItems } from "../../services/burger-ingredients/burger-ingredients-action";
 import AppHeader from "../app-header/app-header";
 import HomePage from "../../pages/home/home";
@@ -23,7 +23,7 @@ import FeedOrder from '../feed-order-info/feed-order-info';
 import ProfileOrders from '../profile-orders/profile-orders';
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => { dispatch(getItems()) }, [dispatch]);
   const location = useLocation();
   const background = location.state?.background;

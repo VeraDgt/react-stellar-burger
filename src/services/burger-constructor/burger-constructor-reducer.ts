@@ -11,7 +11,7 @@ const initialState: TConstructorState = {
   burgersData: [],
 }
 
-export const burgerConstructorReducer = (state = initialState, action: ConstructorActions) => {
+export const burgerConstructorReducer = (state: TConstructorState = initialState, action: ConstructorActions): TConstructorState => {
   function addBun(state: TConstructorState, action: TGetBurgerData) {
     const index = [...state.burgersData].findIndex((el) => el.type === 'bun');
     const newState = [...state.burgersData];

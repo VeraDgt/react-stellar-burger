@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './login.module.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../..';
 import { Link } from 'react-router-dom';
 import { login } from '../../services/user-auth/auth-action';
 import { regexEmail, regexPassword } from '../../utils/data';
@@ -19,7 +19,7 @@ export default function LoginPage() {
     setValidForm(regexPassword.test(form.password));
   }, [form.email, form.password])
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
