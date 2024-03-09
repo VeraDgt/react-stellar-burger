@@ -39,7 +39,7 @@ export function deleteCookie(cookie: string) {
 
 export const getOrderIngredients = (arr: Array<string>, items: Array<TIngredient>) => arr?.map(el => items.find(i => el === i._id)!);
 
-export const countItems = (id: string, arr: (TIngredient | undefined)[]) => {
+export const countItems = (id: string, arr: TIngredient[]) => {
   return arr.filter((el) => el?._id === id).length;
 }
 

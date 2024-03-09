@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../..";
 import { useLocation, useMatch, useParams } from "react-router-dom";
 import { getOrderIngredients, getOrderStatus, orderTotalPrice, countItems } from "../../utils/utils";
@@ -11,45 +11,24 @@ import { burgerIngredients } from "../../services/burger-ingredients/burger-ingr
 import { ordersHistory } from "../../services/socket-auth/socket-auth-selector";
 import { ordersList } from "../../services/socket/socket-selector";
 import { orderExtra } from "../../services/modals/modals-selector";
-import { TIngredient } from "../../types";
 import { TOrder } from "../../types";
+import { Preloader } from "../preloader/preloader";
 
 const FeedOrder = () => {
   const { items } = useAppSelector(burgerIngredients);
   const location = useLocation();
   const dispatch = useAppDispatch();
   const profile = useMatch('/profile/*');
-  const orders  = useAppSelector(profile ? ordersHistory : ordersList);
+  const orders = useAppSelector(profile ? ordersHistory : ordersList);
   const background = location.state?.background;
-  const orderNumber = useParams().number;
+  const orderNum = useParams().number;
   
   const extraOrder = useAppSelector(orderExtra);
 
-  const [ order, setOrder ] = useState<{
-    name?: string,
-    status: string,
-    createdAt: string | number | Date | undefined,
-    orderNum: string | number | undefined,
-    ingredients: Array<TIngredient>
-  }>({
-    name: '',
-    status: '',
-    createdAt: '',
-    orderNum: '',
-    ingredients: []
-  });
-
-  const currOrder = orders?.orders ? orders?.orders.find((el: TOrder) => el.number.toString() === orderNumber) : {
-    number: 0,
-    name: '',
-    status: '',
-    createdAt: '',
-    orderNum: '',
-    ingredients: []
-  };
-
-  const item = extraOrder ? extraOrder : currOrder;
-  const date = item ? item.createdAt : '';
+  const order = extraOrder ? extraOrder :
+  orders?.orders 
+  ? orders.orders.find((el: TOrder) => el.number.toString() === orderNum)
+  : extraOrder;
 
   useEffect((): () => void => {
     dispatch(
@@ -62,34 +41,28 @@ const FeedOrder = () => {
   }, [dispatch, profile]);
 
   useEffect(() => {
-      dispatch(getExtraOrderInfo(orderNumber));
-  }, [orders, dispatch, orderNumber]);
+    if(!orders)
+      dispatch(getExtraOrderInfo(orderNum));
+  }, [orders, dispatch, orderNum]);
 
-  useEffect(() => {
-    setOrder({
-      ...order,
-      name: item?.name,
-      status: getOrderStatus(item?.status),
-      createdAt: item?.createdAt, 
-      orderNum: item?.number,
-      ingredients: ingredientsArr,
-    });
-  }, [orders]);
+  if (!order) return null;
 
-  if (!orders) return null;
-  const ingredientsArr = item ? Array.from(new Set(getOrderIngredients(item.ingredients, items))) : []
-  const totalPrice = item ? orderTotalPrice(getOrderIngredients(item.ingredients, items)) : 0;
+  const date = order.createdAt;
+  
+  const ingredientsArr = getOrderIngredients(order.ingredients, items);
+  const itemsToRenderArr = ingredientsArr.filter((item, i, ar) => ar.indexOf(item) == i);
+  const totalPrice = orderTotalPrice(getOrderIngredients(order.ingredients, items));
 
-  return ( orders ? 
+  return ( order ? 
     <div className={ background ? styles.wrapper : styles.wrapper_onPage }>
-      <p className={background ? styles.number : styles.number_onPage}>#{order.orderNum}</p>
+      <p className={background ? styles.number : styles.number_onPage}>#{order.number}</p>
       <h1 className="text text_type_main-medium mt-10 mb-3">{order.name}</h1>
       <p className={ order.status === 'Выполнен' ? styles.status_state_done : styles.status}>{order.status}</p>
       <h2 className="text text_type_main-medium mt-15">Состав:</h2>
       <ul className={ background ? styles.list : styles.list_onPage }>
-        {
-          order.ingredients.map(el =>
-            <li key={el._id} className={styles.ingredient}>
+        { 
+          itemsToRenderArr.map(el =>
+            <li key={(el)._id} className={styles.ingredient}>
               <img className={styles.img} src={el.image} alt={el.name} />
               <p className="text text_type_main-default">{el.name}</p>
               <p className={styles.price}>{countItems(el._id, ingredientsArr)} x {el.price}</p>
@@ -107,7 +80,7 @@ const FeedOrder = () => {
           <CurrencyIcon type="primary"/>
         </p>
       </div>
-    </div> : <p className="loading text text_type_main-large">...</p>
+    </div> : <Preloader />
   )
 };
 
