@@ -9,7 +9,7 @@ import { countTotalSum } from '../../utils/data';
 import Modal from '../modal/modal';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
-import { getOrder } from '../../services/modals/modals-action';
+import { getOrder as getNewOrder } from '../../services/modals/modals-action';
 import { useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../types';
 import { burgerConstructor } from '../../services/burger-constructor/burger-constructor-selector';
@@ -18,7 +18,9 @@ import { currUser } from '../../services/user-auth/auth-selector';
 
 const BurgerConstructor: FunctionComponent<{dropHandler: (item: TIngredient) => void }> = ({dropHandler}) => {
   const { burgersData } = useAppSelector(burgerConstructor);
+  const bun = burgersData.find(el => el.type === 'bun')?._id;
   const items = burgersData.map((el) => el._id);
+  const orderItems = bun ? items.concat(bun) : [];
   const [ visibility, setVisibility ] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -45,7 +47,7 @@ const BurgerConstructor: FunctionComponent<{dropHandler: (item: TIngredient) => 
 
   function acceptOrder() {
     if (user) {
-      dispatch(getOrder(items));
+      dispatch(getNewOrder(orderItems));
       openModal();
     } else {
       navigate('/login', { replace: false });

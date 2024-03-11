@@ -10,7 +10,8 @@ import { Preloader } from "../../components/preloader/preloader";
 
 export default function FeedPage () {
   
-  const orders = useAppSelector(ordersListArr);
+  const randOrders = useAppSelector(ordersListArr);
+  const orders = randOrders?.sort((a, b) => (a.number < b.number) ? 1 : (a.number > b.number) ? -1 : 0);
   const ordersTotal = useAppSelector(ordersListQty);
   const ordersToday = useAppSelector(ordersListTodayQty);
   const dispatch = useAppDispatch();

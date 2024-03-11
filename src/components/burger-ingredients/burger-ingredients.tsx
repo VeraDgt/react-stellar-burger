@@ -15,7 +15,7 @@ enum Tabs {
 
 
 const BurgerIngredients = ():JSX.Element => {
-  const [ current, setCurrent ] = useState(Tabs.buns);
+  const [ current, setCurrent ] = useState('buns');
 
   const bunsRef = useRef<HTMLLIElement>(null);
   const saucesRef = useRef<HTMLLIElement>(null);
@@ -23,8 +23,8 @@ const BurgerIngredients = ():JSX.Element => {
   const containerRef = useRef<HTMLLIElement>(null);
 
 
-  const onTabClick = () => void {
-    setCurrent(tab: Tabs)
+  const onTabClick = (tab: string) => {
+    setCurrent(tab)
     {
       tab === Tabs.buns && bunsRef.current?.scrollIntoView({behavior: 'smooth'});
       tab === Tabs.sauces && saucesRef.current?.scrollIntoView({behavior: 'smooth'});
