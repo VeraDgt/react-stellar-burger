@@ -1,4 +1,4 @@
-import React, { FunctionComponent, type MouseEvent, type ReactNode } from 'react';
+import React, { FunctionComponent, type ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './modal.module.css';

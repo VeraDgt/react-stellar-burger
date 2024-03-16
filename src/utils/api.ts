@@ -130,7 +130,7 @@ export function getOrderNumber(arr: Array<string>) {
   return request("/orders", {
     method: 'POST',
     headers: { "Content-Type": "application/json",
-              Authorization: getCookie('accessToken') } as HeadersInit,
+              Authorization: getCookie('accessToken')! } as HeadersInit,
     body: JSON.stringify({
       ingredients: arr
     })

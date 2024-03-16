@@ -9,7 +9,7 @@ import { countTotalSum } from '../../utils/data';
 import Modal from '../modal/modal';
 import { useDrop } from 'react-dnd';
 import { DRAG_ITEM } from '../../services/burger-constructor/burger-constructor-action';
-import { getOrder as getNewOrder } from '../../services/modals/modals-action';
+import { getNewOrder } from '../../services/modals/modals-action';
 import { useNavigate } from 'react-router-dom';
 import { TIngredient } from '../../types';
 import { burgerConstructor } from '../../services/burger-constructor/burger-constructor-selector';

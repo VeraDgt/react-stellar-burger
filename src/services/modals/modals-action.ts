@@ -1,7 +1,6 @@
 import { AppDispatch, AppThunk } from "../..";
 import { TOrder } from "../../types";
 import { getOrderNumber, getExtraOrder } from "../../utils/api";
-import { getCookie } from "../../utils/utils";
 import { CLEAR_CONSTRUCTOR } from "../burger-constructor/burger-constructor-action";
 import { CLEAR_QTY } from "../burger-ingredients/burger-ingredients-action";
 import { checkToken } from "../user-auth/auth-action";
@@ -56,24 +55,27 @@ const getOrderSuccess = (payload: TOrder): TGetOrderSuccess => ({
   order: payload,
 })
 
-export function getOrder(num: Array<string>) {
+export function getNewOrder(num: Array<string>) {
   return function(dispatch: AppDispatch & AppThunk) {
     dispatch({ type: GET_ORDER });
 
     getOrderNumber(num).then(res => {
       if (res && res.success) {
-        dispatch(getOrderSuccess(res.order));
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          order: res.order
+      });
         dispatch({ type: CLEAR_CONSTRUCTOR });
         dispatch({ type: CLEAR_QTY });
       } else {
         dispatch(getOrderFailed())
       }
-      if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
-        dispatch(checkToken())
-      }
     })
     .catch(err => {
       console.log(err);
+      if(err.message === 'jwt expired') {
+        dispatch(checkToken());
+      }
       dispatch(getOrderFailed())
     })
   }
