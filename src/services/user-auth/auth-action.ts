@@ -197,12 +197,12 @@ export const getUser = ():AppThunk<Promise<unknown>>  => {
     } else {
       dispatch(setUserFailed())
     }
-    if(res.message === 'jwt expired' || (getCookie('refreshToken') && !getCookie('accessToken'))) {
-      dispatch(checkToken());
-    }
   })
   .catch(err => {
     console.log(err);
+    if(err.message === 'jwt expired') {
+      dispatch(checkToken());
+    }
     dispatch(setUserFailed())
   })
   }
@@ -256,24 +256,24 @@ export const register = (form: TUser) => (dispatch: AppDispatch) => {
 }
 
 export const checkUserAuth = () => {
-    return (dispatch: AppDispatch & AppThunk) => {
-        if (getCookie("accessToken")) {
-          api.getUser().then((res) => {
-            if (res && res.success) {
-            dispatch(setUser(res.user));
-          } else {
-            dispatch(setUserFailed())
-          }})
-              .catch(() => {
-                  deleteCookie("accessToken");
-                  deleteCookie("refreshToken");
-                  dispatch(setUser(null));
-              })
-              .finally(() => dispatch(setAuthChecked(true)));
-        } else {
-            dispatch(setAuthChecked(true));
-        }
+  return (dispatch: AppDispatch & AppThunk) => {
+    if (getCookie("accessToken") !== 'false') {
+      api.getUser().then((res) => {
+        if (res && res.success) {
+        dispatch(setUser(res.user));
+      } else {
+        dispatch(setUserFailed())
+      }})
+        .catch(() => {
+          deleteCookie("accessToken");
+          deleteCookie("refreshToken");
+          dispatch(setUser(null));
+      })
+      .finally(() => dispatch(setAuthChecked(true)));
+    } else {
+      dispatch(setAuthChecked(true));
     };
+  };
 };
 
 export const recoverPassword = (email: string) => {
