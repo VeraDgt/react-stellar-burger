@@ -36,7 +36,7 @@ export default function RegisterPage() {
     setValidForm(regexPassword.test(form.password));
   }, [form.name, form.email, form.password])
 
-  if(getCookie('accessToken')) {
+  if(getCookie('accessToken') !== 'false') {
     return (
       <Navigate to={'/'}/>
     )

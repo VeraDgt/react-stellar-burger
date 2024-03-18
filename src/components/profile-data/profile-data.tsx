@@ -31,7 +31,7 @@ const ProfileData = () => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
-      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
+      [(e.target)?.name]: (e.target)?.value
     })
   }
 

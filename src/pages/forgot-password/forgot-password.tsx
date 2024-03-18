@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from '../login/login.module.css';
 import { useAppDispatch } from '../..';
@@ -21,10 +21,10 @@ export default function ForgotPwPage() {
     navigate('/reset-password', {state: {from: location}});
   }
 
-  const onChange = (e: FormEvent) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
-      [(e.target as HTMLInputElement)?.name]: (e.target as HTMLInputElement)?.value
+      [(e.target)?.name]: (e.target)?.value
     });
   }
 
