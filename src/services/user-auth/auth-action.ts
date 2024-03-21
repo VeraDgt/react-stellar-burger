@@ -245,6 +245,7 @@ export const register = (form: TUser) => (dispatch: AppDispatch) => {
     setCookie('accessToken', res.accessToken, { expires: cookieLive });
     setCookie('refreshToken', res.refreshToken);
     dispatch(registerSuccess(res));
+    
     } else {
       dispatch(registerFailed())
     }
